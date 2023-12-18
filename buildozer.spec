@@ -37,7 +37,7 @@ version = 0.1
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3==3.8.18,hostpython3==3.8.18,kivy,pillow==9.5.0,requests,flask,xlsxwriter,statistics,matplotlib
+requirements = python3==3.8.18,hostpython3==3.8.18,kivy,pillow==9.5.0,requests,flask,xlsxwriter,statistics,matplotlib,disutils
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
@@ -321,7 +321,7 @@ android.allow_backup = True
 #p4a.url =
 
 # (str) python-for-android fork to use in case if p4a.url is not specified, defaults to upstream (kivy)
-p4a.fork = kivy
+p4a.fork = josh140520
 
 # (str) python-for-android branch to use, defaults to master
 p4a.branch = develop
