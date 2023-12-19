@@ -42,7 +42,7 @@ from kivy.uix.label import Label
 from kivy.core.window import Window
 from kivy.uix.slider import Slider
 from kivy.clock import Clock
-from backend_kivyagg import FigureCanvasKivyAgg
+#from backend_kivyagg import FigureCanvasKivyAgg
 
 
 
