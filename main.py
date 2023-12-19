@@ -11,7 +11,7 @@ import datetime
 from statistics import mean
 
 
-#import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 import kivy
 
 import xlsxwriter
