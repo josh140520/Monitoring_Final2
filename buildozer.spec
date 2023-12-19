@@ -175,7 +175,7 @@ fullscreen = 0
 # their classes. Don't add jars that you do not need, since extra jars can slow
 # down the build process. Allows wildcards matching, for example:
 # OUYA-ODK/libs/*.jar
-#android.add_jars = foo.jar,bar.jar,path/to/more/*.jar
+android.add_jars = $P4A/android/build/gradle/java-packages/java-17.jar
 
 # (list) List of Java files to add to the android project (can be java or a
 # directory containing the files)
@@ -203,7 +203,7 @@ fullscreen = 0
 #android.add_resources =
 
 # (list) Gradle dependencies to add
-#android.gradle_dependencies =
+android.gradle_dependencies = 'com.android.tools.build:gradle:7.1.1'
 
 # (bool) Enable AndroidX support. Enable when 'android.gradle_dependencies'
 # contains an 'androidx' package, or any package from Kotlin source.
