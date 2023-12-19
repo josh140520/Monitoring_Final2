@@ -203,7 +203,7 @@ android.add_jars = $P4A/android/build/gradle/java-packages/java-17.jar
 #android.add_resources =
 
 # (list) Gradle dependencies to add
-android.gradle_dependencies = 'com.android.tools.build:gradle:7.1.1'
+android.gradle_dependencies = com.android.tools.build:gradle:7.1.1
 
 # (bool) Enable AndroidX support. Enable when 'android.gradle_dependencies'
 # contains an 'androidx' package, or any package from Kotlin source.
