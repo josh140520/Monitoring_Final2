@@ -323,7 +323,7 @@ android.allow_backup = True
 p4a.fork = josh140520
 
 # (str) python-for-android branch to use, defaults to master
-p4a.branch = release-2022.09.04
+p4a.branch = release-2020.06.02
 
 # (str) python-for-android specific commit to use, defaults to HEAD, must be within p4a.branch
 #p4a.commit = HEAD
