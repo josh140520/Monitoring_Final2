@@ -9,9 +9,9 @@ import datetime
 
 
 from statistics import mean
+from kivy.graphics import Rectangle, Color, Line
 
-
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 import kivy
 
 import xlsxwriter
@@ -42,7 +42,7 @@ from kivy.uix.label import Label
 from kivy.core.window import Window
 from kivy.uix.slider import Slider
 from kivy.clock import Clock
-from backend_kivyagg import FigureCanvasKivyAgg
+#from backend_kivyagg import FigureCanvasKivyAgg
 
 
 
@@ -1436,6 +1436,14 @@ class GraphWindow(Screen): #3rd window
     table_list = ListProperty([])
     selected_table = StringProperty('None')
 
+
+    LineWidth = NumericProperty(2) #kapal ng linya
+    LineSpace = NumericProperty(1677) #distance
+    SpaceMultiplier = NumericProperty(69.875)
+    WidthDivider = NumericProperty(16)
+    Y_Adjuster = NumericProperty(15)
+
+
     selected_x = ['00:00:00', '01:00:00', '02:00:00', '03:00:00', '04:00:00', '05:00:00', '06:00:00', '07:00:00',
                   '08:00:00', '09:00:00', '10:00:00', '11:00:00', '12:00:00', '13:00:00', '14:00:00', '15:00:00',
                   '16:00:00', '17:00:00', '18:00:00', '19:00:00', '20:00:00', '21:00:00', '22:00:00', '23:00:00']
@@ -1707,7 +1715,66 @@ class GraphWindow(Screen): #3rd window
         popup = Popup(title='Successful Saving', content=content, size_hint=(None, None), size=(300, 200))
         popup.open()
 
+    def update_line(self, *args):
+        # Update the line points when the layout size or position changes
+        listX = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
+        listY = [0, 40, 30, 40, 50, 60, 120, None, 350, 100, 0, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220,
+                 1000]
+
+        # Replace None values with 0
+        listY = [0 if y is None else y for y in listY]
+
+        # Create a list of points by interleaving x and y coordinates
+        points = []
+        for x, y in zip(listX, listY):
+            points.extend([
+                self.ids.temp_layout.x + self.ids.temp_layout.width * (x / max(listX)),
+                self.ids.temp_layout.y + self.ids.temp_layout.height * (y / max(listY))
+            ])
+
+        self.line.points = points
+
+        # Determine line color based on listY value
+        none_index = listY.index(None) if None in listY else -1
+        if none_index != -1:
+            white_color = Color(1, 1, 1)
+            self.line_color.rgba = white_color if self.line_color.index == none_index else (0, 0, 1)
+
+
     def show_temp(self, instance):
+
+
+        # Add a blue rectangle to the canvas
+        with self.ids.temp_layout.canvas:
+            Color(0, 0, 1, 0.1)  # Set color to blue (RGB values)
+            self.rectangle = Rectangle(pos=self.ids.temp_layout.pos, size=self.ids.temp_layout.size)
+
+            # Calculate line coordinates based on listX and listY
+            listX = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
+            listY = [0, 40, 30, 40, 50, 60, 120, 0, 350, 100, 0, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210,
+                     220, 1000]
+
+            # Replace None values with 0
+            listY = [0 if y is None else y for y in listY]
+
+            # Create a list of points by interleaving x and y coordinates
+            points = []
+            for x, y in zip(listX, listY):
+                points.extend([
+                    self.ids.temp_layout.x + self.ids.temp_layout.width * (x / max(listX)),
+                    self.ids.temp_layout.y + self.ids.temp_layout.height * (y / max(listY))
+                ])
+
+            self.line_color = Color(0, 0, 1)
+            self.line = Line(
+                points=points,
+                width=2  # Set line width (adjust as needed)
+            )
+
+            # Bind line points to update dynamically when the layout size changes
+        self.bind(pos=self.update_line, size=self.update_line)
+
+    def show_temp1(self, instance):
         global temp_dict, n, selected_x, temp_sum
         self.ids.temp_layout.clear_widgets()
         fig, ax = plt.subplots()
