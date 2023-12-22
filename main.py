@@ -1573,6 +1573,8 @@ class GraphWindow(Screen): #3rd window
         popup.open()
 
     def save_to_excel_and_close(self, popup):
+        global absolute_path
+        absolute_path = ''
         try:
             # Connect to SQLite database
             conn = sqlite3.connect(db_file)  # Replace 'your_database.db' with your database file
@@ -1591,6 +1593,8 @@ class GraphWindow(Screen): #3rd window
             excel_file = f"Data_{self.selected_table.replace(' ', '_')}.xlsx"
             workbook = xlsxwriter.Workbook(excel_file)
             worksheet = workbook.add_worksheet('Measurements')
+            absolute_path = os.path.abspath(excel_file)
+            print(absolute_path)
 
             # Write headers
             for col_num, header in enumerate(columns):
@@ -1711,7 +1715,9 @@ class GraphWindow(Screen): #3rd window
         popup = Popup(title='Error Saving', content=content, size_hint=(None, None), size=(300, 200), background_color=(0.5, 0.5, 0.8, 0.7))
         popup.open()
     def show_saving_popup(self):
-        content = Label(text='Sucessfully Saved, Check your Files!')
+        global absolute_path
+
+        content = Label(text=f'Sucessfully Save to:\n{absolute_path}!')
         popup = Popup(title='Successful Saving', content=content, size_hint=(None, None), size=(300, 200))
         popup.open()
 
