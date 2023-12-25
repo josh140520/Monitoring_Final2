@@ -404,6 +404,7 @@ WindowManager:
                             background_color: 0, 1, 0, 1  # Green background color
                             color: 0, 0, 0, 1  # Black font color
                             font_size: 20  # Adjust the font size as needed
+                            
                             on_press:
                                 self.background_color = 0, 0.7, 0, 1  # Darker green when pressed
                             on_release:
@@ -462,7 +463,7 @@ WindowManager:
                             background_normal: 'connection_icon_normal.png'
                             background_down: 'connection_icon_down.png'
                             size_hint: None, None
-                            size: 62, 62
+                            size: root.PagePicSize, root.PagePicSize
                             on_release:
                                 root.manager.transition.direction = "right"
                                 root.manager.current = "Conn"
@@ -475,7 +476,7 @@ WindowManager:
                             background_normal: 'exit_icon_normal.png'
                             background_down: 'exit_icon_down.png'
                             size_hint: None, None
-                            size: 62, 62
+                            size: root.PagePicSize, root.PagePicSize
                             on_release: app.exit_app()
 
                     AnchorLayout:
