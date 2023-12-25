@@ -125,6 +125,15 @@ class MainWindow(Screen): #Main screen
 
 
 
+    ######################################
+    Mainfontsize = NumericProperty(sp(25)) ##editable Main window font size
+
+
+
+    ######################################
+
+
+
     flow = NumericProperty(0)
     flow_color = ListProperty([0, 0, 0, 1])
     remarks_flow = StringProperty('No Data')
