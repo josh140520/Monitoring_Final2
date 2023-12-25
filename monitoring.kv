@@ -12,10 +12,11 @@ WindowManager:
     name: "Main"
     GridLayout:
         cols: 1
-        rows: 7
+        rows: 3
         GridLayout:
             cols: 3
             rows: 1
+            size_hint_y: 1/7
             canvas.before:
                 Color:
                     rgba: 0, 0.8, 1, 1  # Light blue color (RGBA)
@@ -62,7 +63,7 @@ WindowManager:
 
             cols: 1
             rows: 1
-            size_hint_y: 0.25
+            size_hint_y: 1/7
             canvas.before:
                 Color:
                     rgba: 1, 1, 1, 1
@@ -74,316 +75,45 @@ WindowManager:
                 text: '@Proponents: Chesther, Ken, Jazzle'
                 color: 0, 0, 0, 1
 
-
         GridLayout:
-            cols: 2
-            rows: 1
-
-            AnchorLayout:
-                anchor_x: 'center'
-                anchor_y: 'center'
-                canvas.before:
-                    Color:
-                        rgba: 1, 1, 1, 1
-                    Rectangle:
-                        pos: self.pos
-                        size: self.size
-                Image:
-                    source: 'panel_icon_background.png'
-                    size_hint: None, None
-                    size: 485, 155 #400, 120
-                    size: self.parent.width * 1, self.parent.width * 1 #adjust
-                GridLayout:
-                    cols: 3
-                    rows: 1
-                    Label:
-                        text: ' Temperature\n     Sensor'
-                        color: 0, 0, 0, 1
-                        font_size: root.Mainfontsize
-
-
-                    Label:
-                        text: str(root.temp) if root.switch_data is False else root.no_temp #measure1
-                        color: root.temp_color if root.switch_data is False else root.no_temp_color
-                        font_size: root.Mainfontsize
-
-                    Label:
-                        text: root.remarks_temp if root.switch_data is False else root.no_remarks_temp#remarks1
-                        color: (1, 0, 0, 1) if (root.remarks_temp == 'HIGH' or root.remarks_temp == 'LOW') and root.switch_data is False else (0, 0.5, 0, 1) if root.remarks_temp == 'NORMAL' and root.switch_data is False else (0, 0, 0, 1)
-                        font_size: root.Mainfontsize
+            cols: 1
+            size_hint_y: 5/7
             GridLayout:
-                cols: 1
-                canvas.before:
-                    Color:
-                        rgba: 1, 1, 1, 1
-                    Rectangle:
-                        pos: self.pos
-                        size: self.size
-                size_hint: None, None  # Remove size_hint
-                Label:
-                    text: '' #most right
+                cols: 2
+                rows: 1
 
-        GridLayout:
-            cols: 2
-            rows: 1
-
-            AnchorLayout:
-                anchor_x: 'left'
-                anchor_y: 'center'
-                canvas.before:
-                    Color:
-                        rgba: 1, 1, 1, 1
-                    Rectangle:
-                        pos: self.pos
-                        size: self.size
-                Image:
-                    source: 'panel_icon_background.png'
-                    size_hint: None, None
-                    size: 485, 155 #400, 120
-                    size: self.parent.width * 1, self.parent.width * 1 #adjust
-                GridLayout:
-                    cols: 3
-                    rows: 1
-                    Label:
-                        text: 'Flow Rate \n    Sensor'
-                        color: 0, 0, 0, 1
-                        font_size: root.Mainfontsize
-
-
-
-
-                    Label:
-                        text: str(root.flow) if root.switch_data is False else root.no_flow #measure2
-                        color: root.flow_color if root.switch_data is False else root.no_flow_color
-                        font_size: root.Mainfontsize
-
-                    Label:
-                        text: root.remarks_flow if root.switch_data is False else root.no_remarks_flow#remarks2
-                        color: (1, 0, 0, 1) if (root.remarks_flow == 'HIGH' or root.remarks_flow == 'LOW') and root.switch_data is False else (0, 0.5, 0, 1) if root.remarks_flow == 'NORMAL' and root.switch_data is False else (0, 0, 0, 1)
-                        font_size: root.Mainfontsize
-
-            GridLayout:
-                cols: 1
-                canvas.before:
-                    Color:
-                        rgba: 1, 1, 1, 1
-                    Rectangle:
-                        pos: self.pos
-                        size: self.size
-                size_hint: None, None  # Remove size_hint
-                Label:
-                    text: '' #most right
-
-        GridLayout:
-            cols: 2
-            rows: 1
-
-            AnchorLayout:
-                anchor_x: 'left'
-                anchor_y: 'center'
-                canvas.before:
-                    Color:
-                        rgba: 1, 1, 1, 1
-                    Rectangle:
-                        pos: self.pos
-                        size: self.size
-                Image:
-                    source: 'panel_icon_background.png'
-                    size_hint: None, None
-                    size: 485, 155 #400, 120
-                    size: self.parent.width * 1, self.parent.width * 1 #adjust
-
-                GridLayout:
-                    cols: 3
-                    rows: 1
-                    Label:
-                        text: 'Pressure\n    Sensor'
-                        color: 0, 0, 0, 1
-                        font_size: root.Mainfontsize
-
-                    Label:
-                        text: str(root.pressure) if root.switch_data is False else root.no_pressure #measure3
-                        color: root.pressure_color if root.switch_data is False else root.no_pressure_color
-                        font_size: root.Mainfontsize
-                    Label:
-                        text: root.remarks_pressure if root.switch_data is False else root.no_remarks_pressure #remarks3
-                        color: (1, 0, 0, 1) if (root.remarks_pressure == 'HIGH' or root.remarks_pressure == 'LOW') and root.switch_data is False else (0, 0.5, 0, 1) if root.remarks_pressure == 'NORMAL' and root.switch_data is False else (0, 0, 0, 1)
-                        font_size: root.Mainfontsize
-            GridLayout:
-                cols: 1
-                canvas.before:
-                    Color:
-                        rgba: 1, 1, 1, 1
-                    Rectangle:
-                        pos: self.pos
-                        size: self.size
-                size_hint: None, None  # Remove size_hint
-                Label:
-                    text: '' #most right
-
-
-
-
-
-
-
-
-
-
-
-        GridLayout:
-            cols: 2
-            rows: 1
-            size_hint_y: 2
-            canvas.before:
-                Color:
-                    rgba: 1, 1, 1, 1
-                Rectangle:
-                    pos: self.pos
-                    size: self.size
-            #Image:
-            #    source: 'Lpanel_icon_background.png'
-            #    size: 750, 400  # Adjust the size as needed
-            #    size: self.parent.width * 1, self.parent.width * 1 #adjust
-
-            BoxLayout:
-                orientation: 'vertical'
-                size_hint: (1, 1)
-                size: 750, 400  # Adjust the size as needed
-                size: self.parent.width * 1, self.parent.width * 1 #adjust
-                canvas.before:
-                    Color:
-                        rgba: 1, 1, 1, 1
-                    Rectangle:
-                        pos: self.pos
-                        size: self.size
-
-                ScrollView:
-                    do_scroll_x: True
-                    do_scroll_y: True
-                    size_hint: (0.8, 0.8)
-                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
-                    effect_cls: "ScrollEffect"
-                    effect_cls_params: {"scroll_type": ["bars"], "scroll_wheel_distance": 20}
-                    scroll_type: ['content', 'bars']
-                    bar_width: 10
+                AnchorLayout:
+                    anchor_x: 'left'
+                    anchor_y: 'center'
                     canvas.before:
                         Color:
-                            rgba: 1, 1, 1, 1  # Blue color (RGBA)
+                            rgba: 1, 1, 1, 1
                         Rectangle:
                             pos: self.pos
                             size: self.size
-
-                    BoxLayout:
-                        orientation: 'vertical'
-                        size_hint_y: None
-                        size_hint_x: 2.5 #added
-                        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
-                        height: 1050
-
-
-                        GridLayout:
-                            cols: 2
-                            rows: 1
-
-
-                            GridLayout:
-                                cols: 1
-                                rows: 2
-                                BoxLayout:
-                                    orientation: 'vertical'
-                                    size_hint_y: 0.075
-                                    canvas.before:
-                                        Color:
-                                            rgba: 0, 0, 1, 1
-                                        Rectangle:
-                                            pos: self.pos
-                                            size: self.size
-                                    Label:
-                                        text: 'Temperature Sensor'
-                                BoxLayout:
-                                    orientation: 'vertical'
-                                    id: temp_layout
-                                    size_hint: 1, 1
-                        GridLayout:
-                            cols: 2
-                            rows: 1
+                    Image:
+                        source: 'panel_icon_background.png'
+                        size_hint: None, None
+                        size: 485, 155 #400, 120
+                        size: self.parent.width * 1, self.parent.width * 1 #adjust
+                    GridLayout:
+                        cols: 3
+                        rows: 1
+                        Label:
+                            text: ' Temperature\n     Sensor'
+                            color: 0, 0, 0, 1
+                            font_size: root.Mainfontsize
 
 
-                            GridLayout:
-                                cols: 1
-                                rows: 2
-                                BoxLayout:
-                                    orientation: 'vertical'
-                                    size_hint_y: 0.075
-                                    canvas.before:
-                                        Color:
-                                            rgba: 0, 0, 1, 1
-                                        Rectangle:
-                                            pos: self.pos
-                                            size: self.size
-                                    Label:
-                                        text: 'Flow Rate Sensor'
-                                BoxLayout:
-                                    orientation: 'vertical'
-                                    id: flow_layout
-                                    size_hint: 1, 1
+                        Label:
+                            text: str(root.temp) if root.switch_data is False else root.no_temp #measure1
+                            color: root.temp_color if root.switch_data is False else root.no_temp_color
+                            font_size: root.Mainfontsize
 
-
-                        GridLayout:
-                            cols: 2
-                            rows: 1
-
-
-                            GridLayout:
-                                cols: 1
-                                rows: 2
-                                BoxLayout:
-                                    orientation: 'vertical'
-                                    size_hint_y: 0.075
-                                    canvas.before:
-                                        Color:
-                                            rgba: 0, 0, 1, 1
-                                        Rectangle:
-                                            pos: self.pos
-                                            size: self.size
-                                    Label:
-                                        text: 'Pressure Sensor'
-                                BoxLayout:
-                                    orientation: 'vertical'
-                                    id: pressure_layout
-                                    size_hint: 1, 1
-
-                        GridLayout:
-                            cols: 2
-                            rows: 1
-
-
-                            GridLayout:
-                                cols: 1
-                                rows: 2
-                                BoxLayout:
-                                    orientation: 'vertical'
-                                    size_hint_y: 0.075
-                                    canvas.before:
-                                        Color:
-                                            rgba: 0, 0, 1, 1
-                                        Rectangle:
-                                            pos: self.pos
-                                            size: self.size
-                                    Label:
-                                        text: 'Battery Meter Level'
-                                BoxLayout:
-                                    orientation: 'vertical'
-                                    id: batt_layout
-                                    size_hint: 1, 1
-
-
-
-            AnchorLayout:
-                anchor_x: 'center'
-                anchor_y: 'center'
-                size_hint_x: 0.25
+                        Label:
+                            text: root.remarks_temp if root.switch_data is False else root.no_remarks_temp#remarks1
+                            color: (1, 0, 0, 1) if (root.remarks_temp == 'HIGH' or root.remarks_temp == 'LOW') and root.switch_data is False else (0, 0.5, 0, 1) if root.remarks_temp == 'NORMAL' and root.switch_data is False else (0, 0, 0, 1)
+                            font_size: root.Mainfontsize
                 GridLayout:
                     cols: 1
                     canvas.before:
@@ -393,97 +123,370 @@ WindowManager:
                             pos: self.pos
                             size: self.size
                     size_hint: None, None  # Remove size_hint
-                    Button:
-                        text: "Start"
-                        background_color: 0, 1, 0, 1  # Green background color
-                        color: 0, 0, 0, 1  # Black font color
-                        font_size: 20  # Adjust the font size as needed
-                        on_press:
-                            self.background_color = 0, 0.7, 0, 1  # Darker green when pressed
-                        on_release:
-                            self.background_color = 0, 1, 0, 1
-                            root.on_release_callback(self)
-
-                    Button:
-                        text: "Stop"
-                        background_color: 1, 0, 0, 1  # Red background color
-                        color: 0, 0, 0, 1  # Black font color
-                        font_size: 20  # Adjust the font size as needed
-                        on_press:
-                            self.background_color = 0.9, 0, 0, 1  # Darker green when pressed
-                        on_release:
-                            self.background_color = 1, 0, 0, 1
-                            root.stop_release_callback(self)
-
-                    Button:
-                        text: "Update"
-                        background_color: 0, 0, 1, 0.75  # Red background color
-                        color: 0, 0, 0, 1  # Black font color
-                        font_size: 20  # Adjust the font size as needed
-                        on_press:
-                            self.background_color = 0, 0, 0.9, 0.75  # Darker green when pressed
-                        on_release:
-                            self.background_color = 0, 0, 1, 0.75
-                            root.active_graph(self)
-
-
-
-        GridLayout:
-            cols: 1
-            rows: 1
-            size_hint_y: 0.75
-            canvas.before:
-                Color:
-                    rgba: 1, 1, 1, 1
-                Rectangle:
-                    pos: self.pos
-                    size: self.size
+                    Label:
+                        text: '' #most right
 
             GridLayout:
-                cols: 5
+                cols: 2
                 rows: 1
 
+                AnchorLayout:
+                    anchor_x: 'left'
+                    anchor_y: 'center'
+                    canvas.before:
+                        Color:
+                            rgba: 1, 1, 1, 1
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+                    Image:
+                        source: 'panel_icon_background.png'
+                        size_hint: None, None
+                        size: 485, 155 #400, 120
+                        size: self.parent.width * 1, self.parent.width * 1 #adjust
+                    GridLayout:
+                        cols: 3
+                        rows: 1
+                        Label:
+                            text: 'Flow Rate \n    Sensor'
+                            color: 0, 0, 0, 1
+                            font_size: root.Mainfontsize
+
+
+
+
+                        Label:
+                            text: str(root.flow) if root.switch_data is False else root.no_flow #measure2
+                            color: root.flow_color if root.switch_data is False else root.no_flow_color
+                            font_size: root.Mainfontsize
+
+                        Label:
+                            text: root.remarks_flow if root.switch_data is False else root.no_remarks_flow#remarks2
+                            color: (1, 0, 0, 1) if (root.remarks_flow == 'HIGH' or root.remarks_flow == 'LOW') and root.switch_data is False else (0, 0.5, 0, 1) if root.remarks_flow == 'NORMAL' and root.switch_data is False else (0, 0, 0, 1)
+                            font_size: root.Mainfontsize
+
+                GridLayout:
+                    cols: 1
+                    canvas.before:
+                        Color:
+                            rgba: 1, 1, 1, 1
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+                    size_hint: None, None  # Remove size_hint
+                    Label:
+                        text: '' #most right
+
+            GridLayout:
+                cols: 2
+                rows: 1
+
+                AnchorLayout:
+                    anchor_x: 'left'
+                    anchor_y: 'center'
+                    canvas.before:
+                        Color:
+                            rgba: 1, 1, 1, 1
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+                    Image:
+                        source: 'panel_icon_background.png'
+                        size_hint: None, None
+                        size: 485, 155 #400, 120
+                        size: self.parent.width * 1, self.parent.width * 1 #adjust
+
+                    GridLayout:
+                        cols: 3
+                        rows: 1
+                        Label:
+                            text: 'Pressure\n    Sensor'
+                            color: 0, 0, 0, 1
+                            font_size: root.Mainfontsize
+
+                        Label:
+                            text: str(root.pressure) if root.switch_data is False else root.no_pressure #measure3
+                            color: root.pressure_color if root.switch_data is False else root.no_pressure_color
+                            font_size: root.Mainfontsize
+                        Label:
+                            text: root.remarks_pressure if root.switch_data is False else root.no_remarks_pressure #remarks3
+                            color: (1, 0, 0, 1) if (root.remarks_pressure == 'HIGH' or root.remarks_pressure == 'LOW') and root.switch_data is False else (0, 0.5, 0, 1) if root.remarks_pressure == 'NORMAL' and root.switch_data is False else (0, 0, 0, 1)
+                            font_size: root.Mainfontsize
+                GridLayout:
+                    cols: 1
+                    canvas.before:
+                        Color:
+                            rgba: 1, 1, 1, 1
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+                    size_hint: None, None  # Remove size_hint
+                    Label:
+                        text: '' #most right
+
+
+
+
+
+
+
+
+
+
+
+            GridLayout:
+                cols: 2
+                rows: 1
+                size_hint_y: 2
                 canvas.before:
                     Color:
-                        rgba: 0.851, 0.851, 0.851, 0.8
+                        rgba: 1, 1, 1, 1
                     Rectangle:
-                        pos: (self.width - self.size[0] * 0.8) / 2, (self.height - self.size[1] * 0.8) / 2
-                        size: self.size[0] * 0.8, self.size[1] * 0.8
-                AnchorLayout:
-                    anchor_x: 'right'
-                    anchor_y: 'center'
-                    Button:
-                        background_normal: 'connection_icon_normal.png'
-                        background_down: 'connection_icon_down.png'
-                        size_hint: None, None
-                        size: 62, 62
-                        on_release:
-                            root.manager.transition.direction = "right"
-                            root.manager.current = "Conn"
+                        pos: self.pos
+                        size: self.size
+                #Image:
+                #    source: 'Lpanel_icon_background.png'
+                #    size: 750, 400  # Adjust the size as needed
+                #    size: self.parent.width * 1, self.parent.width * 1 #adjust
+
+                BoxLayout:
+                    orientation: 'vertical'
+                    size_hint: (1, 1)
+                    size: 750, 400  # Adjust the size as needed
+                    size: self.parent.width * 1, self.parent.width * 1 #adjust
+                    canvas.before:
+                        Color:
+                            rgba: 1, 1, 1, 1
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+
+                    ScrollView:
+                        do_scroll_x: True
+                        do_scroll_y: True
+                        size_hint: (0.8, 0.8)
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                        effect_cls: "ScrollEffect"
+                        effect_cls_params: {"scroll_type": ["bars"], "scroll_wheel_distance": 20}
+                        scroll_type: ['content', 'bars']
+                        bar_width: 10
+                        canvas.before:
+                            Color:
+                                rgba: 1, 1, 1, 1  # Blue color (RGBA)
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
+
+                        BoxLayout:
+                            orientation: 'vertical'
+                            size_hint_y: None
+                            size_hint_x: 2.5 #added
+                            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                            height: 1050
+
+
+                            GridLayout:
+                                cols: 2
+                                rows: 1
+
+
+                                GridLayout:
+                                    cols: 1
+                                    rows: 2
+                                    BoxLayout:
+                                        orientation: 'vertical'
+                                        size_hint_y: 0.075
+                                        canvas.before:
+                                            Color:
+                                                rgba: 0, 0, 1, 1
+                                            Rectangle:
+                                                pos: self.pos
+                                                size: self.size
+                                        Label:
+                                            text: 'Temperature Sensor'
+                                    BoxLayout:
+                                        orientation: 'vertical'
+                                        id: temp_layout
+                                        size_hint: 1, 1
+                            GridLayout:
+                                cols: 2
+                                rows: 1
+
+
+                                GridLayout:
+                                    cols: 1
+                                    rows: 2
+                                    BoxLayout:
+                                        orientation: 'vertical'
+                                        size_hint_y: 0.075
+                                        canvas.before:
+                                            Color:
+                                                rgba: 0, 0, 1, 1
+                                            Rectangle:
+                                                pos: self.pos
+                                                size: self.size
+                                        Label:
+                                            text: 'Flow Rate Sensor'
+                                    BoxLayout:
+                                        orientation: 'vertical'
+                                        id: flow_layout
+                                        size_hint: 1, 1
+
+
+                            GridLayout:
+                                cols: 2
+                                rows: 1
+
+
+                                GridLayout:
+                                    cols: 1
+                                    rows: 2
+                                    BoxLayout:
+                                        orientation: 'vertical'
+                                        size_hint_y: 0.075
+                                        canvas.before:
+                                            Color:
+                                                rgba: 0, 0, 1, 1
+                                            Rectangle:
+                                                pos: self.pos
+                                                size: self.size
+                                        Label:
+                                            text: 'Pressure Sensor'
+                                    BoxLayout:
+                                        orientation: 'vertical'
+                                        id: pressure_layout
+                                        size_hint: 1, 1
+
+                            GridLayout:
+                                cols: 2
+                                rows: 1
+
+
+                                GridLayout:
+                                    cols: 1
+                                    rows: 2
+                                    BoxLayout:
+                                        orientation: 'vertical'
+                                        size_hint_y: 0.075
+                                        canvas.before:
+                                            Color:
+                                                rgba: 0, 0, 1, 1
+                                            Rectangle:
+                                                pos: self.pos
+                                                size: self.size
+                                        Label:
+                                            text: 'Battery Meter Level'
+                                    BoxLayout:
+                                        orientation: 'vertical'
+                                        id: batt_layout
+                                        size_hint: 1, 1
+
 
 
                 AnchorLayout:
                     anchor_x: 'center'
                     anchor_y: 'center'
-                    Button:
-                        background_normal: 'exit_icon_normal.png'
-                        background_down: 'exit_icon_down.png'
-                        size_hint: None, None
-                        size: 62, 62
-                        on_release: app.exit_app()
+                    size_hint_x: 0.25
+                    GridLayout:
+                        cols: 1
+                        canvas.before:
+                            Color:
+                                rgba: 1, 1, 1, 1
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
+                        size_hint: None, None  # Remove size_hint
+                        Button:
+                            text: "Start"
+                            background_color: 0, 1, 0, 1  # Green background color
+                            color: 0, 0, 0, 1  # Black font color
+                            font_size: 20  # Adjust the font size as needed
+                            on_press:
+                                self.background_color = 0, 0.7, 0, 1  # Darker green when pressed
+                            on_release:
+                                self.background_color = 0, 1, 0, 1
+                                root.on_release_callback(self)
 
-                AnchorLayout:
-                    anchor_x: 'left'
-                    anchor_y: 'center'
-                    Button:
-                        background_normal: 'graph_icon_normal.png'
-                        background_down: 'graph_icon_down.png'
-                        size_hint: None, None
-                        size: 62, 62
-                        on_release:
-                            root.manager.transition.direction = "left"
-                            root.manager.current = "Graph"
+                        Button:
+                            text: "Stop"
+                            background_color: 1, 0, 0, 1  # Red background color
+                            color: 0, 0, 0, 1  # Black font color
+                            font_size: 20  # Adjust the font size as needed
+                            on_press:
+                                self.background_color = 0.9, 0, 0, 1  # Darker green when pressed
+                            on_release:
+                                self.background_color = 1, 0, 0, 1
+                                root.stop_release_callback(self)
 
+                        Button:
+                            text: "Update"
+                            background_color: 0, 0, 1, 0.75  # Red background color
+                            color: 0, 0, 0, 1  # Black font color
+                            font_size: 20  # Adjust the font size as needed
+                            on_press:
+                                self.background_color = 0, 0, 0.9, 0.75  # Darker green when pressed
+                            on_release:
+                                self.background_color = 0, 0, 1, 0.75
+                                root.active_graph(self)
+
+
+
+            GridLayout:
+                cols: 1
+                rows: 1
+                size_hint_y: 0.75
+                canvas.before:
+                    Color:
+                        rgba: 1, 1, 1, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+
+                GridLayout:
+                    cols: 5
+                    rows: 1
+
+                    canvas.before:
+                        Color:
+                            rgba: 0.851, 0.851, 0.851, 0.8
+                        Rectangle:
+                            pos: (self.width - self.size[0] * 0.8) / 2, (self.height - self.size[1] * 0.8) / 2
+                            size: self.size[0] * 0.8, self.size[1] * 0.8
+                    AnchorLayout:
+                        anchor_x: 'right'
+                        anchor_y: 'center'
+                        Button:
+                            background_normal: 'connection_icon_normal.png'
+                            background_down: 'connection_icon_down.png'
+                            size_hint: None, None
+                            size: 62, 62
+                            on_release:
+                                root.manager.transition.direction = "right"
+                                root.manager.current = "Conn"
+
+
+                    AnchorLayout:
+                        anchor_x: 'center'
+                        anchor_y: 'center'
+                        Button:
+                            background_normal: 'exit_icon_normal.png'
+                            background_down: 'exit_icon_down.png'
+                            size_hint: None, None
+                            size: 62, 62
+                            on_release: app.exit_app()
+
+                    AnchorLayout:
+                        anchor_x: 'left'
+                        anchor_y: 'center'
+                        Button:
+                            background_normal: 'graph_icon_normal.png'
+                            background_down: 'graph_icon_down.png'
+                            size_hint: None, None
+                            size: 62, 62
+                            on_release:
+                                root.manager.transition.direction = "left"
+                                root.manager.current = "Graph"
+##
 
 
 

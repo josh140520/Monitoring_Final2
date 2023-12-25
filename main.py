@@ -149,6 +149,12 @@ class MainWindow(Screen): #Main screen
                      '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00']
     def __init__(self, **kwargs):
         super(MainWindow, self).__init__(**kwargs)
+        with self.canvas.before:
+            Color(1, 1, 1, 1)  # White color in RGBA format
+            self.rect = Rectangle(size=self.size, pos=self.pos)
+
+        # Bind the size and position of the white background to the widget's size and position
+        self.bind(size=self._update_rect, pos=self._update_rect)
         self.scheduled_interval = None  # To store the reference to the scheduled interval
         self.worker_thread = None
 
@@ -156,6 +162,11 @@ class MainWindow(Screen): #Main screen
         self.stop_button = Button(text='Stop', on_release=self.stop_testing)
         self.add_widget(self.start_button)
         self.add_widget(self.stop_button)
+
+    def _update_rect(self, instance, value):
+        # Update the size and position of the white background
+        self.rect.size = instance.size
+        self.rect.pos = instance.pos
 
 
 
@@ -1210,10 +1221,20 @@ class ConnWindow(Screen):
 
             self.ESP_status = "DISCONNECTED"
 
+    def get_local_ip(self, instance):
+        try:
+            # Create a UDP socket to an external server (does not actually send data)
+            temp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            temp_socket.connect(("8.8.8.8", 80))  # Google's public DNS server
+            local_ip = temp_socket.getsockname()[0]
+            temp_socket.close()
+            return local_ip
+        except socket.error:
+            return None
 
     def run_flask_server(self):
         global port_number, host
-        host = socket.gethostbyname(socket.gethostname())
+        host = self.get_local_ip(instance=None)
 
         # Run the Flask server in a separate thread
         server_thread = threading.Thread(target=self.app.run, kwargs={'host': '0.0.0.0', 'port': port_number})
