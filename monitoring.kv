@@ -77,6 +77,7 @@ WindowManager:
 
         GridLayout:
             cols: 1
+            rows: 5
             size_hint_y: 5/7
             GridLayout:
                 cols: 2
@@ -125,6 +126,8 @@ WindowManager:
                     size_hint: None, None  # Remove size_hint
                     Label:
                         text: '' #most right
+
+
 
             GridLayout:
                 cols: 2
@@ -482,7 +485,7 @@ WindowManager:
                             background_normal: 'graph_icon_normal.png'
                             background_down: 'graph_icon_down.png'
                             size_hint: None, None
-                            size: 62, 62
+                            size: root.PagePicSize, root.PagePicSize
                             on_release:
                                 root.manager.transition.direction = "left"
                                 root.manager.current = "Graph"

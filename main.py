@@ -127,6 +127,7 @@ class MainWindow(Screen): #Main screen
 
     ######################################
     Mainfontsize = NumericProperty(sp(20)) ##editable Main window font size
+    PagePicSize = NumericProperty(sp(120))
     #FontLayoutsize = NumericProperty(sp(20), sp(20))
 
 
@@ -158,10 +159,10 @@ class MainWindow(Screen): #Main screen
         self.scheduled_interval = None  # To store the reference to the scheduled interval
         self.worker_thread = None
 
-        self.start_button = Button(text='Start', on_release=self.start_testing)
+        '''self.start_button = Button(text='Start', on_release=self.start_testing)
         self.stop_button = Button(text='Stop', on_release=self.stop_testing)
         self.add_widget(self.start_button)
-        self.add_widget(self.stop_button)
+        self.add_widget(self.stop_button)'''
 
     def _update_rect(self, instance, value):
         # Update the size and position of the white background
