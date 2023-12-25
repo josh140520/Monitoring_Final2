@@ -127,7 +127,7 @@ class MainWindow(Screen): #Main screen
 
     ######################################
     Mainfontsize = NumericProperty(sp(20)) ##editable Main window font size
-    PagePicSize = NumericProperty(sp(120))
+    PagePicSize = NumericProperty(sp(80))
     #FontLayoutsize = NumericProperty(sp(20), sp(20))
 
 
