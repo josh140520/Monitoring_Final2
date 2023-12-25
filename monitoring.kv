@@ -80,7 +80,7 @@ WindowManager:
             rows: 1
 
             AnchorLayout:
-                anchor_x: 'center'
+                anchor_x: 'left'
                 anchor_y: 'center'
                 canvas.before:
                     Color:
@@ -90,9 +90,9 @@ WindowManager:
                         size: self.size
                 Image:
                     source: 'panel_icon_background.png'
-                    size_hint: 3, None
-                    #size: 485, 155 #400, 120
-                    size: self.parent.width * 3, self.parent.width * 1 #adjust
+                    size_hint: None, None
+                    size: 485, 155 #400, 120
+                    size: self.parent.width * 1, self.parent.width * 1 #adjust
                 GridLayout:
                     cols: 3
                     rows: 1
