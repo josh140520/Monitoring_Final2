@@ -1486,7 +1486,7 @@ class GraphWindow(Screen): #3rd window
 
     #################################
     GraphPicSize = NumericProperty(150)
-    DatabaseFontSize = NumericProperty(25)
+    DatabaseFontSize = NumericProperty(sp(25))
 
 
     #################################
@@ -1554,7 +1554,7 @@ class GraphWindow(Screen): #3rd window
 
         for key, value in flow_sum.items():
             label_text = f'{key}: {value} {"Low" if value <= 14.55 else "High"}'
-            button = Button(text=label_text, size_hint_y=None, height=40, background_color=(0.8, 0.5, 0.5, 0.7), font_size=12.5)
+            button = Button(text=label_text, size_hint_y=None, height=40, background_color=(0.8, 0.5, 0.5, 0.7), font_size=sp(12.5))
             flow_scroll_grid.add_widget(button)
         flow_scroll_view.add_widget(flow_scroll_grid)
 
@@ -1567,7 +1567,7 @@ class GraphWindow(Screen): #3rd window
 
         for key, value in pressure_sum.items():
             label_text = f'{key}: {value} {"Low" if value <= 38.8 else "High"}'
-            button = Button(text=label_text, size_hint_y=None, height=40, background_color=(0.8, 0.5, 0.5, 0.7), font_size=12.5)
+            button = Button(text=label_text, size_hint_y=None, height=40, background_color=(0.8, 0.5, 0.5, 0.7), font_size=12.5, size = (50*Multiplier_HighLow, 25*Multiplier_HighLow))
             pressure_scroll_grid.add_widget(button)
 
         pressure_scroll_view.add_widget(pressure_scroll_grid)
@@ -1580,7 +1580,7 @@ class GraphWindow(Screen): #3rd window
         popup = Popup(title='High and Low Values',
                       title_align='center',
                       content=grid_layout,
-                      size_hint=(0.9, 0.7),
+                      size_hint=(600*Multiplier_HighLow, 800*Multiplier_HighLow),
                       background_color=(0.5, 0.5, 0.8, 0.7))
 
         # Bind the Popup size to the Window size
@@ -2133,13 +2133,14 @@ class GraphWindow(Screen): #3rd window
         print("Selected Day:", text)
 
     def on_confirm_button_click(self, year, month, day):
+        global Multiplier_ChooseDate
         if year == 'Select Year' or month == 'Select Month' or day == 'Select Day':
             self.selected_table == None
             self.popup = Popup(
                 title="Date Selection Error",
                 title_align='center',
                 size_hint=(None, None),
-                size=(300, 200),
+                size=(300*Multiplier_ChooseDate, 200*Multiplier_ChooseDate),
                 background_color=(0.5, 0.5, 0.5, 0.7),
                 separator_color=(1, 1, 1, 0)
             )
@@ -2147,7 +2148,7 @@ class GraphWindow(Screen): #3rd window
             error_label = Label(text="     Invalid date.\nPlease try again.", size_hint=(1, 1))
 
             # Create dismiss button
-            dismiss_button = Button(text='Close', size_hint=(0.5, 0.4),background_color=(1, 0.5, 0.5, 0.7),  pos_hint={'center_x': 0.5, 'center_y': 0.5})
+            dismiss_button = Button(text='Close', size_hint=(0.5, 0.4),background_color=(1, 0.5, 0.5, 0.7),  pos_hint={'center_x': 0.5, 'center_y': 0.5}, size=(100*Multiplier_ChooseDate, 50*Multiplier_ChooseDate))
             dismiss_button.bind(on_press=self.popup.dismiss)
 
             # Add widgets to content layout
@@ -2285,15 +2286,15 @@ class GraphWindow(Screen): #3rd window
 
         # Add buttons to the buttons_layout
         buttons_layout.add_widget(
-            Button(text='Confirm', on_press=self.write_graph, size_hint=(None, None), size=(120, 50), background_color=(0, 0.5, 0, 0.7)))
+            Button(text='Confirm', on_press=self.write_graph, size_hint=(None, None), size=(120*Multiplier_Confirmation, 50*Multiplier_Confirmation), background_color=(0, 0.5, 0, 0.7)))
         buttons_layout.add_widget(
-            Button(text='Cancel', on_press=self.on_cancel_write, size_hint=(None, None), size=(120, 50),background_color=(0.5, 0, 0, 0.7)))
+            Button(text='Cancel', on_press=self.on_cancel_write, size_hint=(None, None), size=(120*Multiplier_Confirmation, 50*Multiplier_Confirmation),background_color=(0.5, 0, 0, 0.7)))
 
         # Add the buttons_layout to the main layout
         layout.add_widget(buttons_layout)
 
         # Create the popup and set its content
-        popup = Popup(title='Confirmation', content=layout, size_hint=(None, None), size=(300, 200),background_color=(0.5, 0.5, 0.8, 0.7))
+        popup = Popup(title='Confirmation', content=layout, size_hint=(None, None), size=(300*Multiplier_Confirmation, 200*Multiplier_Confirmation),background_color=(0.5, 0.5, 0.8, 0.7))
 
         # Open the popup
         popup.open()
