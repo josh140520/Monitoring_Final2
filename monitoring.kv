@@ -528,7 +528,7 @@ WindowManager:
             Rectangle:
                 size: 65, root.batt * 1.88
 
-                pos: self.parent.width - self.width - 20, self.parent.height - self.height - 775
+                pos: self.parent.width - self.width - 20, self.parent.height - self.height - 775 #add 600
 
 
     FloatLayout:
@@ -537,7 +537,7 @@ WindowManager:
             source: '25batt_icon.png'
             size: 75, 200
             size_hint: None, None
-            pos: self.parent.width - self.width - 25, self.parent.height - self.height - 775
+            pos: self.parent.width - self.width - 25, self.parent.height - self.height - 775 #add 600
 
     FloatLayout:
         Label:
@@ -545,7 +545,7 @@ WindowManager:
             color: (0, 0, 0, 1)
             size_hint: None, None
             size: self.texture_size  # Set the size based on the label's text size
-            pos: self.parent.width - self.width - 43, self.parent.height - self.height - 860
+            pos: self.parent.width - self.width - 43, self.parent.height - self.height - 860 #add 600
             font_size: 20
     FloatLayout:
         Label:
@@ -553,7 +553,7 @@ WindowManager:
             color: 0, 0, 0, 1
             size_hint: None, None
             size: self.texture_size
-            pos: self.parent.width - self.width - 200, self.parent.height - self.height - 480
+            pos: self.parent.width - self.width - 200, self.parent.height - self.height - 980 #add 600
             font_size: 17
 
 
@@ -844,7 +844,7 @@ WindowManager:
                     Button:
                         background_normal: 'set_up_normal.png'
                         background_down: 'set_up_down.png'
-                        size: 50, 51
+                        size: root.GraphPicSize, root.GraphPicSize
                         size_hint: None, None
                         on_release:
                             root.read_graph(self)
@@ -860,7 +860,7 @@ WindowManager:
                     Button:
                         background_normal: 'search-graph_normal.png'
                         background_down: 'search-graph_down.png'
-                        size: 50, 51
+                        size: root.GraphPicSize, root.GraphPicSize
                         size_hint: None, None
                         background_color: 1, 1, 1, 1
                         on_release:
@@ -873,7 +873,7 @@ WindowManager:
                     Button:
                         background_normal: 'caution-icon_normal.png'
                         background_down: 'caution-icon_down.png'
-                        size: 50, 51
+                        size: root.GraphPicSize, root.GraphPicSize
                         size_hint: None, None
 
                         on_release:
@@ -887,7 +887,7 @@ WindowManager:
                     Button:
                         background_normal: 'save_excel_normal.png'
                         background_down: 'save_excel_down.png'
-                        size: 50, 50
+                        size: root.GraphPicSize, root.GraphPicSize
                         size_hint: None, None
                         on_release:
                             root.save_popup(self)
@@ -899,7 +899,7 @@ WindowManager:
                     Button:
                         background_normal: 'delete_data_normal.png'
                         background_down: 'delete_data_down.png'
-                        size: 50, 51
+                        size: root.GraphPicSize, root.GraphPicSize
                         size_hint: None, None
                         on_release:
                             root.open_reset_popup(self)
