@@ -1600,8 +1600,8 @@ class GraphWindow(Screen): #3rd window
         button_layout = GridLayout(cols=2, spacing=10, size_hint_y=None, height=40)
 
         # Add buttons to the GridLayout
-        save_button = Button(text='Save',background_color=(0, 0.5, 0, 0.7),size_hint=(None, None), size=(150*Multiplier_Excel, 50*Multiplier_Excel))
-        close_button = Button(text='Cancel',background_color=(0.5, 0, 0, 0.7),size_hint=(None, None), size=(150*Multiplier_Excel, 50*Multiplier_Excel))
+        save_button = Button(text='Save',background_color=(0, 0.5, 0, 0.7),size_hint=(None, None), size=(120*Multiplier_Excel, 50*Multiplier_Excel))
+        close_button = Button(text='Cancel',background_color=(0.5, 0, 0, 0.7),size_hint=(None, None), size=(120*Multiplier_Excel, 50*Multiplier_Excel))
 
         # Bind functions to buttons
         save_button.bind(on_release=lambda btn: self.save_to_excel_and_close(popup))
@@ -2288,9 +2288,9 @@ class GraphWindow(Screen): #3rd window
 
         # Add buttons to the buttons_layout
         buttons_layout.add_widget(
-            Button(text='Confirm', on_press=self.write_graph, size_hint=(None, None), size=(150*Multiplier_Confirmation, 50*Multiplier_Confirmation), background_color=(0, 0.5, 0, 0.7)))
+            Button(text='Confirm', on_press=self.write_graph, size_hint=(None, None), size=(120*Multiplier_Confirmation, 50*Multiplier_Confirmation), background_color=(0, 0.5, 0, 0.7)))
         buttons_layout.add_widget(
-            Button(text='Cancel', on_press=self.on_cancel_write, size_hint=(None, None), size=(150*Multiplier_Confirmation, 50*Multiplier_Confirmation),background_color=(0.5, 0, 0, 0.7)))
+            Button(text='Cancel', on_press=self.on_cancel_write, size_hint=(None, None), size=(120*Multiplier_Confirmation, 50*Multiplier_Confirmation),background_color=(0.5, 0, 0, 0.7)))
 
         # Add the buttons_layout to the main layout
         layout.add_widget(buttons_layout)
