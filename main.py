@@ -1460,6 +1460,13 @@ class GraphPopup(Popup):
 class GraphWindow(Screen): #3rd window
     global clear, r, selected_x
     global temp_sum, flow_sum, pressure_sum, batt_sum
+    global Multiplier_ChooseDate, Multiplier_Confirmation,Multiplier_HighLow, Multiplier_Excel, Multiplier_Delete
+    Multiplier_ChooseDate = 2
+    Multiplier_Confirmation = 1
+    Multiplier_HighLow = 1
+    Multiplier_Excel = 1
+    Multiplier_Delete = 1
+
     temp_sum = {}
     flow_sum = {}
     pressure_sum = {}
@@ -1479,6 +1486,7 @@ class GraphWindow(Screen): #3rd window
 
     #################################
     GraphPicSize = NumericProperty(150)
+    DatabaseFontSize = NumericProperty(25)
 
 
     #################################
@@ -2068,6 +2076,7 @@ class GraphWindow(Screen): #3rd window
             update_day_spinner(year, month_spinner.text)
 
         def update_day_spinner(year, month):
+            global Multiplier_ChooseDate
             day_list = list(date_dict.get(year, {}).get(month, set()))
             day_spinner.values = day_list
             day_spinner.text = 'Select Day'
@@ -2080,15 +2089,15 @@ class GraphWindow(Screen): #3rd window
         table_grid = GridLayout(cols=1, spacing=10, size_hint_y=None)
         table_grid.bind(minimum_height=table_grid.setter('height'))
 
-        row1 = BoxLayout(orientation='horizontal', spacing=10, size_hint_y=None, height=40)
+        row1 = BoxLayout(orientation='horizontal', spacing=10, size_hint_y=None, height=40, size=(200*Multiplier_ChooseDate,50*Multiplier_ChooseDate))
         row1.add_widget(year_spinner)
         table_grid.add_widget(row1)
 
-        row2 = BoxLayout(orientation='horizontal', spacing=10, size_hint_y=None, height=40)
+        row2 = BoxLayout(orientation='horizontal', spacing=10, size_hint_y=None, height=40, size=(200*Multiplier_ChooseDate,50*Multiplier_ChooseDate))
         row2.add_widget(month_spinner)
         table_grid.add_widget(row2)
 
-        row3 = BoxLayout(orientation='horizontal', spacing=10, size_hint_y=None, height=40)
+        row3 = BoxLayout(orientation='horizontal', spacing=10, size_hint_y=None, height=40, size=(200*Multiplier_ChooseDate,50*Multiplier_ChooseDate))
         row3.add_widget(day_spinner)
         table_grid.add_widget(row3)
 
@@ -2100,7 +2109,7 @@ class GraphWindow(Screen): #3rd window
             on_release=lambda instance: self.on_confirm_button_click(year_spinner.text, month_spinner.text,
                                                                      day_spinner.text))
 
-        row4 = BoxLayout(orientation='horizontal', spacing=10, size_hint_y=None, height=40)
+        row4 = BoxLayout(orientation='horizontal', spacing=10, size_hint_y=None, height=40, size=(200*Multiplier_ChooseDate,50*Multiplier_ChooseDate))
         row4.add_widget(confirm_button)
         table_grid.add_widget(row4)
         content.add_widget(scroll_view)
@@ -2110,7 +2119,7 @@ class GraphWindow(Screen): #3rd window
             title_align='center',
             content=content,
             size_hint=(None, None),
-            size=(400, 500),
+            size=(400*Multiplier_ChooseDate, 500*Multiplier_ChooseDate),
             background_color=(0.5, 0.5, 0.8, 0.7),
         )
 
