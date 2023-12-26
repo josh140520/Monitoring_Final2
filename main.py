@@ -1590,37 +1590,52 @@ class GraphWindow(Screen): #3rd window
         # Open the Popup
         popup.open()
 
+
+
     def save_popup(self, instance):
-        global Multiplier_Excel
-        # Create a popup
-        popup = Popup(title='Save As Excel',
-                      size_hint=(None, None), size=(300*Multiplier_Excel, 200*Multiplier_Excel),background_color=(0.5, 0.5, 0.8, 0.7))
+        # Create the layout for the popup
+        layout = BoxLayout(orientation='vertical', padding=10)
 
-        # Create a GridLayout for buttons
-        button_layout = GridLayout(cols=2, spacing=10, size_hint_y=None, height=40)
+        # Create the GridLayout for messages
+        messages_layout = GridLayout(cols=2, rows=2, spacing=10, size_hint_y=None)
+        messages_layout.bind(minimum_height=messages_layout.setter('height'))
 
-        # Add buttons to the GridLayout
-        save_button = Button(text='Save',background_color=(0, 0.5, 0, 0.7),size_hint=(None, None), size=(120*Multiplier_Excel, 50*Multiplier_Excel))
-        close_button = Button(text='Cancel',background_color=(0.5, 0, 0, 0.7),size_hint=(None, None), size=(120*Multiplier_Excel, 50*Multiplier_Excel))
+        # Add messages to the GridLayout
+        messages_layout.add_widget(Label(text='Do you want to save Graph as Excel?'))
 
-        # Bind functions to buttons
-        save_button.bind(on_release=lambda btn: self.save_to_excel_and_close(popup))
-        close_button.bind(on_release=popup.dismiss)
 
-        # Add buttons to the GridLayout
-        button_layout.add_widget(save_button)
-        button_layout.add_widget(close_button)
+        # Add the GridLayout to the main layout
+        layout.add_widget(messages_layout)
 
-        # Create a Label for the content
-        content_label = Label(text='Do you want to save Graph as Excel?', size_hint_y=None, height=40)
+        # Create a horizontal BoxLayout for buttons
+        buttons_layout = BoxLayout(size_hint_y=0.3, height=50, spacing=10)
 
-        # Add the Label and GridLayout to the popup content
-        popup.content = BoxLayout(orientation='vertical')
-        popup.content.add_widget(content_label)
-        popup.content.add_widget(button_layout)
+        # Add buttons to the buttons_layout
+        buttons_layout.add_widget(
+            Button(text='Save', on_release=lambda btn: self.save_to_excel_and_close(popup), size_hint=(None, None), size=(120*Multiplier_Excel, 50*Multiplier_Excel), background_color=(0, 0.5, 0, 0.7)))
+        buttons_layout.add_widget(
+            Button(text='Cancel', on_release=self.on_cancel_write, size_hint=(None, None), size=(120*Multiplier_Excel, 50*Multiplier_Excel),background_color=(0.5, 0, 0, 0.7)))
+
+        # Add the buttons_layout to the main layout
+        layout.add_widget(buttons_layout)
+
+        # Create the popup and set its content
+        popup = Popup(title='Save as Excel', content=layout, size_hint=(None, None), size=(300*Multiplier_Excel, 200*Multiplier_Excel),background_color=(0.5, 0.5, 0.8, 0.7))
 
         # Open the popup
         popup.open()
+
+
+
+
+
+
+
+
+
+
+
+
 
     def save_to_excel_and_close(self, popup):
         global absolute_path
