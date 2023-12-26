@@ -2342,7 +2342,7 @@ class GraphWindow(Screen): #3rd window
     def open_reset_popup(self, instance):
         # Create the popup
         global Multiplier_Delete
-        content = BoxLayout(orientation='vertical', size=(300*Multiplier_Delete, 200*Multiplier_Delete))
+        content = BoxLayout(orientation='vertical', size_hint=(2, 1), size=(300*Multiplier_Delete, 200*Multiplier_Delete))
         content.add_widget(Label(text="Are you sure you want to reset the database?"))
 
         def on_reset_button(instance):
