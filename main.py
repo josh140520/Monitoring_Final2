@@ -1580,7 +1580,8 @@ class GraphWindow(Screen): #3rd window
         popup = Popup(title='High and Low Values',
                       title_align='center',
                       content=grid_layout,
-                      size=(150*Multiplier_HighLow, 300*Multiplier_HighLow),
+                      size_hint=(None, None),
+                      size=(150*Multiplier_HighLow, 250*Multiplier_HighLow),
                       background_color=(0.5, 0.5, 0.8, 0.7))
 
         # Bind the Popup size to the Window size
@@ -2294,7 +2295,7 @@ class GraphWindow(Screen): #3rd window
         layout.add_widget(buttons_layout)
 
         # Create the popup and set its content
-        popup = Popup(title='Confirmation', content=layout, size=(300*Multiplier_Confirmation, 200*Multiplier_Confirmation),background_color=(0.5, 0.5, 0.8, 0.7))
+        popup = Popup(title='Confirmation', content=layout, size_hint=(None, None), size=(300*Multiplier_Confirmation, 200*Multiplier_Confirmation),background_color=(0.5, 0.5, 0.8, 0.7))
 
         # Open the popup
         popup.open()
