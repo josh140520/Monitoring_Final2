@@ -130,6 +130,7 @@ class MainWindow(Screen): #Main screen
     PagePicSize = NumericProperty(180)
     MainButtonfontsize = NumericProperty(sp(15))
     #FontLayoutsize = NumericProperty(sp(20), sp(20))
+    displayhint = NumericProperty(0.15)
 
 
 

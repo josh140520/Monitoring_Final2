@@ -76,7 +76,7 @@ WindowManager:
                 color: 0, 0, 0, 1
 
         GridLayout:
-            cols: 1
+            cols: 2
             rows: 3
             size_hint_y: 3/7
             GridLayout:
@@ -126,6 +126,14 @@ WindowManager:
                     size_hint: None, None  # Remove size_hint
                     Label:
                         text: '' #most right
+
+            GridLayout:
+                cols: 1
+                size_hint_x: root.displayhint
+                Label:
+                    text: ''
+
+
 
 
 
@@ -180,6 +188,11 @@ WindowManager:
                     Label:
                         text: '' #most right
 
+
+            GridLayout:
+                cols: 1
+                size_hint_x: root.displayhint
+
             GridLayout:
                 cols: 2
                 rows: 1
@@ -226,7 +239,9 @@ WindowManager:
                     size_hint: None, None  # Remove size_hint
                     Label:
                         text: '' #most right
-
+            GridLayout:
+                cols: 1
+                size_hint_x: root.displayhint
 
 
 
@@ -238,7 +253,7 @@ WindowManager:
         GridLayout:
             cols: 1
             rows: 2
-            size_hint_x: 2.5/7
+            size_hint_y: 2.5/7
 
             GridLayout:
                 cols: 2
