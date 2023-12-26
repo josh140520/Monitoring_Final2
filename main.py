@@ -1465,7 +1465,7 @@ class GraphWindow(Screen): #3rd window
     Multiplier_Confirmation = 2.75
     Multiplier_HighLow = 2
     Multiplier_Excel = 2.75
-    Multiplier_Delete = 1
+    Multiplier_Delete = 2.75
 
     temp_sum = {}
     flow_sum = {}
@@ -1597,7 +1597,7 @@ class GraphWindow(Screen): #3rd window
         layout = BoxLayout(orientation='vertical', padding=10)
 
         # Create the GridLayout for messages
-        messages_layout = GridLayout(cols=2, rows=2, spacing=10, size_hint_y=None)
+        messages_layout = GridLayout(cols=2, rows=2, spacing=10, size_hint_y=0.5)
         messages_layout.bind(minimum_height=messages_layout.setter('height'))
 
         # Add messages to the GridLayout
@@ -2288,7 +2288,7 @@ class GraphWindow(Screen): #3rd window
         layout = BoxLayout(orientation='vertical', padding=10)
 
         # Create the GridLayout for messages
-        messages_layout = GridLayout(cols=2, rows=2, spacing=10, size_hint_y=None)
+        messages_layout = GridLayout(cols=2, rows=2, spacing=10, size_hint_y=0.5)
         messages_layout.bind(minimum_height=messages_layout.setter('height'))
 
         # Add messages to the GridLayout
@@ -2341,7 +2341,8 @@ class GraphWindow(Screen): #3rd window
 
     def open_reset_popup(self, instance):
         # Create the popup
-        content = BoxLayout(orientation='vertical')
+        global Multiplier_Delete
+        content = BoxLayout(orientation='vertical', size=(300*Multiplier_Delete, 200*Multiplier_Delete))
         content.add_widget(Label(text="Are you sure you want to reset the database?"))
 
         def on_reset_button(instance):
@@ -2358,7 +2359,7 @@ class GraphWindow(Screen): #3rd window
 
                 popup = Popup(title="Deletion Successful",
                               content=content,
-                              size_hint=(None, None), size=(300, 150),
+                              size=(300*Multiplier_Delete, 200*Multiplier_Delete),
                               auto_dismiss=True,
                               background_color=(0.5, 0.5, 0.8, 0.7))
 
@@ -2376,7 +2377,7 @@ class GraphWindow(Screen): #3rd window
 
                 popup = Popup(title="No Database Found",
                               content=content,
-                              size_hint=(None, None), size=(300, 150),
+                              size=(300*Multiplier_Delete, 150*Multiplier_Delete),
                               auto_dismiss=True,
                               background_color=(0.5, 0.5, 0.8, 0.7))
 
