@@ -63,7 +63,7 @@ WindowManager:
 
             cols: 1
             rows: 1
-            size_hint_y: 1/7
+            size_hint_y: 0.5/7
             canvas.before:
                 Color:
                     rgba: 1, 1, 1, 1
@@ -78,7 +78,7 @@ WindowManager:
         GridLayout:
             cols: 1
             rows: 5
-            size_hint_y: 5/7
+            size_hint_y: 5.5/7
             GridLayout:
                 cols: 2
                 rows: 1
@@ -402,24 +402,24 @@ WindowManager:
 
                         Button:
                             text: "Start"
-                            background_color: 0, 1, 0, 1  # Green background color
+                            background_color: 0, 0.8, 0, 1  # Green background color
                             color: 0, 0, 0, 1  # Black font color
                             font_size: root.MainButtonfontsize  # Adjust the font size as needed
                             on_press:
-                                self.background_color = 0, 0.7, 0, 1  # Darker green when pressed
+                                self.background_color = 0, 1, 0, 1  # Darker green when pressed
                             on_release:
-                                self.background_color = 0, 1, 0, 1
+                                self.background_color = 0, 0.8, 0, 1
                                 root.on_release_callback(self)
 
                         Button:
                             text: "Stop"
-                            background_color: 1, 0, 0, 1  # Red background color
+                            background_color: 0.8, 0, 0, 0.85  # Red background color
                             color: 0, 0, 0, 1  # Black font color
                             font_size: root.MainButtonfontsize  # Adjust the font size as needed
                             on_press:
-                                self.background_color = 0.9, 0, 0, 1  # Darker green when pressed
+                                self.background_color = 1, 0, 0, 0.85  # Darker green when pressed
                             on_release:
-                                self.background_color = 1, 0, 0, 1
+                                self.background_color = 0.8, 0, 0, 0.85
                                 root.stop_release_callback(self)
 
                         Button:
