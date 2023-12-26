@@ -1581,7 +1581,7 @@ class GraphWindow(Screen): #3rd window
                       title_align='center',
                       content=grid_layout,
                       size_hint=(None, None),
-                      size=(150*Multiplier_HighLow, 250*Multiplier_HighLow),
+                      size=(500*Multiplier_HighLow, 700*Multiplier_HighLow),
                       background_color=(0.5, 0.5, 0.8, 0.7))
 
         # Bind the Popup size to the Window size
