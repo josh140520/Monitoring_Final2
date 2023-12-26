@@ -1567,7 +1567,7 @@ class GraphWindow(Screen): #3rd window
 
         for key, value in pressure_sum.items():
             label_text = f'{key}: {value} {"Low" if value <= 38.8 else "High"}'
-            button = Button(text=label_text, size_hint_y=None, height=40, background_color=(0.8, 0.5, 0.5, 0.7), font_size=12.5, size = (50*Multiplier_HighLow, 25*Multiplier_HighLow))
+            button = Button(text=label_text, size_hint_y=None, height=40, background_color=(0.8, 0.5, 0.5, 0.7), font_size=12.5, size = (50*Multiplier_HighLow, None))
             pressure_scroll_grid.add_widget(button)
 
         pressure_scroll_view.add_widget(pressure_scroll_grid)
@@ -1580,7 +1580,7 @@ class GraphWindow(Screen): #3rd window
         popup = Popup(title='High and Low Values',
                       title_align='center',
                       content=grid_layout,
-                      size=(250*Multiplier_HighLow, 350*Multiplier_HighLow),
+                      size=(150*Multiplier_HighLow, 300*Multiplier_HighLow),
                       background_color=(0.5, 0.5, 0.8, 0.7))
 
         # Bind the Popup size to the Window size
@@ -2294,7 +2294,7 @@ class GraphWindow(Screen): #3rd window
         layout.add_widget(buttons_layout)
 
         # Create the popup and set its content
-        popup = Popup(title='Confirmation', content=layout, size_hint=(None, None), size=(300*Multiplier_Confirmation, 200*Multiplier_Confirmation),background_color=(0.5, 0.5, 0.8, 0.7))
+        popup = Popup(title='Confirmation', content=layout, size=(300*Multiplier_Confirmation, 200*Multiplier_Confirmation),background_color=(0.5, 0.5, 0.8, 0.7))
 
         # Open the popup
         popup.open()
