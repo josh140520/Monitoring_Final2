@@ -1463,7 +1463,7 @@ class GraphWindow(Screen): #3rd window
     global Multiplier_ChooseDate, Multiplier_Confirmation,Multiplier_HighLow, Multiplier_Excel, Multiplier_Delete
     Multiplier_ChooseDate = 2
     Multiplier_Confirmation = 2.75
-    Multiplier_HighLow = 1.15
+    Multiplier_HighLow = 2
     Multiplier_Excel = 1
     Multiplier_Delete = 1
 
