@@ -2341,8 +2341,7 @@ class GraphWindow(Screen): #3rd window
 
     def open_reset_popup(self, instance):
         # Create the popup
-        global Multiplier_Delete
-        content = BoxLayout(orientation='vertical', size_hint=(2, 1), size=(300*Multiplier_Delete, 200*Multiplier_Delete))
+        content = BoxLayout(orientation='vertical')
         content.add_widget(Label(text="Are you sure you want to reset the database?"))
 
         def on_reset_button(instance):
@@ -2359,7 +2358,7 @@ class GraphWindow(Screen): #3rd window
 
                 popup = Popup(title="Deletion Successful",
                               content=content,
-                              size=(300*Multiplier_Delete, 200*Multiplier_Delete),
+                              size_hint=(None, None), size=(300*Multiplier_Delete, 200*Multiplier_Delete),
                               auto_dismiss=True,
                               background_color=(0.5, 0.5, 0.8, 0.7))
 
@@ -2377,7 +2376,7 @@ class GraphWindow(Screen): #3rd window
 
                 popup = Popup(title="No Database Found",
                               content=content,
-                              size=(300*Multiplier_Delete, 150*Multiplier_Delete),
+                              size_hint=(None, None), size=(300*Multiplier_Delete, 200*Multiplier_Delete),
                               auto_dismiss=True,
                               background_color=(0.5, 0.5, 0.8, 0.7))
 
@@ -2393,9 +2392,9 @@ class GraphWindow(Screen): #3rd window
             # You can add any code for canceling the action
             popup.dismiss()
 
-        reset_button = Button(text="Confirm", size_hint=(0.5,0.8),background_color=(0, 0.5, 0, 0.7))
+        reset_button = Button(text="Confirm", size_hint=(None,None),size=(120*Multiplier_Delete, 50*Multiplier_Delete),background_color=(0, 0.5, 0, 0.7))
         reset_button.bind(on_release=on_reset_button)
-        cancel_button = Button(text="Cancel", size_hint=(0.5,0.8),background_color=(0.5, 0, 0, 0.7))
+        cancel_button = Button(text="Cancel", size_hint=(None,None),size=(120*Multiplier_Delete, 50*Multiplier_Delete),background_color=(0.5, 0, 0, 0.7))
         cancel_button.bind(on_release=on_cancel_button)
 
         button_layout = BoxLayout(orientation='horizontal')
@@ -2403,7 +2402,7 @@ class GraphWindow(Screen): #3rd window
         button_layout.add_widget(cancel_button)
         content.add_widget(button_layout)
 
-        popup = Popup(title='Database Deletion', content=content, size_hint=(None, 0.25), size=(400, 400), background_color=(0.5, 0.5, 0.8, 0.7))
+        popup = Popup(title='Database Deletion', content=content, size_hint=(None, None), size=(300*Multiplier_Delete, 200*Multiplier_Delete), background_color=(0.5, 0.5, 0.8, 0.7))
         popup.open()
 
 
