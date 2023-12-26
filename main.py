@@ -1462,8 +1462,8 @@ class GraphWindow(Screen): #3rd window
     global temp_sum, flow_sum, pressure_sum, batt_sum
     global Multiplier_ChooseDate, Multiplier_Confirmation,Multiplier_HighLow, Multiplier_Excel, Multiplier_Delete
     Multiplier_ChooseDate = 2
-    Multiplier_Confirmation = 2
-    Multiplier_HighLow = 1.5
+    Multiplier_Confirmation = 2.75
+    Multiplier_HighLow = 1.15
     Multiplier_Excel = 1
     Multiplier_Delete = 1
 
@@ -1580,7 +1580,7 @@ class GraphWindow(Screen): #3rd window
         popup = Popup(title='High and Low Values',
                       title_align='center',
                       content=grid_layout,
-                      size=(400*Multiplier_HighLow, 500*Multiplier_HighLow),
+                      size=(250*Multiplier_HighLow, 350*Multiplier_HighLow),
                       background_color=(0.5, 0.5, 0.8, 0.7))
 
         # Bind the Popup size to the Window size
