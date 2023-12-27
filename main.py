@@ -1623,9 +1623,9 @@ class GraphWindow(Screen): #3rd window
 
         # Add buttons to the buttons_layout
         buttons_layout.add_widget(
-            Button(text='Save', on_release=lambda btn: self.save_to_excel_and_close(popup), size_hint=(None, None), size=(120*Multiplier_Excel, 50*Multiplier_Excel), background_color=(0, 0.5, 0, 0.7)))
+            Button(text='Save', on_release=lambda btn: self.save_to_excel_and_close(popup), size_hint=(1, None), size=(120*Multiplier_Excel, 50*Multiplier_Excel), background_color=(0, 0.5, 0, 0.7)))
         buttons_layout.add_widget(
-            Button(text='Cancel', on_release=self.on_cancel_write, size_hint=(None, None), size=(120*Multiplier_Excel, 50*Multiplier_Excel),background_color=(0.5, 0, 0, 0.7)))
+            Button(text='Cancel', on_release=self.on_cancel_write, size_hint=(1, None), size=(120*Multiplier_Excel, 50*Multiplier_Excel),background_color=(0.5, 0, 0, 0.7)))
 
         # Add the buttons_layout to the main layout
         layout.add_widget(buttons_layout)
@@ -2314,9 +2314,9 @@ class GraphWindow(Screen): #3rd window
 
         # Add buttons to the buttons_layout
         buttons_layout.add_widget(
-            Button(text='Confirm', on_press=self.write_graph, size_hint=(None, None), size=(120*Multiplier_Confirmation, 50*Multiplier_Confirmation), background_color=(0, 0.5, 0, 0.7)))
+            Button(text='Confirm', on_press=self.write_graph, size_hint=(1, None), size=(120*Multiplier_Confirmation, 50*Multiplier_Confirmation), background_color=(0, 0.5, 0, 0.7)))
         buttons_layout.add_widget(
-            Button(text='Cancel', on_press=self.on_cancel_write, size_hint=(None, None), size=(120*Multiplier_Confirmation, 50*Multiplier_Confirmation),background_color=(0.5, 0, 0, 0.7)))
+            Button(text='Cancel', on_press=self.on_cancel_write, size_hint=(1, None), size=(120*Multiplier_Confirmation, 50*Multiplier_Confirmation),background_color=(0.5, 0, 0, 0.7)))
 
         # Add the buttons_layout to the main layout
         layout.add_widget(buttons_layout)
@@ -2403,9 +2403,9 @@ class GraphWindow(Screen): #3rd window
             # You can add any code for canceling the action
             popup.dismiss()
 
-        reset_button = Button(text="Confirm", size_hint=(None,None),size=(120*Multiplier_Delete, 50*Multiplier_Delete),background_color=(0, 0.5, 0, 0.7))
+        reset_button = Button(text="Confirm", size_hint=(1,None),size=(120*Multiplier_Delete, 50*Multiplier_Delete),background_color=(0, 0.5, 0, 0.7))
         reset_button.bind(on_release=on_reset_button)
-        cancel_button = Button(text="Cancel", size_hint=(None,None),size=(120*Multiplier_Delete, 50*Multiplier_Delete),background_color=(0.5, 0, 0, 0.7))
+        cancel_button = Button(text="Cancel", size_hint=(1,None),size=(120*Multiplier_Delete, 50*Multiplier_Delete),background_color=(0.5, 0, 0, 0.7))
         cancel_button.bind(on_release=on_cancel_button)
 
         button_layout = BoxLayout(orientation='horizontal')
