@@ -1472,6 +1472,7 @@ class GraphWindow(Screen): #3rd window
     global clear, r, selected_x
     global temp_sum, flow_sum, pressure_sum, batt_sum
     global Multiplier_ChooseDate, Multiplier_Confirmation,Multiplier_HighLow, Multiplier_Excel, Multiplier_Delete
+    global HighLowFont, HighLowButtonFont
     Multiplier_ChooseDate = 2
     Multiplier_Confirmation = 2.75
     Multiplier_HighLow = 2
@@ -1494,6 +1495,8 @@ class GraphWindow(Screen): #3rd window
     SpaceMultiplier = NumericProperty(69.875)
     WidthDivider = NumericProperty(16)
     Y_Adjuster = NumericProperty(15)
+    HighLowFont = sp(20)
+    HighLowButtonFont = sp(10)
 
     #################################
     GraphPicSize = NumericProperty(150)
@@ -1543,7 +1546,7 @@ class GraphWindow(Screen): #3rd window
         flow_layout = GridLayout(cols=1)
         pressure_layout = GridLayout(cols=1)
 
-        button = Button(text=f'TEMPERATURE \n       SENSOR', size_hint=(0.5,0.25), font_size=14, background_color=(0.5, 0.5, 0.8, 0.9))
+        button = Button(text=f'TEMPERATURE \n       SENSOR', size_hint=(0.5,0.25), font_size=HighLowFont, background_color=(0.5, 0.5, 0.8, 0.9))
         temp_layout.add_widget(button)
         temp_scroll_view = ScrollView()
         temp_layout.add_widget(temp_scroll_view)
@@ -1552,11 +1555,11 @@ class GraphWindow(Screen): #3rd window
 
         for key, value in temp_sum.items():
             label_text = f'{key}: {value} {"Low" if value <= 38.8 else "High"}'
-            button = Button(text=label_text, size_hint_y=None, height=40, background_color=(0.8, 0.5, 0.5, 0.7), font_size=12.5)
+            button = Button(text=label_text, size_hint_y=None, height=40, background_color=(0.8, 0.5, 0.5, 0.7), font_size=HighLowButtonFont)
             temp_scroll_grid.add_widget(button)
         temp_scroll_view.add_widget(temp_scroll_grid)
 
-        button = Button(text=f'  FLOW \nSENSOR', size_hint=(0.5,0.25), font_size=14, background_color=(0.5, 0.5, 0.8, 0.9))
+        button = Button(text=f'  FLOW \nSENSOR', size_hint=(0.5,0.25), font_size=HighLowFont, background_color=(0.5, 0.5, 0.8, 0.9))
         flow_layout.add_widget(button)
         flow_scroll_view = ScrollView()
         flow_layout.add_widget(flow_scroll_view)
@@ -1565,11 +1568,11 @@ class GraphWindow(Screen): #3rd window
 
         for key, value in flow_sum.items():
             label_text = f'{key}: {value} {"Low" if value <= 14.55 else "High"}'
-            button = Button(text=label_text, size_hint_y=None, height=40, background_color=(0.8, 0.5, 0.5, 0.7), font_size=sp(12.5))
+            button = Button(text=label_text, size_hint_y=None, height=40, background_color=(0.8, 0.5, 0.5, 0.7), font_size=HighLowButtonFont)
             flow_scroll_grid.add_widget(button)
         flow_scroll_view.add_widget(flow_scroll_grid)
 
-        button = Button(text=f'PRESSURE \n  SENSOR', size_hint=(0.5,0.25), font_size=14,background_color=(0.5, 0.5, 0.8, 0.9))
+        button = Button(text=f'PRESSURE \n  SENSOR', size_hint=(0.5,0.25), font_size=HighLowFont,background_color=(0.5, 0.5, 0.8, 0.9))
         pressure_layout.add_widget(button)
         pressure_scroll_view = ScrollView()
         pressure_layout.add_widget(pressure_scroll_view)
@@ -1578,7 +1581,7 @@ class GraphWindow(Screen): #3rd window
 
         for key, value in pressure_sum.items():
             label_text = f'{key}: {value} {"Low" if value <= 38.8 else "High"}'
-            button = Button(text=label_text, size_hint_y=None, height=40, background_color=(0.8, 0.5, 0.5, 0.7), font_size=12.5, size = (50*Multiplier_HighLow, None))
+            button = Button(text=label_text, size_hint_y=None, height=40, background_color=(0.8, 0.5, 0.5, 0.7), font_size=HighLowButtonFont)
             pressure_scroll_grid.add_widget(button)
 
         pressure_scroll_view.add_widget(pressure_scroll_grid)
@@ -1667,9 +1670,12 @@ class GraphWindow(Screen): #3rd window
 
             # Create an Excel file
             excel_file = f"Data_{self.selected_table.replace(' ', '_')}.xlsx"
+            downloads_folder = os.path.join(os.path.expanduser('~'), 'Downloads')
+            absolute_path = os.path.join(downloads_folder, excel_file)
+
             workbook = xlsxwriter.Workbook(excel_file)
             worksheet = workbook.add_worksheet('Measurements')
-            absolute_path = os.path.abspath(excel_file)
+            #absolute_path = os.path.abspath(excel_file)
             print(absolute_path)
 
             # Write headers
@@ -1788,13 +1794,13 @@ class GraphWindow(Screen): #3rd window
 
     def show_error_popup(self):
         content = Label(text=f'Please Try Again\n > Close any Excel Files \n > Select a date in the Set Graph')
-        popup = Popup(title='Error Saving', content=content, size_hint=(None, None), size=(300, 200), background_color=(0.5, 0.5, 0.8, 0.7))
+        popup = Popup(title='Error Saving', content=content, size_hint=(None, None), size=(200*Multiplier_Excel, 100*Multiplier_Excel), background_color=(0.5, 0.5, 0.8, 0.7))
         popup.open()
     def show_saving_popup(self):
         global absolute_path
 
         content = Label(text=f'Sucessfully Save to:\n{absolute_path}!')
-        popup = Popup(title='Successful Saving', content=content, size_hint=(None, None), size=(300, 200))
+        popup = Popup(title='Successful Saving', content=content, size_hint=(None, None), size=(200*Multiplier_Excel, 100*Multiplier_Excel))
         popup.open()
 
     def update_line(self, *args):
