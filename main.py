@@ -1156,6 +1156,12 @@ class ConnWindow(Screen):
     global data_transfer
     data_transfer = False
 
+    ##########################################
+    ConnFontSize = NumericProperty(sp(25))
+
+
+    ###########################################
+
     def __init__(self, **kwargs):
         super(ConnWindow, self).__init__(**kwargs)
         self.app = Flask(__name__)
