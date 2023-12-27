@@ -43,6 +43,10 @@ from kivy.core.window import Window
 from kivy.uix.slider import Slider
 from kivy.clock import Clock
 #from backend_kivyagg import FigureCanvasKivyAgg
+from kivy import platform
+if platform == "android":
+    from android.permissions import Permission, request_permissions
+    request_permissions([Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE])
 
 
 
