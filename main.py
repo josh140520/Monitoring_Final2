@@ -1155,9 +1155,14 @@ class ConnWindow(Screen):
     ESP_status = StringProperty()
     global data_transfer
     data_transfer = False
-
+    global MultiplierPortSelect, MultiplierDisplay, MultiplierServer
     ##########################################
     ConnFontSize = NumericProperty(sp(25))
+    MultiplierPortSelect = 2.75
+    MultiplierDisplay = 1
+    MultiplierServer = 2,75
+    ###########################################
+
 
 
     ###########################################
@@ -1356,7 +1361,7 @@ class ConnWindow(Screen):
 
                     # Create the Popup with the modified content
                     popup = Popup(title='Port Number Confirmation', content=popup_content, size_hint=(None, None),
-                                  size=(400, 200), background_color=(0.302, 0.922, 1, 1))
+                                  size=(250*MultiplierPortSelect, 150*MultiplierPortSelect), background_color=(0.302, 0.922, 1, 1))
 
                     # Open the Popup
                     popup.open()
@@ -1382,7 +1387,7 @@ class ConnWindow(Screen):
             label = Label(text=content, halign='center', valign='middle')
 
             # Add an "OK" button to dismiss the popup
-            ok_button = Button(text="CANCEL", size_hint_y=None, height='48dp', background_color=(0.7, 0, 0, 0.8))
+            ok_button = Button(text="CANCEL", size_hint=(None, None),pos_hint = {'center_x': 0.5, 'center_y': 0.5}, size = (120*MultiplierPortSelect, 50*MultiplierPortSelect), background_color=(0.7, 0, 0, 0.8))
             ok_button.bind(on_press=lambda instance: error_popup.dismiss())
 
             # Add the Label and Button to the BoxLayout
@@ -1391,7 +1396,7 @@ class ConnWindow(Screen):
 
 
             # Create the Popup with the BoxLayout as its content and set background color
-            error_popup = Popup(title=title, content=box_layout, size_hint=(None, None), size=(400, 200),
+            error_popup = Popup(title=title, content=box_layout, size_hint=(None, None), size = (200*MultiplierPortSelect, 100*MultiplierPortSelect),
                                 background_color=(0.302, 0.922, 1, 1))  # Adjust the color as needed
 
             # Display the Popup
@@ -1434,7 +1439,7 @@ class ConnWindow(Screen):
         # Creating the popup window with the main GridLayout as content
         popup_title = "Selection of Port Number"
         popup = Popup(title=popup_title, content=main_layout,
-                      size_hint=(None, None), size=(400, 200),
+                      size_hint=(None, None), size=(300*MultiplierPortSelect, 200*MultiplierPortSelect),
                       background_color=(0.318, 0.749, 1, 0.729))
         popup.title_align = 'center'
 
