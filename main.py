@@ -3,6 +3,7 @@ import math
 import socket
 import sqlite3
 import os
+import subprocess
 import time
 import threading
 import datetime
@@ -1799,10 +1800,10 @@ class GraphWindow(Screen): #3rd window
             workbook.close()
             # Close the database connection
             conn.close()
-            if platform == 'win':
+            if platform.system() == 'Windows':
                 os.startfile(absolute_path)
-            elif platform == 'android':
-                os.system(f"am start -a android.intent.action.VIEW -t application/vnd.openxmlformats-officedocument.spreadsheetml.sheet -d file://{absolute_path}")
+            elif platform.system() == 'Android':
+                subprocess.run(["am", "start", "-a", "android.intent.action.VIEW", "-d", f"file://{absolute_path}"])
 
 
             # Close the popup
