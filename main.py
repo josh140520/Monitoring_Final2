@@ -62,6 +62,7 @@ if platform == "android":
 
 
 
+
 global db_file
 db_file = 'monitoring_database.db'
 
@@ -1691,7 +1692,7 @@ class GraphWindow(Screen): #3rd window
 
             workbook = xlsxwriter.Workbook(excel_file)
             worksheet = workbook.add_worksheet('Measurements')
-            #absolute_path = os.path.abspath(excel_file)
+            absolute_path = os.path.abspath(excel_file)
             print(absolute_path)
 
             # Write headers
@@ -1798,6 +1799,11 @@ class GraphWindow(Screen): #3rd window
             workbook.close()
             # Close the database connection
             conn.close()
+            if platform == 'win':
+                os.startfile(absolute_path)
+            elif platform == 'android':
+                os.system(f"am start -a android.intent.action.VIEW -d file://{absolute_path}")
+
 
             # Close the popup
             popup.dismiss()
