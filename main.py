@@ -44,9 +44,21 @@ from kivy.uix.slider import Slider
 from kivy.clock import Clock
 #from backend_kivyagg import FigureCanvasKivyAgg
 from kivy import platform
+
+
+
 if platform == "android":
-    from android.permissions import Permission, request_permissions
-    request_permissions([Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE])
+    from android.permissions import Permission, request_permissions, check_permission
+    permissions = [Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE]
+    request_permissions(permissions)
+
+    # Check if permissions are granted
+    for permission in permissions:
+        if not check_permission(permission):
+            # Handle the case where permission is not granted
+            print(f"Permission {permission} not granted.")
+
+
 
 
 
