@@ -1513,7 +1513,7 @@ class GraphWindow(Screen): #3rd window
     WidthDivider = NumericProperty(16)
     Y_Adjuster = NumericProperty(15)
     HighLowFont = sp(20)
-    HighLowButtonFont = sp(10)
+    HighLowButtonFont = sp(8)
 
     #################################
     GraphPicSize = NumericProperty(150)
@@ -1819,8 +1819,9 @@ class GraphWindow(Screen): #3rd window
     def show_saving_popup(self):
         global absolute_path
 
-        content = Label(text=f'Sucessfully Save to:\n{absolute_path}!')
-        popup = Popup(title='Successful Saving', content=content, size_hint=(None, None), size=(200*Multiplier_Excel, 100*Multiplier_Excel))
+        content = Label(text=f'Sucessfully Save to: Download Folder')
+        print(absolute_path)
+        popup = Popup(title='Successful Saving', content=content, size_hint=(None, None), size=(300*Multiplier_Excel, 200*Multiplier_Excel))
         popup.open()
 
     def update_line(self, *args):

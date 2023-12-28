@@ -615,6 +615,8 @@ WindowManager:
                 anchor_x: 'center'
                 anchor_y: 'center'
                 Button:
+                    size_hint: None, None  # This disables the automatic size_hint
+                    size: 150, 92
                     background_normal: 'graphback_icon_normal.png'
                     background_down: 'graphback_icon_down.png'
                     canvas.before:
@@ -781,7 +783,7 @@ WindowManager:
                     background_normal: 'graphback_icon_normal.png'
                     background_down: 'graphback_icon_down.png'
                     size_hint: None, None
-                    size: 50, 49
+                    size: 150, 92
                     #size: self.parent.width * 0.3, self.parent.width * 0.3 #adjust
                     on_release:
                         root.manager.transition.direction = "right"
