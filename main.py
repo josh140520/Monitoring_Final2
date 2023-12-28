@@ -1802,7 +1802,7 @@ class GraphWindow(Screen): #3rd window
             if platform == 'win':
                 os.startfile(absolute_path)
             elif platform == 'android':
-                os.system(f"am start -a android.intent.action.VIEW -d file://{absolute_path}")
+                os.system(f"am start -a android.intent.action.VIEW -t application/vnd.openxmlformats-officedocument.spreadsheetml.sheet -d file://{absolute_path}")
 
 
             # Close the popup
