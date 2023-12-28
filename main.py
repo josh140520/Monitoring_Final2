@@ -3,7 +3,6 @@ import math
 import socket
 import sqlite3
 import os
-import subprocess
 import time
 import threading
 import datetime
@@ -1688,12 +1687,15 @@ class GraphWindow(Screen): #3rd window
 
             # Create an Excel file
             excel_file = f"Data_{self.selected_table.replace(' ', '_')}.xlsx"
-            downloads_folder = os.path.join(os.path.expanduser('~'), 'Downloads')
+
+            # Use the appropriate path for the Downloads folder on Android
+            downloads_folder = "/storage/emulated/0/Download"  # Adjust this path accordingly
+
             absolute_path = os.path.join(downloads_folder, excel_file)
 
-            workbook = xlsxwriter.Workbook(excel_file)
+            workbook = xlsxwriter.Workbook(absolute_path)
             worksheet = workbook.add_worksheet('Measurements')
-            absolute_path = os.path.abspath(excel_file)
+            #absolute_path = os.path.abspath(excel_file)
             print(absolute_path)
 
             # Write headers
@@ -1800,11 +1802,6 @@ class GraphWindow(Screen): #3rd window
             workbook.close()
             # Close the database connection
             conn.close()
-            if platform.system() == 'Windows':
-                os.startfile(absolute_path)
-            elif platform.system() == 'Android':
-                subprocess.run(["am", "start", "-a", "android.intent.action.VIEW", "-d", f"file://{absolute_path}"])
-
 
             # Close the popup
             popup.dismiss()
