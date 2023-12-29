@@ -103,7 +103,7 @@ class MainWindow(Screen): #Main screen
     global interval_time
     global notification_val
     global ringing
-    global msg_box
+    global msg_box, StartStopFont, MultiplierStartStop
     add_interval = ''
     '''global temp
     global flow
@@ -148,6 +148,9 @@ class MainWindow(Screen): #Main screen
     MainButtonfontsize = NumericProperty(sp(15))
     #FontLayoutsize = NumericProperty(sp(20), sp(20))
     displayhint = NumericProperty(0.1)
+    StartStopFont = sp(25)
+    MultiplierStartStop = 2.75
+
 
 
 
@@ -1105,7 +1108,7 @@ class MainWindow(Screen): #Main screen
         else:
             layout = BoxLayout(orientation='vertical', spacing=10)
             label = Label(text='Stop Failed, No ESP8266 Connection', font_size=17)
-            cancel_button = Button(text='Dismiss', size_hint_y=None, height=40, background_color=(1, 0, 0, 0.8))
+            cancel_button = Button(text='Dismiss', size_hint=(None,None), size=(120*MultiplierStartStop, 50*MultiplierStartStop),pos_hint={'center_x': 0.5, 'center_y': 0.5}, background_color=(1, 0, 0, 0.8))
 
             # Define the button callback to dismiss the popup
             def dismiss_popup(instance):
@@ -1118,7 +1121,7 @@ class MainWindow(Screen): #Main screen
             layout.add_widget(cancel_button)
 
             # Create the popup
-            connect_popup = Popup(title='', size_hint=(None, None), size=(400, 150),
+            connect_popup = Popup(title='', size_hint=(None, None), size=(300*MultiplierStartStop, 200*MultiplierStartStop),
                                   separator_color=(0, 0, 0, 0), background_color=(0.318, 0.749, 1, 0.8))
             connect_popup.content = layout
 
@@ -1134,8 +1137,8 @@ class MainWindow(Screen): #Main screen
 
         else:
             layout = BoxLayout(orientation='vertical', spacing=10)
-            label = Label(text='Start Failed, No ESP8266 Connection', font_size=17)
-            cancel_button = Button(text='Dismiss', size_hint_y=None, height=40, background_color=(1, 0, 0, 0.8))
+            label = Label(text='Start Failed, No ESP8266 Connection', font_size=StartStopFont)
+            cancel_button = Button(text='Dismiss', size_hint=(None,None), size=(120*MultiplierStartStop, 50*MultiplierStartStop),pos_hint={'center_x': 0.5, 'center_y': 0.5}, background_color=(1, 0, 0, 0.8))
 
             # Define the button callback to dismiss the popup
             def dismiss_popup(instance):
@@ -1148,7 +1151,7 @@ class MainWindow(Screen): #Main screen
             layout.add_widget(cancel_button)
 
             # Create the popup
-            connect_popup = Popup(title='', size_hint=(None, None), size=(400, 150),
+            connect_popup = Popup(title='', size_hint=(None,None), size=(300*MultiplierStartStop, 200*MultiplierStartStop),
                                   separator_color=(0, 0, 0, 0), background_color=(0.318, 0.749, 1, 0.8))
             connect_popup.content = layout
 
@@ -1172,12 +1175,13 @@ class ConnWindow(Screen):
     ESP_status = StringProperty()
     global data_transfer
     data_transfer = False
-    global MultiplierPortSelect, MultiplierDisplay, MultiplierServer
+    global MultiplierPortSelect, MultiplierDisplay, MultiplierServer, ServerFontSize
     ##########################################
     ConnFontSize = NumericProperty(sp(25))
     MultiplierPortSelect = 2.75
     MultiplierDisplay = 1
     MultiplierServer = 2.75
+    ServerFontSize = sp(25)
     ###########################################
 
 
@@ -1285,7 +1289,7 @@ class ConnWindow(Screen):
                     connecttoESP = True
                     print(connecttoESP)
                     layout = BoxLayout(orientation='vertical', spacing=10)
-                    label = Label(text='Flask Server Successfully Created', font_size=17)
+                    label = Label(text='Flask Server Successfully Created', font_size=ServerFontSize)
                     cancel_button = Button(text='Confirm', size_hint=(None, None), size=(120*MultiplierServer, 50*MultiplierServer),pos_hint={'center_x': 0.5, 'center_y': 0.5}, background_color=(0, 1, 0, 0.8))
 
                     # Define the button callback to dismiss the popup
@@ -1312,7 +1316,7 @@ class ConnWindow(Screen):
         except Exception as e:
             # Replace 'print("hh")' with a Kivy popup
             layout = BoxLayout(orientation='vertical', spacing=10)
-            label = Label(text='Server failed: No port number found', font_size=17)
+            label = Label(text='Server failed: No port number found', font_size=ServerFontSize)
             cancel_button = Button(text='Confirm', size_hint=(None, None), size=(120*MultiplierServer, 50*MultiplierServer),pos_hint={'center_x': 0.5, 'center_y': 0.5}, background_color=(1, 0, 0, 0.8))
 
             # Define the button callback to dismiss the popup
@@ -1413,7 +1417,7 @@ class ConnWindow(Screen):
 
 
             # Create the Popup with the BoxLayout as its content and set background color
-            error_popup = Popup(title=title, content=box_layout, size_hint=(None, None), size = (200*MultiplierPortSelect, 100*MultiplierPortSelect),
+            error_popup = Popup(title=title, content=box_layout, size_hint=(None, None), size=(300*MultiplierPortSelect,200*MultiplierPortSelect),
                                 background_color=(0.302, 0.922, 1, 1))  # Adjust the color as needed
 
             # Display the Popup
@@ -1513,7 +1517,7 @@ class GraphWindow(Screen): #3rd window
     WidthDivider = NumericProperty(16)
     Y_Adjuster = NumericProperty(15)
     HighLowFont = sp(20)
-    HighLowButtonFont = sp(8)
+    HighLowButtonFont = sp(7)
 
     #################################
     GraphPicSize = NumericProperty(150)
