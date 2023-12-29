@@ -1177,7 +1177,7 @@ class ConnWindow(Screen):
     ConnFontSize = NumericProperty(sp(25))
     MultiplierPortSelect = 2.75
     MultiplierDisplay = 1
-    MultiplierServer = 2,75
+    MultiplierServer = 2.75
     ###########################################
 
 
@@ -1286,7 +1286,7 @@ class ConnWindow(Screen):
                     print(connecttoESP)
                     layout = BoxLayout(orientation='vertical', spacing=10)
                     label = Label(text='Flask Server Successfully Created', font_size=17)
-                    cancel_button = Button(text='Confirm', size_hint_y=None, height=40, background_color=(0, 1, 0, 0.8))
+                    cancel_button = Button(text='Confirm', size_hint=(None, None), size=(120*MultiplierServer, 50*MultiplierServer),pos_hint={'center_x': 0.5, 'center_y': 0.5}, background_color=(0, 1, 0, 0.8))
 
                     # Define the button callback to dismiss the popup
                     def dismiss_popup(instance):
@@ -1299,7 +1299,7 @@ class ConnWindow(Screen):
                     layout.add_widget(cancel_button)
 
                     # Create the popup
-                    connect_popup = Popup(title='', size_hint=(None, None), size=(400, 150),
+                    connect_popup = Popup(title='', size_hint=(None, None), size=(300*MultiplierServer, 200*MultiplierServer),
                                           separator_color=(0, 0, 0, 0), background_color=(0.318, 0.749, 1, 0.8))
                     connect_popup.content = layout
 
@@ -1313,7 +1313,7 @@ class ConnWindow(Screen):
             # Replace 'print("hh")' with a Kivy popup
             layout = BoxLayout(orientation='vertical', spacing=10)
             label = Label(text='Server failed: No port number found', font_size=17)
-            cancel_button = Button(text='Confirm', size_hint_y=None, height=40, background_color=(1, 0, 0, 0.8))
+            cancel_button = Button(text='Confirm', size_hint=(None, None), size=(120*MultiplierServer, 50*MultiplierServer),pos_hint={'center_x': 0.5, 'center_y': 0.5}, background_color=(1, 0, 0, 0.8))
 
             # Define the button callback to dismiss the popup
             def dismiss_popup(instance):
@@ -1326,7 +1326,7 @@ class ConnWindow(Screen):
             layout.add_widget(cancel_button)
 
             # Create the popup
-            connect_popup = Popup(title='', size_hint=(None, None), size=(400, 150),
+            connect_popup = Popup(title='', size_hint=(None, None), size=(300*MultiplierServer, 200*MultiplierServer),
                                   separator_color=(0, 0, 0, 0), background_color=(0.318, 0.749, 1, 0.8))
             connect_popup.content = layout
 
@@ -1355,18 +1355,18 @@ class ConnWindow(Screen):
                     popup_content = GridLayout(cols=1)  # Use a GridLayout with one column
 
                     # Add the label to the GridLayout
-                    popup_content.add_widget(Label(text=f"                      Proceed with port {port_number}? \nOnce confirmed, no further modifications allowed."))
+                    popup_content.add_widget(Label(text=f"                      Proceed with port {port_number}?"))
 
                     # Create a horizontal GridLayout for buttons
                     button_layout = GridLayout(cols=2)
 
                     # Add Confirm button
-                    confirm_button = Button(text='Confirm', background_color=(0, 1, 0, 0.5), size=(100, 50),size_hint=(1, None))
+                    confirm_button = Button(text='Confirm', background_color=(0, 1, 0, 0.5), size=(100, 50),size_hint=(1, 1))
                     button_layout.add_widget(confirm_button)
                     confirm_button.bind(on_press=lambda instance: popup.dismiss())
 
                     # Add Cancel button
-                    cancel_button = Button(text='Cancel', background_color=(1, 0, 0, 0.5), size=(100, 50),size_hint=(1, None))
+                    cancel_button = Button(text='Cancel', background_color=(1, 0, 0, 0.5), size=(100, 50),size_hint=(1, 1))
                     button_layout.add_widget(cancel_button)
 
                     # Bind the buttons to their respective actions
@@ -1378,7 +1378,7 @@ class ConnWindow(Screen):
 
                     # Create the Popup with the modified content
                     popup = Popup(title='Port Number Confirmation', content=popup_content, size_hint=(None, None),
-                                  size=(250*MultiplierPortSelect, 150*MultiplierPortSelect), background_color=(0.302, 0.922, 1, 1))
+                                  size=(350*MultiplierPortSelect, 250*MultiplierPortSelect), background_color=(0.302, 0.922, 1, 1))
 
                     # Open the Popup
                     popup.open()
@@ -1814,7 +1814,7 @@ class GraphWindow(Screen): #3rd window
 
     def show_error_popup(self):
         content = Label(text=f'Please Try Again\n > Close any Excel Files \n > Select a date in the Set Graph')
-        popup = Popup(title='Error Saving', content=content, size_hint=(None, None), size=(200*Multiplier_Excel, 100*Multiplier_Excel), background_color=(0.5, 0.5, 0.8, 0.7))
+        popup = Popup(title='Error Saving', content=content, size_hint=(None, None), size=(300*Multiplier_Excel, 200*Multiplier_Excel), background_color=(0.5, 0.5, 0.8, 0.7))
         popup.open()
     def show_saving_popup(self):
         global absolute_path
