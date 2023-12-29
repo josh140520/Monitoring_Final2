@@ -954,10 +954,10 @@ WindowManager:
 
                 BoxLayout:
                     orientation: 'vertical'
-                    size_hint_y: 2.5
-                    size_hint_x: 4 #added
+                    size_hint_y: 3
+                    size_hint_x: 5 #added
                     pos_hint: {'center_x': 0.5, 'center_y': 0.5}
-                    height: 4000
+                    height: 5000
 
                     GridLayout:
                         cols: 2
@@ -984,12 +984,8 @@ WindowManager:
                                 size_hint: 1, 1.5
                                 #############################################################
                                 GridLayout:
-                                    cols: 3
-                                    rows: 3
-                                    BoxLayout:
-                                        orientation: 'horizontal'
-                                        size_hint: 0.05, 0.1
-                                        Button:
+                                    cols: 1
+
                                     BoxLayout:
                                         id: temp_layout
                                         orientation: 'horizontal'
@@ -1008,22 +1004,7 @@ WindowManager:
 
 
 
-                                    BoxLayout:
-                                        orientation: 'horizontal'
-                                        size_hint: 0.05, 0.1
-                                        Button:
-                                    BoxLayout:
-                                        orientation: 'horizontal'
-                                        size_hint: 0.05, 0.1
-                                        Button:
-                                    BoxLayout:
-                                        orientation: 'horizontal'
-                                        size_hint: 0.05, 0.1
-                                        Button:
-                                    BoxLayout:
-                                        orientation: 'horizontal'
-                                        size_hint: 0.05, 0.1
-                                        Button:
+
 
 
 
