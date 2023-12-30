@@ -777,7 +777,7 @@ WindowManager:
                     size: self.size
 
             AnchorLayout:
-                anchor_x: 'left'
+                anchor_x: 'center'
                 anchor_y: 'center'
                 Button:
                     size_hint: None, None
@@ -796,13 +796,13 @@ WindowManager:
                     text: 'MONITORING HISTORY'
                     color: 0, 0, 0, 1
                     font_size: 50
-                    font_size: self.parent.width * 0.2 #adjust
+                    font_size: self.parent.width * 0.22 #adjust
                     size_hint: None, None
                     size: self.texture_size
                     bold: True
 
             AnchorLayout:
-                anchor_x: 'right'
+                anchor_x: 'center'
                 anchor_y: 'center'
                 Button:
                     background_normal: 'question_icon_normal.png'
