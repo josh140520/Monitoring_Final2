@@ -282,19 +282,19 @@ class MainWindow(Screen): #Main screen
         if ((abs(temperatures_sum * 10) > trigger or abs(flows_sum * 10) > trigger or abs(pressures_sum * 10) > trigger)or(abs(flows_sum * 10) > trigger and abs(pressures_sum * 10) > trigger)) and ringing is False:
             self.play_ringtone()
             ringing = True   #(abs(temperatures_sum * 10) > trigger or abs(flows_sum * 10) > trigger or abs(pressures_sum * 10) > trigger)
+        else:
+            print('condition not met')
 
 
 
 
-    def load_ringtone(self):
-        ringtone_path = 'ringtone.mp3'
-        return SoundLoader.load(ringtone_path)
+
 
     def play_ringtone(self):
         global sound, sw_ring
         sw_ring = True
         # Assuming self.load_ringtone() returns a sound object
-        sound = self.load_ringtone()
+        sound = SoundLoader.load('ringtone.mp3')
 
         def play_sound():
             if sound:
@@ -305,16 +305,6 @@ class MainWindow(Screen): #Main screen
         # Create a thread and start it
         thread = threading.Thread(target=play_sound)
         thread.start()
-
-    def play_music(self, instance):
-        # Load the music file (change 'ringtone.mp3' to your file name)
-        sound = SoundLoader.load('ringtone.mp3')
-
-        # Check if the sound file loaded successfully
-        if sound:
-            sound.play()
-        else:
-            print("Error loading the sound file")
 
     def ringing_error(self, instance):
         content = Label(text='Error, Ringtone is not Activated!')
