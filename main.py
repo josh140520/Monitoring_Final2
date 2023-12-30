@@ -290,7 +290,7 @@ class MainWindow(Screen): #Main screen
 
 
 
-    def play_ringtone(self):
+    def play_ringtone(self, instance):
         global sound, sw_ring
         sw_ring = True
         # Assuming self.load_ringtone() returns a sound object
