@@ -340,7 +340,7 @@ class MainWindow(Screen): #Main screen
         global temperatures_sum, flows_sum, pressures_sum, connecttoESP
         global notif_temperatures, notif_flows, notif_pressures, notif_battery
         global msg_box
-        fsize = NotificationFontSize
+        fsize = sp(15)
         val_limit = 60
 
         # Check if the variables are defined
