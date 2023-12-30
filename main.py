@@ -148,7 +148,7 @@ class MainWindow(Screen): #Main screen
     MainButtonfontsize = NumericProperty(sp(15))
     #FontLayoutsize = NumericProperty(sp(20), sp(20))
     displayhint = NumericProperty(0.1)
-    StartStopFont = sp(20)
+    StartStopFont = sp(17)
     MultiplierStartStop = 2.75
 
 
@@ -1181,7 +1181,7 @@ class ConnWindow(Screen):
     MultiplierPortSelect = 2.75
     MultiplierDisplay = 1
     MultiplierServer = 2.75
-    ServerFontSize = sp(20)
+    ServerFontSize = sp(17)
     ###########################################
 
 
@@ -1359,18 +1359,18 @@ class ConnWindow(Screen):
                     popup_content = GridLayout(cols=1)  # Use a GridLayout with one column
 
                     # Add the label to the GridLayout
-                    popup_content.add_widget(Label(text=f"                      Proceed with port {port_number}?"))
+                    popup_content.add_widget(Label(text=f"Proceed with port {port_number}, Do you wish to continue?", pos_hint={'center_x': 0.5, 'center_y': 0.5}))
 
                     # Create a horizontal GridLayout for buttons
                     button_layout = GridLayout(cols=2)
 
                     # Add Confirm button
-                    confirm_button = Button(text='Confirm', background_color=(0, 1, 0, 0.5), size=(100, 50),size_hint=(1, 1))
+                    confirm_button = Button(text='Confirm', background_color=(0, 1, 0, 0.5), size=(100, 50),size_hint=(1, None))
                     button_layout.add_widget(confirm_button)
                     confirm_button.bind(on_press=lambda instance: popup.dismiss())
 
                     # Add Cancel button
-                    cancel_button = Button(text='Cancel', background_color=(1, 0, 0, 0.5), size=(100, 50),size_hint=(1, 1))
+                    cancel_button = Button(text='Cancel', background_color=(1, 0, 0, 0.5), size=(100, 50),size_hint=(1, None))
                     button_layout.add_widget(cancel_button)
 
                     # Bind the buttons to their respective actions
