@@ -300,13 +300,21 @@ class MainWindow(Screen): #Main screen
             if sound:
                 while sw_ring is True:
                     sound.play()
-                    print('ringgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg')
 
 
         # Create a thread and start it
-        play_sound()
-        '''thread = threading.Thread(target=play_sound)
-        thread.start()'''
+        thread = threading.Thread(target=play_sound)
+        thread.start()
+
+    def play_music(self, instance):
+        # Load the music file (change 'ringtone.mp3' to your file name)
+        sound = SoundLoader.load('ringtone.mp3')
+
+        # Check if the sound file loaded successfully
+        if sound:
+            sound.play()
+        else:
+            print("Error loading the sound file")
 
     def ringing_error(self, instance):
         content = Label(text='Error, Ringtone is not Activated!')
