@@ -148,7 +148,7 @@ class MainWindow(Screen): #Main screen
     MainButtonfontsize = NumericProperty(sp(15))
     #FontLayoutsize = NumericProperty(sp(20), sp(20))
     displayhint = NumericProperty(0.1)
-    StartStopFont = sp(25)
+    StartStopFont = sp(20)
     MultiplierStartStop = 2.75
 
 
@@ -1107,7 +1107,7 @@ class MainWindow(Screen): #Main screen
 
         else:
             layout = BoxLayout(orientation='vertical', spacing=10)
-            label = Label(text='Stop Failed, No ESP8266 Connection', font_size=17)
+            label = Label(text='Stop Failed, No ESP8266 Connection', font_size=StartStopFont)
             cancel_button = Button(text='Dismiss', size_hint=(None,None), size=(120*MultiplierStartStop, 50*MultiplierStartStop),pos_hint={'center_x': 0.5, 'center_y': 0.5}, background_color=(1, 0, 0, 0.8))
 
             # Define the button callback to dismiss the popup
@@ -1181,7 +1181,7 @@ class ConnWindow(Screen):
     MultiplierPortSelect = 2.75
     MultiplierDisplay = 1
     MultiplierServer = 2.75
-    ServerFontSize = sp(25)
+    ServerFontSize = sp(20)
     ###########################################
 
 
@@ -1387,9 +1387,9 @@ class ConnWindow(Screen):
                     # Open the Popup
                     popup.open()
                 else:
-                    show_error_popup("Invalid Port Number", "Please enter a valid port number in the range 0-65535.")
+                    show_error_popup("Invalid Port Number", "Please enter a valid port number range (0-65535).")
             except ValueError:
-                show_error_popup("Invalid Input", "Please enter a numeric value for the port number.")
+                show_error_popup("Invalid Input", "Please enter a numeric value for the port.")
 
         def on_cancel(instance):
             popup.dismiss()
@@ -1818,14 +1818,14 @@ class GraphWindow(Screen): #3rd window
 
     def show_error_popup(self):
         content = Label(text=f'Please Try Again\n > Close any Excel Files \n > Select a date in the Set Graph')
-        popup = Popup(title='Error Saving', content=content, size_hint=(None, None), size=(300*Multiplier_Excel, 200*Multiplier_Excel), background_color=(0.5, 0.5, 0.8, 0.7))
+        popup = Popup(title='Error Saving', content=content, size_hint=(None, None), size=(300*Multiplier_Excel, 200*Multiplier_Excel), background_color=(0.5, 0.5, 0.8, 1))
         popup.open()
     def show_saving_popup(self):
         global absolute_path
 
         content = Label(text=f'Sucessfully Save to: Download Folder')
         print(absolute_path)
-        popup = Popup(title='Successful Saving', content=content, size_hint=(None, None), size=(300*Multiplier_Excel, 200*Multiplier_Excel))
+        popup = Popup(title='Successful Saving', content=content, size_hint=(None, None), size=(300*Multiplier_Excel, 200*Multiplier_Excel), background_color=(0.5, 0.5, 0.8, 1))
         popup.open()
 
     def update_line(self, *args):
