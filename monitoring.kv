@@ -25,7 +25,7 @@ WindowManager:
                     size: self.size
 
             AnchorLayout:
-                anchor_x: 'center'
+                anchor_x: 'left'
                 anchor_y: 'center'
                 Button:
                     background_normal: 'question_icon_normal.png'
@@ -42,12 +42,13 @@ WindowManager:
                     text: 'MONITORING APP'
                     color: 0, 0, 0, 1
                     font_size: 50
-                    font_size: self.parent.width * 0.2 #adjust
+                    font_size: self.parent.width * 0.25 #adjust
                     size_hint: None, None
                     size: self.texture_size
+                    bold: True
 
             AnchorLayout:
-                anchor_x: 'center'
+                anchor_x: 'right'
                 anchor_y: 'center'
                 Button:
                     background_normal: 'notification_icon_normal.png'
@@ -585,7 +586,7 @@ WindowManager:
                     size: self.size
 
             AnchorLayout:
-                anchor_x: 'center'
+                anchor_x: 'left'
                 anchor_y: 'center'
                 Button:
                     background_normal: 'question_icon_normal.png'
@@ -606,13 +607,14 @@ WindowManager:
                     text: 'Connection Page'
                     color: 0, 0, 0, 1
                     font_size: 50
-                    font_size: self.parent.width * 0.2 #adjust
+                    font_size: self.parent.width * 0.25 #adjust
                     size_hint: None, None
                     size: self.texture_size
+                    bold: True
 
 
             AnchorLayout:
-                anchor_x: 'center'
+                anchor_x: 'right'
                 anchor_y: 'center'
                 Button:
                     size_hint: None, None  # This disables the automatic size_hint
@@ -775,7 +777,7 @@ WindowManager:
                     size: self.size
 
             AnchorLayout:
-                anchor_x: 'center'
+                anchor_x: 'left'
                 anchor_y: 'center'
                 Button:
                     size_hint: None, None
@@ -797,9 +799,10 @@ WindowManager:
                     font_size: self.parent.width * 0.2 #adjust
                     size_hint: None, None
                     size: self.texture_size
+                    bold: True
 
             AnchorLayout:
-                anchor_x: 'center'
+                anchor_x: 'right'
                 anchor_y: 'center'
                 Button:
                     background_normal: 'question_icon_normal.png'
