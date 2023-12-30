@@ -103,7 +103,7 @@ class MainWindow(Screen): #Main screen
     global interval_time
     global notification_val
     global ringing
-    global msg_box, StartStopFont, MultiplierStartStop
+    global msg_box, StartStopFont, MultiplierStartStop, NotificationFontSize, MultiplierNotification
     add_interval = ''
     '''global temp
     global flow
@@ -150,6 +150,8 @@ class MainWindow(Screen): #Main screen
     displayhint = NumericProperty(0.1)
     StartStopFont = sp(17)
     MultiplierStartStop = 2.75
+    NotificationFontSize = sp(20)
+    MultiplierNotification = 2.75
 
 
 
@@ -306,7 +308,7 @@ class MainWindow(Screen): #Main screen
 
     def ringing_error(self, instance):
         content = Label(text='Error, Ringtone is not Activated!')
-        popup = Popup(title='Ringtone', content=content, size_hint=(None, None), size=(300, 150),background_color=(0.5, 0.5, 0.8, 0.7))
+        popup = Popup(title='Ringtone', content=content, size_hint=(None, None), size=(300*MultiplierNotification, 200*MultiplierNotification),background_color=(0.5, 0.5, 0.8, 0.7))
         popup.open()
 
     def stop_ringtone(self, instance):
@@ -338,7 +340,7 @@ class MainWindow(Screen): #Main screen
         global temperatures_sum, flows_sum, pressures_sum, connecttoESP
         global notif_temperatures, notif_flows, notif_pressures, notif_battery
         global msg_box
-        fsize = 17
+        fsize = NotificationFontSize
         val_limit = 60
 
         # Check if the variables are defined
@@ -422,8 +424,8 @@ class MainWindow(Screen): #Main screen
             msg_box = ''
 
         # Create a Label for the main notification message
-        main_message = Label(text='Longest Recorded Value', font_size=20)
-        msg_label = Label(text=f'System:\n{msg_box}', font_size=20,color=(0, 0, 0, 1),bold=True)
+        main_message = Label(text='Longest Recorded Value', font_size=NotificationFontSize)
+        msg_label = Label(text=f'System:\n{msg_box}', font_size=NotificationFontSize,color=(0, 0, 0, 1),bold=True)
 
         # Set size hints for labels
         main_message.size_hint = (1, 0.3)  # 30% of the height
@@ -432,18 +434,18 @@ class MainWindow(Screen): #Main screen
         # Create buttons
         button = Button(
             text='Stop Ringtone',
-            size_hint=(0.5, None),
-            size=(100, 50),
-            pos_hint={'center_x': 0.5},
+            size_hint=(1, None),
+            size=(120*MultiplierNotification, 50*MultiplierNotification),
+            pos_hint={'center_x': 0.5, 'center_y': 0.5},
             on_release=self.stop_ringtone,
             background_color=(0, 0.7, 0, 0.7)
         )
 
         button2 = Button(
             text='Cancel',
-            size_hint=(0.5, None),
-            size=(100, 50),
-            pos_hint={'center_x': 0.5},
+            size_hint=(1, None),
+            size=(120 * MultiplierNotification, 50 * MultiplierNotification),
+            pos_hint={'center_x': 0.5, 'center_y': 0.5},
             on_release=self.cancel,
             background_color=(0.7, 0, 0, 0.7)
         )
@@ -480,7 +482,7 @@ class MainWindow(Screen): #Main screen
             title='Notification',
             content=main_layout,
             size_hint=(None, None),
-            size=(self.width * 0.7, self.height * 0.8),
+            size=(300*MultiplierNotification, 500*MultiplierNotification),
             auto_dismiss=True,
             background_color=(0, 0.533, 0.62, 0.5),
             separator_color=(1, 1, 1, 1)
@@ -1365,12 +1367,12 @@ class ConnWindow(Screen):
                     button_layout = GridLayout(cols=2)
 
                     # Add Confirm button
-                    confirm_button = Button(text='Confirm', background_color=(0, 1, 0, 0.5), size=(100, 50),size_hint=(1, None))
+                    confirm_button = Button(text='Confirm', background_color=(0, 1, 0, 0.5), size=(120*2.75, 50*2.75),size_hint=(1, None))
                     button_layout.add_widget(confirm_button)
                     confirm_button.bind(on_press=lambda instance: popup.dismiss())
 
                     # Add Cancel button
-                    cancel_button = Button(text='Cancel', background_color=(1, 0, 0, 0.5), size=(100, 50),size_hint=(1, None))
+                    cancel_button = Button(text='Cancel', background_color=(1, 0, 0, 0.5), size=(120*2.75, 50*2.75),size_hint=(1, None))
                     button_layout.add_widget(cancel_button)
 
                     # Bind the buttons to their respective actions
@@ -1516,7 +1518,7 @@ class GraphWindow(Screen): #3rd window
     SpaceMultiplier = NumericProperty(69.875)
     WidthDivider = NumericProperty(16)
     Y_Adjuster = NumericProperty(15)
-    HighLowFont = sp(20)
+    HighLowFont = sp(10)
     HighLowButtonFont = sp(7)
 
     #################################

@@ -108,7 +108,7 @@ WindowManager:
 
 
                         Label:
-                            text: str(root.temp) if root.switch_data is False else root.no_temp #measure1
+                            text: str(root.temp) + ' C' if root.switch_data is False else root.no_temp #measure1
                             color: root.temp_color if root.switch_data is False else root.no_temp_color
                             font_size: root.Mainfontsize
 
@@ -168,7 +168,7 @@ WindowManager:
 
 
                         Label:
-                            text: str(root.flow) if root.switch_data is False else root.no_flow #measure2
+                            text: str(root.flow) + ' lpm' if root.switch_data is False else root.no_flow #measure2
                             color: root.flow_color if root.switch_data is False else root.no_flow_color
                             font_size: root.Mainfontsize
 
@@ -222,7 +222,7 @@ WindowManager:
                             font_size: root.Mainfontsize
 
                         Label:
-                            text: str(root.pressure) if root.switch_data is False else root.no_pressure #measure3
+                            text: str(root.pressure) + ' psi' if root.switch_data is False else root.no_pressure #measure3
                             color: root.pressure_color if root.switch_data is False else root.no_pressure_color
                             font_size: root.Mainfontsize
                         Label:
