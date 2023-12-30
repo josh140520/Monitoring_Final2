@@ -300,11 +300,13 @@ class MainWindow(Screen): #Main screen
             if sound:
                 while sw_ring is True:
                     sound.play()
+                    print('ringgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg')
 
 
         # Create a thread and start it
-        thread = threading.Thread(target=play_sound)
-        thread.start()
+        play_sound()
+        '''thread = threading.Thread(target=play_sound)
+        thread.start()'''
 
     def ringing_error(self, instance):
         content = Label(text='Error, Ringtone is not Activated!')
