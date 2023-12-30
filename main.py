@@ -297,15 +297,15 @@ class MainWindow(Screen): #Main screen
         # Assuming self.load_ringtone() returns a sound object
         sound = SoundLoader.load('ringtone.mp3')
 
-        def play_sound():
-
-
+        '''def play_sound():'''
+        if sound:
+            #while sw_ring is True:
             sound.play()
 
 
-        # Create a thread and start it
+        '''# Create a thread and start it
         thread = threading.Thread(target=play_sound)
-        thread.start()
+        thread.start()'''
 
     def ringing_error(self, instance):
         content = Label(text='Error, Ringtone is not Activated!')
