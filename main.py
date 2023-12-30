@@ -1241,7 +1241,7 @@ class ConnWindow(Screen):
         global temp_dict, port_number, host, connecttoESP
 
         try:
-            if port_number is None:
+            if port_number is None or isinstance(port_number, str):
                 self.flask_server = 'OFF'
             else:
                 self.flask_server = "ON"
@@ -1281,7 +1281,7 @@ class ConnWindow(Screen):
     def start_server(self):
         global connecttoESP, port_number
         try:
-            if port_number is not None:
+            if port_number is not None and not isinstance(port_number, str):
                 if not self.server_thread or not self.server_thread.is_alive():
                     MainWindow.stop_testing(self,instance=None)
                     self.server_thread = threading.Thread(target=self.run_flask_server, daemon=True)
