@@ -422,8 +422,8 @@ class MainWindow(Screen): #Main screen
             msg_box = ''
 
         # Create a Label for the main notification message
-        main_message = Label(text='Longest Recorded Value', font_size=20, font_name="Arial")
-        msg_label = Label(text=f'System:\n{msg_box}', font_size=20, font_name="Arial",color=(0, 0, 0, 1),bold=True)
+        main_message = Label(text='Longest Recorded Value', font_size=20)
+        msg_label = Label(text=f'System:\n{msg_box}', font_size=20,color=(0, 0, 0, 1),bold=True)
 
         # Set size hints for labels
         main_message.size_hint = (1, 0.3)  # 30% of the height
