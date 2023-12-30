@@ -299,7 +299,7 @@ class MainWindow(Screen): #Main screen
 
         def play_sound():
             if sound:
-                #while sw_ring is True:
+                #while sw_ring is True: #add for continuous playing
                 sound.play()
 
 
