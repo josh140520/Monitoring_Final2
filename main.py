@@ -280,8 +280,9 @@ class MainWindow(Screen): #Main screen
         print(f"/////////Pressures: {notif_pressures}: the sum: {pressures_sum}")
         print(f"/////////Batteries: {notif_battery}")
         if ((abs(temperatures_sum * 10) > trigger or abs(flows_sum * 10) > trigger or abs(pressures_sum * 10) > trigger)or(abs(flows_sum * 10) > trigger and abs(pressures_sum * 10) > trigger)) and ringing is False:
+            ringing = True
             self.play_ringtone()
-            ringing = True   #(abs(temperatures_sum * 10) > trigger or abs(flows_sum * 10) > trigger or abs(pressures_sum * 10) > trigger)
+               #(abs(temperatures_sum * 10) > trigger or abs(flows_sum * 10) > trigger or abs(pressures_sum * 10) > trigger)
         else:
             print('condition not met')
 
@@ -297,9 +298,9 @@ class MainWindow(Screen): #Main screen
         sound = SoundLoader.load('ringtone.mp3')
 
         def play_sound():
-            if sound:
-                while sw_ring is True:
-                    sound.play()
+
+            while sw_ring is True:
+                sound.play()
 
 
         # Create a thread and start it
