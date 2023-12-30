@@ -520,14 +520,14 @@ WindowManager:
 
     FloatLayout:
         size_hint: None, None
-        size: 180, 700  #75, 200
+        size: 170, 700  #75, 200
 
 
         canvas:
             Color:
                 rgba: (0, 1, 0, 1) if root.switch_data is False else (0.5, 0.5, 0.5, 1)
             Rectangle:
-                size: 170, root.batt * 6.58  #BEFORE 75, 1.88
+                size: 160, root.batt * 6.58  #BEFORE 75, 1.88
 
                 pos: self.parent.width - self.width - 20, self.parent.height - self.height - 600 #175
 
@@ -536,7 +536,7 @@ WindowManager:
 
         Image:
             source: '25batt_icon.png'
-            size: 180, 700
+            size: 170, 700
             size_hint: None, None
             pos: self.parent.width - self.width - 25, self.parent.height - self.height - 600 #175
 
