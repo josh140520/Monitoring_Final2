@@ -527,7 +527,7 @@ WindowManager:
             Color:
                 rgba: (0, 1, 0, 1) if root.switch_data is False else (0.5, 0.5, 0.5, 1)
             Rectangle:
-                size: 150, int(root.batt) * 6.58  #BEFORE 75, 1.88
+                size: 150, root.batt * 6.58  #BEFORE 75, 1.88
 
                 pos: self.parent.width - self.width - 20, self.parent.height - self.height - 600 #175
 
@@ -542,7 +542,7 @@ WindowManager:
 
     FloatLayout:
         Label:
-            text: str(root.batt) + '%' if root.switch_data is False else str('- %')
+            text: str(int(root.batt)) + '%' if root.switch_data is False else str('- %')
             color: (0, 0, 0, 1)
             size_hint: None, None
             size: self.texture_size  # Set the size based on the label's text size
