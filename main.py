@@ -16,7 +16,7 @@ import kivy
 
 import xlsxwriter
 from flask import Flask, request
-
+from plyer import notification
 from kivy.uix.image import Image
 from kivy.app import App
 from kivy.core.audio import SoundLoader
@@ -305,6 +305,7 @@ class MainWindow(Screen): #Main screen
             if sound:
                 #while sw_ring is True:
                 sound.play()
+                self.show_notification(instance=None)
 
 
         # Create a thread and start it
@@ -338,7 +339,14 @@ class MainWindow(Screen): #Main screen
             # Show an error popup
             self.ringing_error(instance)
 
-
+    def show_notification(self, instance):
+        global msg_box
+        notification.notify(
+            title='Monitoring App',
+            message=f'Monitoring Detection:\n{msg_box}\nCheck the App now!',
+            app_icon=None,  # e.g. 'C:\\icon_32x32.ico'
+            timeout=None,  # seconds
+        )
 
 
     def notification(self, instance):
