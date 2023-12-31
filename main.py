@@ -303,8 +303,8 @@ class MainWindow(Screen): #Main screen
 
         def play_sound():
             if sound:
-                while sw_ring is True:
-                    sound.play()
+                #while sw_ring is True:
+                sound.play()
 
 
         # Create a thread and start it
