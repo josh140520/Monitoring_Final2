@@ -279,9 +279,9 @@ class MainWindow(Screen): #Main screen
         print(f"/////////Flows: {notif_flows}: the sum: {flows_sum}")
         print(f"/////////Pressures: {notif_pressures}: the sum: {pressures_sum}")
         print(f"/////////Batteries: {notif_battery}")
-        if ((abs(temperatures_sum * 10) > trigger or abs(flows_sum * 10) > trigger or abs(pressures_sum * 10) > trigger)or(abs(flows_sum * 10) > trigger and abs(pressures_sum * 10) > trigger)) and ringing is False:
+        if (abs(temperatures_sum * 10) > trigger or abs(flows_sum * 10) > trigger or abs(pressures_sum * 10) > trigger) and ringing is False:
             ringing = True
-            self.play_ringtone()
+            self.play_ringtone(instance=None)
                #(abs(temperatures_sum * 10) > trigger or abs(flows_sum * 10) > trigger or abs(pressures_sum * 10) > trigger)
         else:
             print('condition not met')
