@@ -104,8 +104,6 @@ class MainWindow(Screen): #Main screen
     global notification_val
     global ringing
     global msg_box, StartStopFont, MultiplierStartStop, NotificationFontSize, MultiplierNotification
-    global sw_ring
-    sw_ring = True
     add_interval = ''
     '''global temp
     global flow
@@ -246,7 +244,7 @@ class MainWindow(Screen): #Main screen
     def notif_data(self):
         global notification_val, temperatures_sum, flows_sum, pressures_sum, ringing
         global notif_temperatures, notif_flows, notif_pressures, notif_battery
-        global sound, sw_ring
+
 
         notif_temperatures = []
         notif_flows = []
@@ -281,12 +279,9 @@ class MainWindow(Screen): #Main screen
         print(f"/////////Flows: {notif_flows}: the sum: {flows_sum}")
         print(f"/////////Pressures: {notif_pressures}: the sum: {pressures_sum}")
         print(f"/////////Batteries: {notif_battery}")
-        if (abs(temperatures_sum * 10) > trigger or abs(flows_sum * 10) > trigger or abs(pressures_sum * 10) > trigger) and ringing is False:
+        if (abs(temperatures_sum * 10) > trigger or abs(flows_sum * 10) > trigger or abs(pressures_sum * 10) > trigger):
             ringing = True
-            sound = SoundLoader.load('ringtone.mp3')
-            thread = threading.Thread(target=self.play_sound(instance=None))
-            thread.start()
-
+            self.play_ringtone(instance=None)
                #(abs(temperatures_sum * 10) > trigger or abs(flows_sum * 10) > trigger or abs(pressures_sum * 10) > trigger)
         else:
             print('condition not met')
@@ -297,14 +292,24 @@ class MainWindow(Screen): #Main screen
 
 
 
-    def play_sound(self, instance):
-        if sound:
-            while sw_ring is True:
-                sound.play()
+
+
+
+    def play_ringtone(self, instance):
+        global sound, sw_ring
+        sw_ring = True
+        # Assuming self.load_ringtone() returns a sound object
+        sound = SoundLoader.load('ringtone.mp3')
+
+        def play_sound():
+            if sound:
+                while sw_ring is True:
+                    sound.play()
 
 
         # Create a thread and start it
-
+        thread = threading.Thread(target=play_sound)
+        thread.start()
 
     def ringing_error(self, instance):
         content = Label(text='Error, Ringtone is not Activated!')
