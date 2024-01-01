@@ -350,7 +350,7 @@ class MainWindow(Screen): #Main screen
         builder.setContentText('This is a sample notification.')
 
         # Set a valid small icon resource
-        #builder.setSmallIcon(R.drawable.ic_notification)
+        builder.setSmallIcon(android.R.drawable.ic_dialog_info)
 
         # Get the NotificationManager
         notification_manager = PythonActivity.mActivity.getSystemService(Context.NOTIFICATION_SERVICE)
