@@ -10,8 +10,7 @@ import datetime
 
 from statistics import mean
 from kivy.graphics import Rectangle, Color, Line
-from kivy.utils import platform
-from kivy.logger import Logger
+
 #import matplotlib.pyplot as plt
 import kivy
 
@@ -309,7 +308,7 @@ class MainWindow(Screen): #Main screen
                 sound.play()
 
 
-        self.show_notification(None)
+        self.show_notification(instance=None)
         # Create a thread and start it
         thread = threading.Thread(target=play_sound)
         thread.start()
@@ -343,43 +342,12 @@ class MainWindow(Screen): #Main screen
 
     def show_notification(self, instance):
         global msg_box
-        if platform == 'android':
-            try:
-                from android import activity
-                from jnius import autoclass
-
-                # Get the current application context
-                context = activity.bind()
-
-                # Create a notification
-                notification_builder = autoclass('android.app.Notification$Builder')(context)
-
-                notification_builder.setContentTitle("Hello")
-                notification_builder.setContentText("This is a notification")
-                notification_builder.setSmallIcon(context.getApplicationInfo().icon)
-
-                # Create an Intent for the notification to launch when tapped
-                intent = autoclass('android.content.Intent')(context, autoclass('org.kivy.android.PythonActivity'))
-                pending_intent = autoclass('android.app.PendingIntent').getActivity(context, 0, intent, 0)
-                notification_builder.setContentIntent(pending_intent)
-
-                # Get the NotificationManager
-                notification_manager = context.getSystemService(context.NOTIFICATION_SERVICE)
-
-                # Show the notification
-                notification_manager.notify(1, notification_builder.build())
-
-            except Exception as e:
-                Logger.error(f"Error creating notification: {e}")
-        else:
-            print('WINDOWS NOTIFICATION')
-
-            notification.notify(
-                title='Monitoring App',
-                message=f'Monitoring Detection:\n{msg_box}\nCheck the App now!',
-                app_icon=None,  # e.g. 'C:\\icon_32x32.ico'
-                timeout=None,  # seconds
-            )
+        notification.notify(
+            title='Monitoring App',
+            message=f'Monitoring Detection:\n{msg_box}\nCheck the App now!',
+            app_icon=None,  # e.g. 'C:\\icon_32x32.ico'
+            timeout=None,  # seconds
+        )
 
 
     def notification(self, instance):
