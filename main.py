@@ -17,10 +17,6 @@ import kivy
 import xlsxwriter
 from flask import Flask, request
 
-from jnius import autoclass, cast
-from plyer import notification
-
-
 from kivy.uix.image import Image
 from kivy.app import App
 from kivy.core.audio import SoundLoader
@@ -53,7 +49,7 @@ from kivy import platform
 
 if platform == "android":
     from android.permissions import Permission, request_permissions, check_permission
-    permissions = [Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE]
+    permissions = [Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE, Permission.ACCESS_NOTIFICATIONS]
     request_permissions(permissions)
 
     # Check if permissions are granted
@@ -62,11 +58,8 @@ if platform == "android":
             # Handle the case where permission is not granted
             print(f"Permission {permission} not granted.")
 
-if platform == 'android':
-    Context = autoclass('android.content.Context')
-    PythonActivity = autoclass('org.kivy.android.PythonActivity')
-    NotificationBuilder = autoclass('android.app.Notification$Builder')
-    NotificationManager = autoclass('android.app.NotificationManager')
+
+
 
 
 
@@ -315,7 +308,7 @@ class MainWindow(Screen): #Main screen
                 sound.play()
 
 
-        self.show_notification(instance = None)
+
         # Create a thread and start it
         thread = threading.Thread(target=play_sound)
         thread.start()
@@ -347,26 +340,8 @@ class MainWindow(Screen): #Main screen
             # Show an error popup
             self.ringing_error(instance)
 
-    def show_notification(self, instance):
-        # Check if the platform is Android
-        if platform == 'android':
-            # Get the PythonActivity class
-            PythonActivity = autoclass('org.kivy.android.PythonActivity')
 
-            # Create a notification
-            notification_service = PythonActivity.mActivity.getSystemService('notification')
-            builder = autoclass('android.app.Notification$Builder')(PythonActivity.mActivity)
-            builder.setContentTitle('My Notification')
-            builder.setContentText('This is a sample notification.')
 
-            # Set a valid small icon resource
-            small_icon_name = 'ic_dialog_info'  # replace with your actual small icon name
-            small_icon_resource = PythonActivity.mActivity.getResources().getIdentifier(small_icon_name, 'drawable',
-                                                                                        PythonActivity.mActivity.getPackageName())
-            builder.setSmallIcon(small_icon_resource)
-
-            # Show the notification
-            notification_service.notify(1, builder.build())
 
     def notification(self, instance):
         global temperatures_sum, flows_sum, pressures_sum, connecttoESP
@@ -2403,14 +2378,14 @@ class GraphWindow(Screen): #3rd window
         if self.selected_table == today:
             print("it is today")
             self.show_temp(self)
-            self.show_flow(self)
-            self.show_pressure(self)
-            self.show_batt(self)
+            #self.show_flow(self)
+            #self.show_pressure(self)
+            #self.show_batt(self)
         else:
             self.show_temp(self)
-            self.show_flow(self)
-            self.show_pressure(self)
-            self.show_batt(self)
+            #self.show_flow(self)
+            #self.show_pressure(self)
+            #self.show_batt(self)
         instance.parent.parent.parent.parent.parent.dismiss()
 
 
