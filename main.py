@@ -1878,7 +1878,7 @@ class GraphWindow(Screen): #3rd window
 
             # Replace None values with 0
             listY = [0 if y is None else y for y in listY]
-            position_offset = (self.ids.temp_layout.width * (0.2), self.ids.temp_layout.height * 0.25)
+            position_offset = (self.ids.temp_layout.width * (0.1), self.ids.temp_layout.height * 0.25)
 
             # Create a list of points by interleaving x and y coordinates
             points = []
