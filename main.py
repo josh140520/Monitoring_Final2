@@ -315,7 +315,7 @@ class MainWindow(Screen): #Main screen
                 sound.play()
 
 
-        self.show_notification(None)
+        self.show_notification(instance = None)
         # Create a thread and start it
         thread = threading.Thread(target=play_sound)
         thread.start()
@@ -347,7 +347,7 @@ class MainWindow(Screen): #Main screen
             # Show an error popup
             self.ringing_error(instance)
 
-    def show_notification(instance):
+    def show_notification(self, instance):
         # Check if the platform is Android
         if platform == 'android':
             # Get the PythonActivity class
