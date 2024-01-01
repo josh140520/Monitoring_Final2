@@ -16,7 +16,7 @@ import kivy
 
 import xlsxwriter
 from flask import Flask, request
-from plyer import notification
+from jnius import autoclass
 from kivy.uix.image import Image
 from kivy.app import App
 from kivy.core.audio import SoundLoader
@@ -49,7 +49,7 @@ from kivy import platform
 
 if platform == "android":
     from android.permissions import Permission, request_permissions, check_permission
-    permissions = [Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE]
+    permissions = [Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE, Permission.ACCESS_NOTIFICATIONS]
     request_permissions(permissions)
 
     # Check if permissions are granted
@@ -59,7 +59,10 @@ if platform == "android":
             print(f"Permission {permission} not granted.")
 
 
-
+Context = autoclass('android.content.Context')
+PythonActivity = autoclass('org.kivy.android.PythonActivity')
+NotificationBuilder = autoclass('android.app.Notification$Builder')
+NotificationManager = autoclass('android.app.NotificationManager')
 
 
 
@@ -341,13 +344,19 @@ class MainWindow(Screen): #Main screen
             self.ringing_error(instance)
 
     def show_notification(self, instance):
-        global msg_box
-        notification.notify(
-            title='Monitoring App',
-            message=f'Monitoring Detection:\n{msg_box}\nCheck the App now!',
-            app_icon=None,  # e.g. 'C:\\icon_32x32.ico'
-            timeout=None,  # seconds
-        )
+        # Create a notification
+        builder = NotificationBuilder(PythonActivity.mActivity)
+        builder.setContentTitle('My Notification')
+        builder.setContentText('This is a sample notification.')
+
+        # Set small icon to 0 (no icon)
+        builder.setSmallIcon(0)
+
+        # Get the NotificationManager
+        notification_manager = PythonActivity.mActivity.getSystemService(Context.NOTIFICATION_SERVICE)
+
+        # Show the notification
+        notification_manager.notify(1, builder.build())
 
 
     def notification(self, instance):
