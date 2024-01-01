@@ -1884,14 +1884,14 @@ class GraphWindow(Screen): #3rd window
             points = []
             for x, y in zip(listX, listY):
                 points.extend([
-                    self.ids.temp_layout.x + position_offset[0] + self.ids.temp_layout.width * (x / max(listX)) * (0.334*2.69),
+                    self.ids.temp_layout.x + position_offset[0] + self.ids.temp_layout.width * (x / max(listX)) * (0.334*2.68),
                     self.ids.temp_layout.y + position_offset[1] + self.ids.temp_layout.height * (y / max(listY)) * 0.7
                 ])
 
             self.line_color = Color(0, 0, 1)
             self.line = Line(
                 points=points,
-                width=2  # Set line width (adjust as needed)
+                width=4  # Set line width (adjust as needed)
             )
 
             # Bind line points to update dynamically when the layout size changes
