@@ -50,7 +50,7 @@ from kivy import platform
 
 if platform == "android":
     from android.permissions import Permission, request_permissions, check_permission
-    permissions = [Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE, Permission.ACCESS_NOTIFICATIONS]
+    permissions = [Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE]
     request_permissions(permissions)
 
     # Check if permissions are granted
