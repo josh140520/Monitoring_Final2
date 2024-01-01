@@ -315,7 +315,7 @@ class MainWindow(Screen): #Main screen
                 sound.play()
 
 
-        self.show_notification(instance=None)
+        self.show_notification(None)
         # Create a thread and start it
         thread = threading.Thread(target=play_sound)
         thread.start()
