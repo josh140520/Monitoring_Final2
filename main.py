@@ -350,14 +350,14 @@ class MainWindow(Screen): #Main screen
         builder.setContentText('This is a sample notification.')
 
         # Set a valid small icon resource
-        builder.setSmallIcon(R.drawable.ic_notification)
+        #builder.setSmallIcon(R.drawable.ic_notification)
 
         # Get the NotificationManager
         notification_manager = PythonActivity.mActivity.getSystemService(Context.NOTIFICATION_SERVICE)
 
         # Show the notification
         notification_manager.notify(1, builder.build())
-        
+
     def notification(self, instance):
         global temperatures_sum, flows_sum, pressures_sum, connecttoESP
         global notif_temperatures, notif_flows, notif_pressures, notif_battery
