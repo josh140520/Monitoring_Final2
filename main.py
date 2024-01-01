@@ -16,7 +16,11 @@ import kivy
 
 import xlsxwriter
 from flask import Flask, request
-from jnius import autoclass
+
+from android.runnable import run_on_ui_thread
+from jnius import PythonActivity, autoclass
+
+
 from kivy.uix.image import Image
 from kivy.app import App
 from kivy.core.audio import SoundLoader
@@ -343,17 +347,21 @@ class MainWindow(Screen): #Main screen
             # Show an error popup
             self.ringing_error(instance)
 
+    @run_on_ui_thread
     def show_notification(self, instance):
         # Create a notification
-        builder = NotificationBuilder(PythonActivity.mActivity)
+        builder = autoclass('android.app.Notification$Builder')(PythonActivity.mActivity)
         builder.setContentTitle('My Notification')
         builder.setContentText('This is a sample notification.')
 
-        # Set a valid small icon resource
-        builder.setSmallIcon(android.R.drawable.ic_dialog_info)
+        # Set a valid small icon resource from your project's resources
+        small_icon_name = 'ic_dialog_info'
+        small_icon_resource = PythonActivity.mActivity.getResources().getIdentifier(small_icon_name, 'drawable',
+                                                                                    PythonActivity.mActivity.getPackageName())
+        builder.setSmallIcon(small_icon_resource)
 
         # Get the NotificationManager
-        notification_manager = PythonActivity.mActivity.getSystemService(Context.NOTIFICATION_SERVICE)
+        notification_manager = PythonActivity.mActivity.getSystemService('notification')
 
         # Show the notification
         notification_manager.notify(1, builder.build())
