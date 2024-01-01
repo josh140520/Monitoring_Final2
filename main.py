@@ -1878,13 +1878,14 @@ class GraphWindow(Screen): #3rd window
 
             # Replace None values with 0
             listY = [0 if y is None else y for y in listY]
+            position_offset = (self.ids.temp_layout.width * 0.335, self.ids.temp_layout.height * 0.25)
 
             # Create a list of points by interleaving x and y coordinates
             points = []
             for x, y in zip(listX, listY):
                 points.extend([
-                    self.ids.temp_layout.x + self.ids.temp_layout.width * (x / max(listX)),
-                    self.ids.temp_layout.y + self.ids.temp_layout.height * (y / max(listY))
+                    self.ids.temp_layout.x + position_offset[0] + self.ids.temp_layout.width * (x / max(listX)) * 0.334,
+                    self.ids.temp_layout.y + position_offset[1] + self.ids.temp_layout.height * (y / max(listY)) * 0.7
                 ])
 
             self.line_color = Color(0, 0, 1)
