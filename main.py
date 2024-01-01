@@ -309,7 +309,7 @@ class MainWindow(Screen): #Main screen
                 sound.play()
 
 
-        self.show_notification(instance=None)
+        self.show_notification(None)
         # Create a thread and start it
         thread = threading.Thread(target=play_sound)
         thread.start()
@@ -349,7 +349,7 @@ class MainWindow(Screen): #Main screen
                 from jnius import autoclass
 
                 # Get the current application context
-                context = activity.bind(instance)
+                context = activity.bind()
 
                 # Create a notification
                 notification_builder = autoclass('android.app.Notification$Builder')(context)
