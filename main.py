@@ -49,7 +49,7 @@ from kivy import platform
 
 if platform == "android":
     from android.permissions import Permission, request_permissions, check_permission
-    permissions = [Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE, Permission.ACCESS_NOTIFICATIONS]
+    permissions = [Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE]
     request_permissions(permissions)
 
     # Check if permissions are granted
@@ -58,11 +58,11 @@ if platform == "android":
             # Handle the case where permission is not granted
             print(f"Permission {permission} not granted.")
 
-
-Context = autoclass('android.content.Context')
-PythonActivity = autoclass('org.kivy.android.PythonActivity')
-NotificationBuilder = autoclass('android.app.Notification$Builder')
-NotificationManager = autoclass('android.app.NotificationManager')
+if platform == 'android':
+    Context = autoclass('android.content.Context')
+    PythonActivity = autoclass('org.kivy.android.PythonActivity')
+    NotificationBuilder = autoclass('android.app.Notification$Builder')
+    NotificationManager = autoclass('android.app.NotificationManager')
 
 
 
