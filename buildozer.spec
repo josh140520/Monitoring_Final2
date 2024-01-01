@@ -37,7 +37,7 @@ version = 0.1.3
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3==3.9.18,hostpython3==3.9.18,kivy==2.1.0,pillow==9.5.0,requests,flask==2.2.0,xlsxwriter,statistics,kivy_garden,werkzeug==2.2.2, https://github.com/kivy/plyer/archive/refs/heads/master.zip, pyjnius
+requirements = python3==3.9.18,hostpython3==3.9.18,kivy==2.1.0,pillow==9.5.0,requests,flask==2.2.0,xlsxwriter,statistics,kivy_garden,werkzeug==2.2.2, plyer==2.1.0
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
 # requirements.source.kivy = ../../kivy
