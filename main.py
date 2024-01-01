@@ -49,7 +49,7 @@ from kivy import platform
 
 if platform == "android":
     from android.permissions import Permission, request_permissions, check_permission
-    permissions = [Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE, Permission.ACCESS_NOTIFICATIONS]
+    permissions = [Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE]
     request_permissions(permissions)
 
     # Check if permissions are granted
@@ -1895,6 +1895,8 @@ class GraphWindow(Screen): #3rd window
 
             # Bind line points to update dynamically when the layout size changes
         self.bind(pos=self.update_line, size=self.update_line)
+
+
 
     def show_temp1(self, instance):
         global temp_dict, n, selected_x, temp_sum
