@@ -1873,7 +1873,7 @@ class GraphWindow(Screen): #3rd window
 
             # Calculate line coordinates based on listX and listY
             listX = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
-            listY = [0, 40, 30, 40, 50, 60, 120, 0, 350, 100, 0, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210,
+            listY = [0, 700, 800, 40, 50, 60, 120, 0, 350, 100, 0, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210,
                      220, 1000]
 
             # Replace None values with 0
