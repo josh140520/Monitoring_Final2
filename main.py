@@ -1867,13 +1867,15 @@ class GraphWindow(Screen): #3rd window
 
 
         # Add a blue rectangle to the canvas
-        resize_factor = 0.85  # Adjust this factor based on your resizing needs
+        resize_factor = 0.89
+        position_factor = 0.82
 
         with self.ids.temp_layout.canvas:
-            Color(0, 1, 0, 0.5)  # Set color to blue with alpha (RGB values + alpha)
+            Color(0, 0, 1, 0.1)  # Set color to blue with alpha (RGB values + alpha)
             self.rectangle = Rectangle(
-                pos=(107.56800000000001, 203.8149350649351),
-                size=((2505.168, 250.6266233766237)))
+                pos=(self.ids.temp_layout.x + (self.ids.temp_layout.width * (1 - position_factor)) / 2,
+                     self.ids.temp_layout.y + (self.ids.temp_layout.height * (1 - position_factor)) / 2),
+                size=(self.ids.temp_layout.width * resize_factor, self.ids.temp_layout.height * resize_factor))
         #with self.ids.temp_layout.canvas:
         #    Color(0, 1, 0, 0.1)  # Set color to blue (RGB values)
         #    self.rectangle = Rectangle(pos=self.ids.temp_layout.pos, size=self.ids.temp_layout.size)
