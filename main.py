@@ -1873,12 +1873,18 @@ class GraphWindow(Screen): #3rd window
 
             # Calculate line coordinates based on listX and listY
             listX = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
-            listY = [200, 1200, 500, 800, 400, 600, 1200, 100, 300, 150, 1000, 500, 800, 140, 1050, 120, 700, 580, 890, 200, 500,
+            listY = [200, 1200, 500, 800, None, None, 1200, 100, 300, 150, 1000, 500, 800, 140, 1050, 120, 700, 580, 890, 200, 500,
                      220, 800]
 
             # Replace None values with 0
-            listY = [0 if y is None else y for y in listY]
-            position_offset = (self.ids.temp_layout.width * (0.0425), self.ids.temp_layout.height * 0.25)
+            for i in range(1, len(listY)):
+                if listY[i] is None:
+                    listY[i] = listY[i - 1]
+            print(listY)
+
+
+
+            position_offset = (self.ids.temp_layout.width * (0.0435), self.ids.temp_layout.height * 0.25)
 
             # Create a list of points by interleaving x and y coordinates
             points = []
