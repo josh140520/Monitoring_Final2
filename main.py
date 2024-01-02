@@ -1870,6 +1870,9 @@ class GraphWindow(Screen): #3rd window
         with self.ids.temp_layout.canvas:
             Color(0, 0, 1, 0.1)  # Set color to blue (RGB values)
             self.rectangle = Rectangle(pos=self.ids.temp_layout.pos, size=self.ids.temp_layout.size)
+        with self.ids.temp_layout.canvas:
+            Color(0, 1, 0, 0.1)  # Set color to blue (RGB values)
+            self.rectangle = Rectangle(pos=self.ids.temp_layout.pos, size=self.ids.temp_layout.size)
 
             # Calculate line coordinates based on listX and listY
             listX = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
@@ -1884,7 +1887,7 @@ class GraphWindow(Screen): #3rd window
 
 
 
-            position_offset = (self.ids.temp_layout.width * (0.045), self.ids.temp_layout.height * 0.25)
+            position_offset = (self.ids.temp_layout.width * (0.0415), self.ids.temp_layout.height * 0.25)
 
             # Create a list of points by interleaving x and y coordinates
             points = []
