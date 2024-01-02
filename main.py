@@ -1908,13 +1908,21 @@ class GraphWindow(Screen): #3rd window
                 points=points,
                 width=5  # Set line width (adjust as needed)
             )
-            resize_factor = 0.89
+            listY = [200, 1200, 500, 800, None, None, 1200, 100, 300, 150, 1000, 500, 800, 140, 1050, 120, 700, 580,
+                     890, 200, 500,
+                     220, 800]
+            listypos = #based on the nth term of the listy 23 number
+            x1 = 0.037
+            x2 = 0.0355
+            resize_factor = x1  #per hour 0.037
             height_factor = 0.72
-            position_factor = 0.84
+            heightposition_factor = 0.84
+            position_factor = 0.84-(2*(listypos*x2))   #hour position
+
             Color(0, 0, 0, 0.4)  # Set color to blue with alpha (RGB values + alpha)
             self.rectangle = Rectangle(
                 pos=(self.ids.temp_layout.x + (self.ids.temp_layout.width * (1 - position_factor)) / 2,
-                     self.ids.temp_layout.y + (self.ids.temp_layout.height * (1 - position_factor)) / 0.65),
+                     self.ids.temp_layout.y + (self.ids.temp_layout.height * (1 - heightposition_factor)) / 0.65),
                 size=(self.ids.temp_layout.width * resize_factor, self.ids.temp_layout.height * height_factor))
             # Bind line points to update dynamically when the layout size changes
         self.bind(pos=self.update_line, size=self.update_line)
