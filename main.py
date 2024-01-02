@@ -1884,7 +1884,7 @@ class GraphWindow(Screen): #3rd window
 
 
 
-            position_offset = (self.ids.temp_layout.width * (0.0435), self.ids.temp_layout.height * 0.25)
+            position_offset = (self.ids.temp_layout.width * (0.045), self.ids.temp_layout.height * 0.25)
 
             # Create a list of points by interleaving x and y coordinates
             points = []
