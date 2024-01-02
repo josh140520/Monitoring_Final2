@@ -1873,8 +1873,8 @@ class GraphWindow(Screen): #3rd window
 
             # Calculate line coordinates based on listX and listY
             listX = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
-            listY = [0, 700, 800, 40, 50, 60, 120, 0, 350, 100, 0, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210,
-                     220, 1000]
+            listY = [200, 1200, 500, 800, 400, 600, 1200, 100, 300, 150, 1000, 500, 800, 140, 1050, 120, 700, 580, 890, 200, 500,
+                     220, 800]
 
             # Replace None values with 0
             listY = [0 if y is None else y for y in listY]
@@ -1891,7 +1891,7 @@ class GraphWindow(Screen): #3rd window
             self.line_color = Color(0, 0, 1)
             self.line = Line(
                 points=points,
-                width=4  # Set line width (adjust as needed)
+                width=5  # Set line width (adjust as needed)
             )
 
             # Bind line points to update dynamically when the layout size changes
