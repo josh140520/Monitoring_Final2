@@ -1867,12 +1867,16 @@ class GraphWindow(Screen): #3rd window
 
 
         # Add a blue rectangle to the canvas
+        resize_factor = 0.85  # Adjust this factor based on your resizing needs
+
         with self.ids.temp_layout.canvas:
-            Color(0, 0, 1, 0.1)  # Set color to blue (RGB values)
-            self.rectangle = Rectangle(pos=self.ids.temp_layout.pos, size=self.ids.temp_layout.size)
-        with self.ids.temp_layout.canvas:
-            Color(0, 1, 0, 0.1)  # Set color to blue (RGB values)
-            self.rectangle = Rectangle(pos=self.ids.temp_layout.pos, size=self.ids.temp_layout.size)
+            Color(0, 1, 0, 0.5)  # Set color to blue with alpha (RGB values + alpha)
+            self.rectangle = Rectangle(
+                pos=(79.68, 54.78896103896105),
+                size=(1855.68, 880.275974025974))
+        #with self.ids.temp_layout.canvas:
+        #    Color(0, 1, 0, 0.1)  # Set color to blue (RGB values)
+        #    self.rectangle = Rectangle(pos=self.ids.temp_layout.pos, size=self.ids.temp_layout.size)
 
             # Calculate line coordinates based on listX and listY
             listX = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
@@ -1896,6 +1900,15 @@ class GraphWindow(Screen): #3rd window
                     self.ids.temp_layout.x + position_offset[0] + self.ids.temp_layout.width * (x / max(listX)) * (0.925),
                     self.ids.temp_layout.y + position_offset[1] + self.ids.temp_layout.height * (y / max(listY)) * 0.7
                 ])
+            for x, y in zip(listX, listY):
+                x_pos = self.ids.temp_layout.x + position_offset[0] + self.ids.temp_layout.width * (x / max(listX)) * (
+                    0.925)
+                y_pos = self.ids.temp_layout.y + position_offset[1] + self.ids.temp_layout.height * (
+                            y / max(listY)) * 0.7
+            print(f"Point Coordinates: ({x_pos}, {y_pos})")
+
+            print(f"Position Offset: {position_offset}")
+
 
             self.line_color = Color(0, 0, 1)
             self.line = Line(
