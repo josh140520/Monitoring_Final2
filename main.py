@@ -1867,18 +1867,9 @@ class GraphWindow(Screen): #3rd window
 
 
         # Add a blue rectangle to the canvas
-        resize_factor = 0.89
-        position_factor = 0.82
+
 
         with self.ids.temp_layout.canvas:
-            Color(0, 0, 1, 0.1)  # Set color to blue with alpha (RGB values + alpha)
-            self.rectangle = Rectangle(
-                pos=(self.ids.temp_layout.x + (self.ids.temp_layout.width * (1 - position_factor)) / 2,
-                     self.ids.temp_layout.y + (self.ids.temp_layout.height * (1 - position_factor)) / 2),
-                size=(self.ids.temp_layout.width * resize_factor, self.ids.temp_layout.height * resize_factor))
-        #with self.ids.temp_layout.canvas:
-        #    Color(0, 1, 0, 0.1)  # Set color to blue (RGB values)
-        #    self.rectangle = Rectangle(pos=self.ids.temp_layout.pos, size=self.ids.temp_layout.size)
 
             # Calculate line coordinates based on listX and listY
             listX = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
@@ -1917,7 +1908,14 @@ class GraphWindow(Screen): #3rd window
                 points=points,
                 width=5  # Set line width (adjust as needed)
             )
-
+            resize_factor = 0.89
+            height_factor = 0.8
+            position_factor = 0.84
+            Color(0, 0, 0, 0.4)  # Set color to blue with alpha (RGB values + alpha)
+            self.rectangle = Rectangle(
+                pos=(self.ids.temp_layout.x + (self.ids.temp_layout.width * (1 - position_factor)) / 2,
+                     self.ids.temp_layout.y + (self.ids.temp_layout.height * (1 - position_factor)) / 1),
+                size=(self.ids.temp_layout.width * resize_factor, self.ids.temp_layout.height * height_factor))
             # Bind line points to update dynamically when the layout size changes
         self.bind(pos=self.update_line, size=self.update_line)
 
