@@ -1,4 +1,5 @@
 #Pillow version: 9.5
+import copy
 import math
 import socket
 import sqlite3
@@ -1837,34 +1838,9 @@ class GraphWindow(Screen): #3rd window
         popup = Popup(title='Successful Saving', content=content, size_hint=(None, None), size=(300*Multiplier_Excel, 200*Multiplier_Excel), background_color=(0.5, 0.5, 0.8, 1))
         popup.open()
 
-    def update_line(self, *args):
-        # Update the line points when the layout size or position changes
-        listX = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
-        listY = [0, 40, 30, 40, 50, 60, 120, None, 350, 100, 0, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220,
-                 1000]
-
-        # Replace None values with 0
-        listY = [0 if y is None else y for y in listY]
-
-        # Create a list of points by interleaving x and y coordinates
-        points = []
-        for x, y in zip(listX, listY):
-            points.extend([
-                self.ids.temp_layout.x + self.ids.temp_layout.width * (x / max(listX)),
-                self.ids.temp_layout.y + self.ids.temp_layout.height * (y / max(listY))
-            ])
-
-        self.line.points = points
-
-        # Determine line color based on listY value
-        none_index = listY.index(None) if None in listY else -1
-        if none_index != -1:
-            white_color = Color(1, 1, 1)
-            self.line_color.rgba = white_color if self.line_color.index == none_index else (0, 0, 1)
-
-
     def show_temp(self, instance):
-
+        drawY = []
+        self.ids.temp_layout.canvas.clear()
 
         # Add a blue rectangle to the canvas
 
@@ -1873,8 +1849,17 @@ class GraphWindow(Screen): #3rd window
 
             # Calculate line coordinates based on listX and listY
             listX = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
-            listY = [200, 1200, 500, 800, None, None, 1200, 100, 300, 150, 1000, 500, 800, 140, 1050, 120, 700, 580, 890, 200, 500,
-                     220, 800]
+            listY = [None, None, 500, 800, None, None, 1200, 100, 300, 150, 1000, 500, 800, 140, 1050, 120, 700, 580,
+                     890, 200, 500,
+                     None, None]
+
+
+
+            drawY = copy.copy(listY)
+            print(f'the: {drawY}')
+            if listY[0] is None:
+                drawY[0] = None
+                listY[0] = 0
 
             # Replace None values with 0
             for i in range(1, len(listY)):
@@ -1885,6 +1870,18 @@ class GraphWindow(Screen): #3rd window
 
 
             position_offset = (self.ids.temp_layout.width * (0.0415), self.ids.temp_layout.height * 0.25)
+
+            for y in listY:
+                if y is not None:
+                    line_color = Color(1, 0, 0, 1)  # Red line, fully opaque
+                    line_position_x = self.ids.temp_layout.x + position_offset[0]
+                    line_position_y = (self.ids.temp_layout.y + position_offset[1] +
+                                       self.ids.temp_layout.height * (y / max(listY)) * 0.7)
+                    line_length = self.ids.temp_layout.width * 0.9  # Adjust the length as needed
+                    line_points = [line_position_x, line_position_y,
+                                   line_position_x + line_length, line_position_y]
+                    Line(points=line_points, width=2, color=line_color)
+
 
             # Create a list of points by interleaving x and y coordinates
             points = []
@@ -1908,23 +1905,23 @@ class GraphWindow(Screen): #3rd window
                 points=points,
                 width=5  # Set line width (adjust as needed)
             )
-            listY = [None, 1200, 500, 800, None, None, 1200, 100, 300, 150, 1000, 500, 800, 140, 1050, 120, 700, 580,
-                     890, 200, 500,
-                     None, None]
+            print(drawY)
 
-            if listY[0] is None:
-                listY[0] = 0
+
+
+
+
+            if drawY[0] is None:
+                drawY[0] = 0
                 self.draw_rectangle(0)
             for i in range(1, 23):
-                if listY[i] is None:
+                if drawY[i] is None:
                     self.draw_rectangle(i)
 
 
 
-
-
             # Bind line points to update dynamically when the layout size changes
-        self.bind(pos=self.update_line, size=self.update_line)
+
 
     def draw_rectangle(self, listypos):
         x1 = 0.039
@@ -1934,11 +1931,13 @@ class GraphWindow(Screen): #3rd window
         heightposition_factor = 0.84
         position_factor = 0.84 - (2.18 * (listypos * x2))  # hour position
 
-        Color(0, 0, 0, 0.4)  # Set color to blue with alpha (RGB values + alpha)
+        Color(0, 0, 0, 1)  # Set color to blue with alpha (RGB values + alpha)
         self.rectangle = Rectangle(
             pos=(self.ids.temp_layout.x + (self.ids.temp_layout.width * (1 - position_factor)) / 2,
                  self.ids.temp_layout.y + (self.ids.temp_layout.height * (1 - heightposition_factor)) / 0.65),
             size=(self.ids.temp_layout.width * resize_factor, self.ids.temp_layout.height * height_factor))
+
+
 
     def show_temp1(self, instance):
         global temp_dict, n, selected_x, temp_sum
