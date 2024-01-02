@@ -1909,12 +1909,12 @@ class GraphWindow(Screen): #3rd window
                 width=5  # Set line width (adjust as needed)
             )
             resize_factor = 0.89
-            height_factor = 0.8
+            height_factor = 0.72
             position_factor = 0.84
             Color(0, 0, 0, 0.4)  # Set color to blue with alpha (RGB values + alpha)
             self.rectangle = Rectangle(
                 pos=(self.ids.temp_layout.x + (self.ids.temp_layout.width * (1 - position_factor)) / 2,
-                     self.ids.temp_layout.y + (self.ids.temp_layout.height * (1 - position_factor)) / 1),
+                     self.ids.temp_layout.y + (self.ids.temp_layout.height * (1 - position_factor)) / 0.65),
                 size=(self.ids.temp_layout.width * resize_factor, self.ids.temp_layout.height * height_factor))
             # Bind line points to update dynamically when the layout size changes
         self.bind(pos=self.update_line, size=self.update_line)
