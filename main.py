@@ -1873,7 +1873,7 @@ class GraphWindow(Screen): #3rd window
             Color(0, 1, 0, 0.5)  # Set color to blue with alpha (RGB values + alpha)
             self.rectangle = Rectangle(
                 pos=(107.56800000000001, 203.8149350649351),
-                size=((2505.168, 3274.6266233766237)))
+                size=((2505.168, 250.6266233766237)))
         #with self.ids.temp_layout.canvas:
         #    Color(0, 1, 0, 0.1)  # Set color to blue (RGB values)
         #    self.rectangle = Rectangle(pos=self.ids.temp_layout.pos, size=self.ids.temp_layout.size)
