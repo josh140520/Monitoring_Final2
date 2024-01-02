@@ -1908,26 +1908,37 @@ class GraphWindow(Screen): #3rd window
                 points=points,
                 width=5  # Set line width (adjust as needed)
             )
-            listY = [200, 1200, 500, 800, None, None, 1200, 100, 300, 150, 1000, 500, 800, 140, 1050, 120, 700, 580,
+            listY = [None, 1200, 500, 800, None, None, 1200, 100, 300, 150, 1000, 500, 800, 140, 1050, 120, 700, 580,
                      890, 200, 500,
-                     220, 800]
-            listypos = #based on the nth term of the listy 23 number
-            x1 = 0.037
-            x2 = 0.0355
-            resize_factor = x1  #per hour 0.037
-            height_factor = 0.72
-            heightposition_factor = 0.84
-            position_factor = 0.84-(2*(listypos*x2))   #hour position
+                     None, None]
 
-            Color(0, 0, 0, 0.4)  # Set color to blue with alpha (RGB values + alpha)
-            self.rectangle = Rectangle(
-                pos=(self.ids.temp_layout.x + (self.ids.temp_layout.width * (1 - position_factor)) / 2,
-                     self.ids.temp_layout.y + (self.ids.temp_layout.height * (1 - heightposition_factor)) / 0.65),
-                size=(self.ids.temp_layout.width * resize_factor, self.ids.temp_layout.height * height_factor))
+            if listY[0] is None:
+                listY[0] = 0
+                self.draw_rectangle(0)
+            for i in range(1, 23):
+                if listY[i] is None:
+                    self.draw_rectangle(i)
+
+
+
+
+
             # Bind line points to update dynamically when the layout size changes
         self.bind(pos=self.update_line, size=self.update_line)
 
+    def draw_rectangle(self, listypos):
+        x1 = 0.039
+        x2 = 0.0355
+        resize_factor = x1  # per hour 0.037
+        height_factor = 0.72
+        heightposition_factor = 0.84
+        position_factor = 0.84 - (2.18 * (listypos * x2))  # hour position
 
+        Color(0, 0, 0, 0.4)  # Set color to blue with alpha (RGB values + alpha)
+        self.rectangle = Rectangle(
+            pos=(self.ids.temp_layout.x + (self.ids.temp_layout.width * (1 - position_factor)) / 2,
+                 self.ids.temp_layout.y + (self.ids.temp_layout.height * (1 - heightposition_factor)) / 0.65),
+            size=(self.ids.temp_layout.width * resize_factor, self.ids.temp_layout.height * height_factor))
 
     def show_temp1(self, instance):
         global temp_dict, n, selected_x, temp_sum
