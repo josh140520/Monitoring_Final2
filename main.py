@@ -1890,10 +1890,10 @@ class GraphWindow(Screen): #3rd window
                             label_color = Color(0, 0, 0, 1)  # Black color, fully opaque
                             label_position_x = self.ids.temp_layout.x + position_offset[0]
                             label_position_y = (self.ids.temp_layout.y + position_offset[1] +
-                                                self.ids.temp_layout.height * (y / max(listY)) * 0.7)
+                                                self.ids.temp_layout.height * (y / max(listY)) * 0.71)
                             print(f'the y: {y}')
 
-                            label = Label(text=str(y), pos=(label_position_x, label_position_y * 0.95),
+                            label = Label(text=str(y), pos=(label_position_x, label_position_y),
                                           color=label_color.rgb, font_size=sp(10))
                             label.texture_update()
 
