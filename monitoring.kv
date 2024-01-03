@@ -451,7 +451,7 @@ WindowManager:
                             on_release:
                                 self.background_color = 0, 0, 1, 0.75
                                 #root.active_graph(self)
-                                root.play_ringtone(self)
+
 
 
 
@@ -870,7 +870,7 @@ WindowManager:
                         size_hint: None, None
                         background_color: 1, 1, 1, 1
                         on_release:
-                            root.write_popup(self)
+                            root.active_graph(self)
 
             BoxLayout:
                 orientation: 'vertical'

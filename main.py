@@ -1049,65 +1049,8 @@ class MainWindow(Screen): #Main screen
         self.ids.batt_layout.add_widget(self.matplotlib_canvas)
         batt_active = {}
 
-    def active_graph(self, instance):
-        repeat = 1
-        interval_time = ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00',
-                         '08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00',
-                         '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00']
-        global temp_active, flow_active, pressure_active, batt_active
-        temp_active = {}
-        flow_active = {}
-        pressure_active = {}
-        batt_active = {}
-
-        current_time = datetime.datetime.now().strftime("%H:%M")
-        if current_time in interval_time or repeat == 1:
-            connection = sqlite3.connect(db_file)
-            cursor = connection.cursor()
-            data = datetime.datetime.now().strftime("Data_%B_%d_%Y")
 
 
-            for i in range(0, 86400, 3600):
-                start_id = i
-                end_id = i + 3600
-                query = f"""
-                    SELECT AVG(temperature) as avg_temp, AVG(flow) as avg_flow, AVG(pressure) as avg_pressure, AVG(battery) as avg_batt 
-                    FROM {data} 
-                    WHERE id BETWEEN {start_id} AND {end_id}
-                """
-                try:
-                    cursor.execute(query)
-                    results = cursor.fetchall()
-                    print(f'the result: {results}')
-                    for row in results:
-                        avg_temp, avg_flow, avg_pressure, avg_batt = row
-                        temp_active[end_id] = avg_temp
-                        flow_active[end_id] = avg_flow
-                        pressure_active[end_id] = avg_pressure
-                        batt_active[end_id] = avg_batt
-                except:
-                    print('Date does not exist!')
-
-            print(temp_active)
-            print(flow_active)
-            print(pressure_active)
-            print(batt_active)
-
-            if data:
-                print("It is today")
-                self.active_temp(instance)
-                self.active_flow(instance)
-                self.active_pressure(instance)
-                self.active_batt(instance)
-                repeat = 0
-            else:
-                self.active_temp(instance)
-                self.active_flow(instance)
-                self.active_pressure(instance)
-                self.active_batt(instance)
-                repeat = 0
-        else:
-            print("Repeated\nRepeated\nRepeated\nRepeated\n")
 
     def stop_release_callback(self, instance):
         # Schedule the start_testing function with a delay of 1 second
@@ -1838,7 +1781,75 @@ class GraphWindow(Screen): #3rd window
         popup = Popup(title='Successful Saving', content=content, size_hint=(None, None), size=(300*Multiplier_Excel, 200*Multiplier_Excel), background_color=(0.5, 0.5, 0.8, 1))
         popup.open()
 
+
+
+    def active_graph(self, instance):
+        repeat = 1
+        interval_time = ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00',
+                         '08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00',
+                         '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00']
+        global temp_active, flow_active, pressure_active, batt_active
+        temp_active = {}
+        flow_active = {}
+        pressure_active = {}
+        batt_active = {}
+
+
+        connection = sqlite3.connect(db_file)
+        cursor = connection.cursor()
+        #data = datetime.datetime.now().strftime("Data_%B_%d_%Y")
+
+        data = f"Data_{self.selected_table.replace(' ', '_')}"
+        print(f'the date: {data}')
+
+
+        for i in range(0, 86400, 3600):
+            start_id = i
+            end_id = i + 3600
+            query = f"""
+                SELECT AVG(temperature) as avg_temp, AVG(flow) as avg_flow, AVG(pressure) as avg_pressure, AVG(battery) as avg_batt 
+                FROM {data} 
+                WHERE id BETWEEN {start_id} AND {end_id}
+            """
+            try:
+                cursor.execute(query)
+                results = cursor.fetchall()
+                print(f'the result: {results}')
+                for row in results:
+                    avg_temp, avg_flow, avg_pressure, avg_batt = row
+                    temp_active[end_id] = avg_temp
+                    flow_active[end_id] = avg_flow
+                    pressure_active[end_id] = avg_pressure
+                    batt_active[end_id] = avg_batt
+            except:
+                print('Date does not exist!')
+
+        print(temp_active)
+        print(flow_active)
+        print(pressure_active)
+        print(batt_active)
+
+        if data:
+            print("It is today")
+            self.show_temp(instance)
+            #self.show_flow(instance)
+            #self.active_pressure(instance)
+            #self.active_batt(instance)
+
+        else:
+            #self.active_temp(instance)
+            #self.active_flow(instance)
+            #self.active_pressure(instance)
+            #self.active_batt(instance)
+            pass
+
+
+
+
+
+
     def show_temp(self, instance):
+        global temp_active, n, interval_time, temp_sum
         drawY = []
         self.ids.temp_layout.canvas.clear()
         self.ids.temp_layout.clear_widgets()
@@ -1852,29 +1863,31 @@ class GraphWindow(Screen): #3rd window
         with self.ids.temp_layout.canvas:
 
             # Calculate line coordinates based on listX and listY
-            listX = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
-            listY = [20, None, 500, 800, None, None, 1200, 100, 300, 150, 1000, 500, 800, 140, 1050, 120, 700, 580,
-                     890, 200, 500,
-                     None, None]
+            listX = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
+            listY = list(temp_active.values())
+            print(f"the y values: {listY} and lenY {len(listY)} and lenX {len(listX)}")
 
 
 
             drawY = copy.copy(listY)
-            print(f'the: {drawY}')
-            if listY[0] is None:
-                drawY[0] = None
-                listY[0] = 0
+            print(f'the drawY: {drawY}')
+            min_value = min(filter(lambda x: x is not None and x != 0, listY), default=None)
+
+            # Replace every None or 0 with the minimum value
+            listY = [min_value if x is None or x == 0 else x for x in listY]
+            print(f"every listY{listY}")
+
 
             # Replace None values with 0
             for i in range(1, len(listY)):
                 if listY[i] is None:
                     listY[i] = listY[i - 1]
-            print(listY)
+            print(f"after convert{listY}")
 
 
 
             position_offset = (self.ids.temp_layout.width * (0.0415), self.ids.temp_layout.height * 0.25)
-
+            listY = [round(item, 1) for item in listY]
             for y in listY:
                 if y is not None:
                     line_color = Color(1, 1, 1, 1)  # Red line, fully opaque
@@ -1897,7 +1910,7 @@ class GraphWindow(Screen): #3rd window
                                           color=label_color.rgb, font_size=sp(10))
                             label.texture_update()
 
-                            # Draw the label on the canvas with a colored rectangle
+                    # Draw the label on the canvas with a colored rectangle
 
 
 
@@ -1938,7 +1951,7 @@ class GraphWindow(Screen): #3rd window
             if drawY[0] is None:
                 drawY[0] = 0
                 self.draw_rectangle(0)
-            for i in range(1, 23):
+            for i in range(1, 24):
                 if drawY[i] is None:
                     self.draw_rectangle(i)
 
@@ -1953,7 +1966,7 @@ class GraphWindow(Screen): #3rd window
         resize_factor = x1  # per hour 0.037
         height_factor = 0.7
         heightposition_factor = 0.84
-        position_factor = 0.84 - (2.18 * (listypos * x2))  # hour position
+        position_factor = 0.84 - (2.1 * (listypos * x2))  # hour position
 
         Color(0, 0, 0, 1)  # Set color to blue with alpha (RGB values + alpha)
         self.rectangle = Rectangle(
