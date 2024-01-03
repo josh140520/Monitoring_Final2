@@ -1841,6 +1841,7 @@ class GraphWindow(Screen): #3rd window
     def show_temp(self, instance):
         drawY = []
         self.ids.temp_layout.canvas.clear()
+        self.ids.temp_layout.clear_widgets()
 
         # Add a blue rectangle to the canvas
         image = Image(source='graph-background.png', width=self.ids.temp_layout.width, size_hint_x=1)
