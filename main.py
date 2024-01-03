@@ -1951,14 +1951,14 @@ class GraphWindow(Screen): #3rd window
         x1 = 0.039
         x2 = 0.0355
         resize_factor = x1  # per hour 0.037
-        height_factor = 0.72
+        height_factor = 0.7
         heightposition_factor = 0.84
         position_factor = 0.84 - (2.18 * (listypos * x2))  # hour position
 
         Color(0, 0, 0, 1)  # Set color to blue with alpha (RGB values + alpha)
         self.rectangle = Rectangle(
             pos=(self.ids.temp_layout.x + (self.ids.temp_layout.width * (1 - position_factor)) / 2,
-                 self.ids.temp_layout.y + (self.ids.temp_layout.height * (1 - heightposition_factor)) / 0.65),
+                 self.ids.temp_layout.y + (self.ids.temp_layout.height * (1 - heightposition_factor)) / 0.63),
             size=(self.ids.temp_layout.width * resize_factor, self.ids.temp_layout.height * height_factor))
 
 
