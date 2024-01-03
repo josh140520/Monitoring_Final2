@@ -1853,7 +1853,7 @@ class GraphWindow(Screen): #3rd window
 
             # Calculate line coordinates based on listX and listY
             listX = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
-            listY = [None, None, 500, 800, None, None, 1200, 100, 300, 150, 1000, 500, 800, 140, 1050, 120, 700, 580,
+            listY = [20, None, 500, 800, None, None, 1200, 100, 300, 150, 1000, 500, 800, 140, 1050, 120, 700, 580,
                      890, 200, 500,
                      None, None]
 
@@ -1877,14 +1877,14 @@ class GraphWindow(Screen): #3rd window
 
             for y in listY:
                 if y is not None:
-                    line_color = Color(1, 0, 0, 1)  # Red line, fully opaque
-                    line_position_x = self.ids.temp_layout.x + position_offset[0]
+                    line_color = Color(1, 1, 1, 1)  # Red line, fully opaque
+                    line_position_x = self.ids.temp_layout.x + position_offset[0] + self.ids.temp_layout.width * (1 / max(listX)) * (0.925)
                     line_position_y = (self.ids.temp_layout.y + position_offset[1] +
-                                       self.ids.temp_layout.height * (y / max(listY)) * 0.72)
+                                       self.ids.temp_layout.height * (y / max(listY)) * 0.7)
                     line_length = self.ids.temp_layout.width * 0.9  # Adjust the length as needed
                     line_points = [line_position_x, line_position_y,
                                    line_position_x + line_length, line_position_y]
-                    Line(points=line_points, width=2, color=line_color)
+                    Line(points=line_points, width=1, color=line_color)
                     for y in listY:
                         if y is not None:
                             label_color = Color(0, 0, 0, 1)  # Black color, fully opaque
