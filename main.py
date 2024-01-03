@@ -1832,7 +1832,7 @@ class GraphWindow(Screen): #3rd window
         if data:
             print("It is today")
             self.show_temp(instance)
-            #self.show_flow(instance)
+            self.show_flow(instance)
             #self.active_pressure(instance)
             #self.active_batt(instance)
 
@@ -2029,8 +2029,141 @@ class GraphWindow(Screen): #3rd window
 
 
 
-
     def show_flow(self, instance):
+        global flow_active, n, interval_time, flow_sum
+        drawY = []
+        self.ids.flow_layout.canvas.clear()
+        self.ids.flow_layout.clear_widgets()
+
+        # Add a blue rectangle to the canvas
+        image = Image(source='graph-background.png', width=self.ids.flow_layout.width, size_hint_x=1)
+
+        # Add the Image widget to the BoxLayout
+        self.ids.flow_layout.add_widget(image)
+
+        with self.ids.flow_layout.canvas:
+
+            # Calculate line coordinates based on listX and listY
+            listX = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
+            listY = list(flow_active.values())
+            print(f"the y values: {listY} and lenY {len(listY)} and lenX {len(listX)}")
+
+
+
+            drawY = copy.copy(listY)
+            print(f'the drawY: {drawY}')
+            min_value = min(filter(lambda x: x is not None and x != 0, listY), default=None)
+
+            # Replace every None or 0 with the minimum value
+            listY = [min_value if x is None or x == 0 else x for x in listY]
+            print(f"every listY{listY}")
+
+
+            # Replace None values with 0
+            for i in range(1, len(listY)):
+                if listY[i] is None:
+                    listY[i] = listY[i - 1]
+            print(f"after convert{listY}")
+
+
+
+            position_offset = (self.ids.flow_layout.width * (0.0415), self.ids.flow_layout.height * 0.25)
+            listY = [round(item, 1) for item in listY]
+            for y in listY:
+                if y is not None:
+                    line_color = Color(1, 1, 1, 1)  # Red line, fully opaque
+                    line_position_x = self.ids.flow_layout.x + position_offset[0] + self.ids.flow_layout.width * (1 / max(listX)) * (0.925)
+                    line_position_y = (self.ids.flow_layout.y + position_offset[1] +
+                                       self.ids.flow_layout.height * (y / max(listY)) * 0.7)
+                    line_length = self.ids.flow_layout.width * 0.9  # Adjust the length as needed
+                    line_points = [line_position_x, line_position_y,
+                                   line_position_x + line_length, line_position_y]
+                    Line(points=line_points, width=1, color=line_color)
+                    for y in listY:
+                        if y is not None:
+                            label_color = Color(0, 0, 0, 1)  # Black color, fully opaque
+                            label_position_x = self.ids.flow_layout.x + position_offset[0]
+                            label_position_y = (self.ids.flow_layout.y + position_offset[1] +
+                                                self.ids.flow_layout.height * (y / max(listY)) * 0.7)
+                            print(f'the y: {y}')
+
+                            label = Label(text=str(y), pos=(label_position_x, label_position_y * 0.985),
+                                          color=label_color.rgb, font_size=sp(10))
+                            label.texture_update()
+
+                    # Draw the label on the canvas with a colored rectangle
+
+
+
+
+
+                    # Draw the label on the canvas
+            print(f"the draw:{listY}")
+
+
+            # Create a list of points by interleaving x and y coordinates
+            points = []
+            for x, y in zip(listX, listY):
+                points.extend([
+                    self.ids.flow_layout.x + position_offset[0] + self.ids.flow_layout.width * (x / max(listX)) * (0.925),
+                    self.ids.flow_layout.y + position_offset[1] + self.ids.flow_layout.height * (y / max(listY)) * 0.7
+                ])
+            for x, y in zip(listX, listY):
+                x_pos = self.ids.flow_layout.x + position_offset[0] + self.ids.flow_layout.width * (x / max(listX)) * (
+                    0.925)
+                y_pos = self.ids.flow_layout.y + position_offset[1] + self.ids.flow_layout.height * (
+                            y / max(listY)) * 0.7
+            print(f"Point Coordinates: ({x_pos}, {y_pos})")
+
+            print(f"Position Offset: {position_offset}")
+
+
+            self.line_color = Color(0, 0, 1)
+            self.line = Line(
+                points=points,
+                width=5  # Set line width (adjust as needed)
+            )
+            print(drawY)
+
+
+
+
+
+            if drawY[0] is None:
+                drawY[0] = 0
+                self.draw_rectangle1(0)
+            for i in range(1, 24):
+                if drawY[i] is None:
+                    self.draw_rectangle1(i)
+
+
+
+            # Bind line points to update dynamically when the layout size changes
+
+
+    def draw_rectangle1(self, listypos):
+        x1 = 0.039
+        x2 = 0.0355
+        resize_factor = x1  # per hour 0.037
+        height_factor = 0.7
+        heightposition_factor = 0.84
+        position_factor = 0.84 - (2.1 * (listypos * x2))  # hour position
+
+        Color(0, 0, 0, 1)  # Set color to blue with alpha (RGB values + alpha)
+        self.rectangle = Rectangle(
+            pos=(self.ids.flow_layout.x + (self.ids.flow_layout.width * (1 - position_factor)) / 2,
+                 self.ids.flow_layout.y + (self.ids.flow_layout.height * (1 - heightposition_factor)) / 0.63),
+            size=(self.ids.flow_layout.width * resize_factor, self.ids.flow_layout.height * height_factor))
+
+
+
+
+
+
+
+
+
+    def show_flow1(self, instance):
         global flow_dict, n, selected_x, flow_sum
         self.ids.flow_layout.clear_widgets()
         fig, ax = plt.subplots()

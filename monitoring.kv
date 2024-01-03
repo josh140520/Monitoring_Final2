@@ -1050,8 +1050,22 @@ WindowManager:
                                     text: 'Flow Rate Sensor'
                             BoxLayout:
                                 orientation: 'vertical'
-                                id: flow_layout
+
                                 size_hint: 1, 1.5
+                                #############################################################
+                                GridLayout:
+                                    cols: 1
+
+                                    BoxLayout:
+                                        id: flow_layout
+                                        orientation: 'horizontal'
+                                        size_hint: 0.95, 0.9
+
+                                        Image:
+                                            source: 'graph-background.png'
+                                            width: root.width
+                                            size_hint_x: 1
+                                            #size: self.texture_size
 
 
                     GridLayout:
