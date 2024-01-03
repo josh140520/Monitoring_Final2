@@ -1880,7 +1880,7 @@ class GraphWindow(Screen): #3rd window
                     line_color = Color(1, 0, 0, 1)  # Red line, fully opaque
                     line_position_x = self.ids.temp_layout.x + position_offset[0]
                     line_position_y = (self.ids.temp_layout.y + position_offset[1] +
-                                       self.ids.temp_layout.height * (y / max(listY)) * 0.75)
+                                       self.ids.temp_layout.height * (y / max(listY)) * 0.72)
                     line_length = self.ids.temp_layout.width * 0.9  # Adjust the length as needed
                     line_points = [line_position_x, line_position_y,
                                    line_position_x + line_length, line_position_y]
@@ -1893,7 +1893,7 @@ class GraphWindow(Screen): #3rd window
                                                 self.ids.temp_layout.height * (y / max(listY)) * 0.7)
                             print(f'the y: {y}')
 
-                            label = Label(text=str(y), pos=(label_position_x, label_position_y * 0.98),
+                            label = Label(text=str(y), pos=(label_position_x, label_position_y * 0.985),
                                           color=label_color.rgb, font_size=sp(10))
                             label.texture_update()
 
