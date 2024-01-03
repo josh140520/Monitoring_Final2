@@ -1885,6 +1885,26 @@ class GraphWindow(Screen): #3rd window
                     line_points = [line_position_x, line_position_y,
                                    line_position_x + line_length, line_position_y]
                     Line(points=line_points, width=2, color=line_color)
+                    for y in listY:
+                        if y is not None:
+                            label_color = Color(0, 0, 0, 1)  # Black color, fully opaque
+                            label_position_x = self.ids.temp_layout.x + position_offset[0]
+                            label_position_y = (self.ids.temp_layout.y + position_offset[1] +
+                                                self.ids.temp_layout.height * (y / max(listY)) * 0.7)
+                            print(f'the y: {y}')
+
+                            label = Label(text=str(y), pos=(label_position_x, label_position_y * 0.95),
+                                          color=label_color.rgb, font_size=sp(10))
+                            label.texture_update()
+
+                            # Draw the label on the canvas with a colored rectangle
+
+
+
+
+
+                    # Draw the label on the canvas
+            print(f"the draw:{listY}")
 
 
             # Create a list of points by interleaving x and y coordinates
