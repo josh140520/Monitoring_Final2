@@ -1833,14 +1833,14 @@ class GraphWindow(Screen): #3rd window
             print("It is today")
             self.show_temp(instance)
             self.show_flow(instance)
-            #self.active_pressure(instance)
-            #self.active_batt(instance)
+            self.show_pressure(instance)
+            self.show_batt(instance)
 
         else:
-            #self.active_temp(instance)
-            #self.active_flow(instance)
-            #self.active_pressure(instance)
-            #self.active_batt(instance)
+            self.show_temp(instance)
+            self.show_flow(instance)
+            self.show_pressure(instance)
+            self.show_batt(instance)
             pass
 
 
@@ -1976,57 +1976,6 @@ class GraphWindow(Screen): #3rd window
 
 
 
-    def show_temp1(self, instance):
-        global temp_dict, n, selected_x, temp_sum
-        self.ids.temp_layout.clear_widgets()
-        fig, ax = plt.subplots()
-
-        x_values = list(temp_dict.keys())
-        x_values = [key or 0 for key in x_values]
-        x_values = x_values[29::30]
-        print(f'thex{x_values}:{len(x_values)}')
-        y_values = list(temp_dict.values())
-        window_size = 30
-        y_values = [mean([v for v in values if v is not None]) if any(v is not None for v in values) else None for values in [y_values[i:i + window_size] for i in range(0, len(y_values), window_size)]]
-
-        high_y_value = 41.2
-        plt.axhline(y=high_y_value, color='red', linestyle='dashed', alpha=0.35, linewidth=1, dashes=(8, 8))
-
-        low_y_value = 38.8
-        plt.axhline(y=low_y_value, color='red', linestyle='dashed', alpha=0.35, linewidth=1, dashes=(8, 8))
-        # Plot the line for y-values
-        ax.plot(x_values, y_values, color='blue')
-
-        # Plot dummy points for x-axis labels, only use x-axis tick labels for visualization
-        for x_value in x_values:
-            if x_value not in selected_x:
-                ax.plot([x_value], [0], color='white', marker='', linestyle='')
-
-        # Rotate x-axis labels for better readability if needed
-        plt.xticks(rotation=r)
-
-        # Set the color and font size of x-axis tick labels
-        x_ticks = ax.get_xticklabels()
-        for tick in x_ticks:
-            if tick.get_text() not in selected_x:
-                tick.set_color('white')
-                tick.set_fontsize(1)  # Adjust the font size as needed for visibility
-            else:
-                tick.set_color('black')
-                tick.set_rotation(25)
-                tick.set_fontsize(7)
-                tick.set_weight('bold')
-
-
-        ax.grid(True)
-        ax.legend()
-        self.matplotlib_canvas = FigureCanvasKivyAgg(figure=fig)
-        self.ids.temp_layout.add_widget(self.matplotlib_canvas)
-        temp_sum = temp_dict
-        temp_dict = {}
-
-
-
 
 
     def show_flow(self, instance):
@@ -2047,7 +1996,7 @@ class GraphWindow(Screen): #3rd window
             listX = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
             listY = list(flow_active.values())
             print(f"the y values: {listY} and lenY {len(listY)} and lenX {len(listX)}")
-
+            #listY = [max(0, x) for x in listY]
 
 
             drawY = copy.copy(listY)
@@ -2158,116 +2107,134 @@ class GraphWindow(Screen): #3rd window
 
 
 
-
-
-
-
-
-    def show_flow1(self, instance):
-        global flow_dict, n, selected_x, flow_sum
-        self.ids.flow_layout.clear_widgets()
-        fig, ax = plt.subplots()
-
-        x_values = list(flow_dict.keys())
-        x_values = [key or 0 for key in x_values]
-        x_values = x_values[29::30]
-        y_values = list(flow_dict.values())
-        window_size = 30
-        y_values = [mean([v for v in values if v is not None]) if any(v is not None for v in values) else None for values in [y_values[i:i + window_size] for i in range(0, len(y_values), window_size)]]
-
-        high_y_value = 15
-        plt.axhline(y=high_y_value, color='red', linestyle='dashed', alpha=0.35, linewidth=1, dashes=(8, 8))
-
-        low_y_value = 14.55
-        plt.axhline(y=low_y_value, color='red', linestyle='dashed', alpha=0.35, linewidth=1, dashes=(8, 8))
-
-        # Plot the line for y-values
-        ax.plot(x_values, y_values, color='blue')
-
-        # Plot dummy points for x-axis labels, only use x-axis tick labels for visualization
-        for x_value in x_values:
-            if x_value not in selected_x:
-                ax.plot([x_value], [0], color='white', marker='', linestyle='')
-
-        # Rotate x-axis labels for better readability if needed
-        plt.xticks(rotation=r)
-
-        # Set the color and font size of x-axis tick labels
-        x_ticks = ax.get_xticklabels()
-        for tick in x_ticks:
-            if tick.get_text() not in selected_x:
-                tick.set_color('white')
-                tick.set_fontsize(1)  # Adjust the font size as needed for visibility
-            else:
-                tick.set_color('black')
-                tick.set_rotation(25)
-                tick.set_fontsize(7)
-                tick.set_weight('bold')
-
-        ax.grid(True)
-        ax.legend()
-        self.matplotlib_canvas = FigureCanvasKivyAgg(figure=fig)
-        self.ids.flow_layout.add_widget(self.matplotlib_canvas)
-        flow_sum = flow_dict
-        flow_dict = {}
-
-
-
-
-
-
-
-
-
-
     def show_pressure(self, instance):
-        global pressure_dict, n, selected_x, pressure_sum
+        global pressure_active, n, interval_time, pressure_sum
+        drawY = []
+        self.ids.pressure_layout.canvas.clear()
         self.ids.pressure_layout.clear_widgets()
-        fig, ax = plt.subplots()
 
-        x_values = list(pressure_dict.keys())
-        x_values = [key or 0 for key in x_values]
-        x_values = x_values[29::30]
-        y_values = list(pressure_dict.values())
-        window_size = 30
-        y_values = [mean([v for v in values if v is not None]) if any(v is not None for v in values) else None for values in [y_values[i:i + window_size] for i in range(0, len(y_values), window_size)]]
+        # Add a blue rectangle to the canvas
+        image = Image(source='graph-background.png', width=self.ids.pressure_layout.width, size_hint_x=1)
+
+        # Add the Image widget to the BoxLayout
+        self.ids.pressure_layout.add_widget(image)
+
+        with self.ids.pressure_layout.canvas:
+
+            # Calculate line coordinates based on listX and listY
+            listX = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
+            listY = list(pressure_active.values())
+            print(f"the y values: {listY} and lenY {len(listY)} and lenX {len(listX)}")
 
 
-        high_y_value = 41.2
-        plt.axhline(y=high_y_value, color='red', linestyle='dashed', alpha=0.35, linewidth=1, dashes=(8, 8))
 
-        low_y_value = 38.8
-        plt.axhline(y=low_y_value, color='red', linestyle='dashed', alpha=0.35, linewidth=1, dashes=(8, 8))
+            drawY = copy.copy(listY)
+            print(f'the drawY: {drawY}')
+            min_value = min(filter(lambda x: x is not None and x != 0, listY), default=None)
 
-        # Plot the line for y-values
-        ax.plot(x_values, y_values, color='blue')
+            # Replace every None or 0 with the minimum value
+            listY = [min_value if x is None or x == 0 else x for x in listY]
+            print(f"every listY{listY}")
 
-        # Plot dummy points for x-axis labels, only use x-axis tick labels for visualization
-        for x_value in x_values:
-            if x_value not in selected_x:
-                ax.plot([x_value], [0], color='white', marker='', linestyle='')
 
-        # Rotate x-axis labels for better readability if needed
-        plt.xticks(rotation=r)
+            # Replace None values with 0
+            for i in range(1, len(listY)):
+                if listY[i] is None:
+                    listY[i] = listY[i - 1]
+            print(f"after convert{listY}")
 
-        # Set the color and font size of x-axis tick labels
-        x_ticks = ax.get_xticklabels()
-        for tick in x_ticks:
-            if tick.get_text() not in selected_x:
-                tick.set_color('white')
-                tick.set_fontsize(1)  # Adjust the font size as needed for visibility
-            else:
-                tick.set_color('black')
-                tick.set_rotation(25)
-                tick.set_fontsize(7)
-                tick.set_weight('bold')
 
-        ax.grid(True)
-        ax.legend()
-        self.matplotlib_canvas = FigureCanvasKivyAgg(figure=fig)
-        self.ids.pressure_layout.add_widget(self.matplotlib_canvas)
-        pressure_sum = pressure_dict
-        pressure_dict = {}
+
+            position_offset = (self.ids.pressure_layout.width * (0.0415), self.ids.pressure_layout.height * 0.25)
+            listY = [round(item, 1) for item in listY]
+            for y in listY:
+                if y is not None:
+                    line_color = Color(1, 1, 1, 1)  # Red line, fully opaque
+                    line_position_x = self.ids.pressure_layout.x + position_offset[0] + self.ids.pressure_layout.width * (1 / max(listX)) * (0.925)
+                    line_position_y = (self.ids.pressure_layout.y + position_offset[1] +
+                                       self.ids.pressure_layout.height * (y / max(listY)) * 0.7)
+                    line_length = self.ids.pressure_layout.width * 0.9  # Adjust the length as needed
+                    line_points = [line_position_x, line_position_y,
+                                   line_position_x + line_length, line_position_y]
+                    Line(points=line_points, width=1, color=line_color)
+                    for y in listY:
+                        if y is not None:
+                            label_color = Color(0, 0, 0, 1)  # Black color, fully opaque
+                            label_position_x = self.ids.pressure_layout.x + position_offset[0]
+                            label_position_y = (self.ids.pressure_layout.y + position_offset[1] +
+                                                self.ids.pressure_layout.height * (y / max(listY)) * 0.7)
+                            print(f'the y: {y}')
+
+                            label = Label(text=str(y), pos=(label_position_x, label_position_y * 0.985),
+                                          color=label_color.rgb, font_size=sp(10))
+                            label.texture_update()
+
+                    # Draw the label on the canvas with a colored rectangle
+
+
+
+
+
+                    # Draw the label on the canvas
+            print(f"the draw:{listY}")
+
+
+            # Create a list of points by interleaving x and y coordinates
+            points = []
+            for x, y in zip(listX, listY):
+                points.extend([
+                    self.ids.pressure_layout.x + position_offset[0] + self.ids.pressure_layout.width * (x / max(listX)) * (0.925),
+                    self.ids.pressure_layout.y + position_offset[1] + self.ids.pressure_layout.height * (y / max(listY)) * 0.7
+                ])
+            for x, y in zip(listX, listY):
+                x_pos = self.ids.pressure_layout.x + position_offset[0] + self.ids.pressure_layout.width * (x / max(listX)) * (
+                    0.925)
+                y_pos = self.ids.pressure_layout.y + position_offset[1] + self.ids.pressure_layout.height * (
+                            y / max(listY)) * 0.7
+            print(f"Point Coordinates: ({x_pos}, {y_pos})")
+
+            print(f"Position Offset: {position_offset}")
+
+
+            self.line_color = Color(0, 0, 1)
+            self.line = Line(
+                points=points,
+                width=5  # Set line width (adjust as needed)
+            )
+            print(drawY)
+
+
+
+
+
+            if drawY[0] is None:
+                drawY[0] = 0
+                self.draw_rectangle2(0)
+            for i in range(1, 24):
+                if drawY[i] is None:
+                    self.draw_rectangle2(i)
+
+
+
+            # Bind line points to update dynamically when the layout size changes
+
+
+    def draw_rectangle2(self, listypos):
+        x1 = 0.039
+        x2 = 0.0355
+        resize_factor = x1  # per hour 0.037
+        height_factor = 0.7
+        heightposition_factor = 0.84
+        position_factor = 0.84 - (2.1 * (listypos * x2))  # hour position
+
+        Color(0, 0, 0, 1)  # Set color to blue with alpha (RGB values + alpha)
+        self.rectangle = Rectangle(
+            pos=(self.ids.pressure_layout.x + (self.ids.pressure_layout.width * (1 - position_factor)) / 2,
+                 self.ids.pressure_layout.y + (self.ids.pressure_layout.height * (1 - heightposition_factor)) / 0.63),
+            size=(self.ids.pressure_layout.width * resize_factor, self.ids.pressure_layout.height * height_factor))
+
+
+
 
 
 
@@ -2275,46 +2242,130 @@ class GraphWindow(Screen): #3rd window
 
 
     def show_batt(self, instance):
-        global batt_dict, n, selected_x
+        global batt_active, n, interval_time, batt_sum
+        drawY = []
+        self.ids.batt_layout.canvas.clear()
         self.ids.batt_layout.clear_widgets()
-        fig, ax = plt.subplots()
 
-        x_values = list(batt_dict.keys())
-        x_values = [key or 0 for key in x_values]
-        x_values = x_values[29::30]
-        y_values = list(batt_dict.values())
-        window_size = 30
-        y_values = [mean([v for v in values if v is not None]) if any(v is not None for v in values) else None for values in [y_values[i:i + window_size] for i in range(0, len(y_values), window_size)]]
+        # Add a blue rectangle to the canvas
+        image = Image(source='graph-background.png', width=self.ids.batt_layout.width, size_hint_x=1)
 
-        # Plot the line for y-values
-        ax.plot(x_values, y_values, color='blue')
+        # Add the Image widget to the BoxLayout
+        self.ids.batt_layout.add_widget(image)
 
-        # Plot dummy points for x-axis labels, only use x-axis tick labels for visualization
-        for x_value in x_values:
-            if x_value not in selected_x:
-                ax.plot([x_value], [0], color='white', marker='', linestyle='')
+        with self.ids.batt_layout.canvas:
 
-        # Rotate x-axis labels for better readability if needed
-        plt.xticks(rotation=r)
+            # Calculate line coordinates based on listX and listY
+            listX = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
+            listY = list(batt_active.values())
+            print(f"the y values: {listY} and lenY {len(listY)} and lenX {len(listX)}")
 
-        # Set the color and font size of x-axis tick labels
-        x_ticks = ax.get_xticklabels()
-        for tick in x_ticks:
-            if tick.get_text() not in selected_x:
-                tick.set_color('white')
-                tick.set_fontsize(1)  # Adjust the font size as needed for visibility
-            else:
-                tick.set_color('black')
-                tick.set_rotation(25)
-                tick.set_fontsize(7)
-                tick.set_weight('bold')
 
-        ax.grid(True)
-        ax.legend()
-        self.matplotlib_canvas = FigureCanvasKivyAgg(figure=fig)
-        self.ids.batt_layout.add_widget(self.matplotlib_canvas)
-        batt_dict = {}
 
+            drawY = copy.copy(listY)
+            print(f'the drawY: {drawY}')
+            min_value = min(filter(lambda x: x is not None and x != 0, listY), default=None)
+
+            # Replace every None or 0 with the minimum value
+            listY = [min_value if x is None or x == 0 else x for x in listY]
+            print(f"every listY{listY}")
+
+
+            # Replace None values with 0
+            for i in range(1, len(listY)):
+                if listY[i] is None:
+                    listY[i] = listY[i - 1]
+            print(f"after convert{listY}")
+
+
+
+            position_offset = (self.ids.batt_layout.width * (0.0415), self.ids.batt_layout.height * 0.25)
+            listY = [round(item, 1) for item in listY]
+            for y in listY:
+                if y is not None:
+                    line_color = Color(1, 1, 1, 1)  # Red line, fully opaque
+                    line_position_x = self.ids.batt_layout.x + position_offset[0] + self.ids.batt_layout.width * (1 / max(listX)) * (0.925)
+                    line_position_y = (self.ids.batt_layout.y + position_offset[1] +
+                                       self.ids.batt_layout.height * (y / max(listY)) * 0.7)
+                    line_length = self.ids.batt_layout.width * 0.9  # Adjust the length as needed
+                    line_points = [line_position_x, line_position_y,
+                                   line_position_x + line_length, line_position_y]
+                    Line(points=line_points, width=1, color=line_color)
+                    for y in listY:
+                        if y is not None:
+                            label_color = Color(0, 0, 0, 1)  # Black color, fully opaque
+                            label_position_x = self.ids.batt_layout.x + position_offset[0]
+                            label_position_y = (self.ids.batt_layout.y + position_offset[1] +
+                                                self.ids.batt_layout.height * (y / max(listY)) * 0.7)
+                            print(f'the y: {y}')
+
+                            label = Label(text=str(y), pos=(label_position_x, label_position_y * 0.985),
+                                          color=label_color.rgb, font_size=sp(10))
+                            label.texture_update()
+
+                    # Draw the label on the canvas with a colored rectangle
+
+
+
+
+
+                    # Draw the label on the canvas
+            print(f"the draw:{listY}")
+
+
+            # Create a list of points by interleaving x and y coordinates
+            points = []
+            for x, y in zip(listX, listY):
+                points.extend([
+                    self.ids.batt_layout.x + position_offset[0] + self.ids.batt_layout.width * (x / max(listX)) * (0.925),
+                    self.ids.batt_layout.y + position_offset[1] + self.ids.batt_layout.height * (y / max(listY)) * 0.7
+                ])
+            for x, y in zip(listX, listY):
+                x_pos = self.ids.batt_layout.x + position_offset[0] + self.ids.batt_layout.width * (x / max(listX)) * (
+                    0.925)
+                y_pos = self.ids.batt_layout.y + position_offset[1] + self.ids.batt_layout.height * (
+                            y / max(listY)) * 0.7
+            print(f"Point Coordinates: ({x_pos}, {y_pos})")
+
+            print(f"Position Offset: {position_offset}")
+
+
+            self.line_color = Color(0, 0, 1)
+            self.line = Line(
+                points=points,
+                width=5  # Set line width (adjust as needed)
+            )
+            print(drawY)
+
+
+
+
+
+            if drawY[0] is None:
+                drawY[0] = 0
+                self.draw_rectangle3(0)
+            for i in range(1, 24):
+                if drawY[i] is None:
+                    self.draw_rectangle3(i)
+
+
+
+            # Bind line points to update dynamically when the layout size changes
+
+
+    def draw_rectangle3(self, listypos):
+        x1 = 0.039
+        x2 = 0.0355
+        resize_factor = x1  # per hour 0.037
+        height_factor = 0.7
+        heightposition_factor = 0.84
+        position_factor = 0.84 - (2.1 * (listypos * x2))  # hour position
+
+        Color(0, 0, 0, 1)  # Set color to blue with alpha (RGB values + alpha)
+        self.rectangle = Rectangle(
+            pos=(self.ids.batt_layout.x + (self.ids.batt_layout.width * (1 - position_factor)) / 2,
+                 self.ids.batt_layout.y + (self.ids.batt_layout.height * (1 - heightposition_factor)) / 0.63),
+            size=(self.ids.batt_layout.width * resize_factor, self.ids.batt_layout.height * height_factor))
 
 
 

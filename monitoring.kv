@@ -1062,7 +1062,7 @@ WindowManager:
                                         size_hint: 0.95, 0.9
 
                                         Image:
-                                            source: 'graph-background.png'
+                                            source: 'graph1-background.png'
                                             width: root.width
                                             size_hint_x: 1
                                             #size: self.texture_size
@@ -1089,8 +1089,22 @@ WindowManager:
                                     text: 'Pressure Sensor'
                             BoxLayout:
                                 orientation: 'vertical'
-                                id: pressure_layout
+
                                 size_hint: 1, 1.5
+                                #############################################################
+                                GridLayout:
+                                    cols: 1
+
+                                    BoxLayout:
+                                        id: pressure_layout
+                                        orientation: 'horizontal'
+                                        size_hint: 0.95, 0.9
+
+                                        Image:
+                                            source: 'graph2-background.png'
+                                            width: root.width
+                                            size_hint_x: 1
+                                            #size: self.texture_size
 
                     GridLayout:
                         cols: 2
@@ -1113,8 +1127,22 @@ WindowManager:
                                     text: 'Battery Meter Level'
                             BoxLayout:
                                 orientation: 'vertical'
-                                id: batt_layout
+
                                 size_hint: 1, 1.5
+                                #############################################################
+                                GridLayout:
+                                    cols: 1
+
+                                    BoxLayout:
+                                        id: batt_layout
+                                        orientation: 'horizontal'
+                                        size_hint: 0.95, 0.9
+
+                                        Image:
+                                            source: 'graph3-background.png'
+                                            width: root.width
+                                            size_hint_x: 1
+                                            #size: self.texture_size
 
 
 
