@@ -1900,7 +1900,7 @@ class GraphWindow(Screen): #3rd window
 
 
 
-            position_offset = (self.ids.temp_layout.width * (0.0415), self.ids.temp_layout.height * 0.25)
+            position_offset = (self.ids.temp_layout.width * (0.043), self.ids.temp_layout.height * 0.25) #changes!
             listY = [round(item, 1) for item in listY]
             for y in listY:
                 if y is not None:
@@ -1931,7 +1931,7 @@ class GraphWindow(Screen): #3rd window
 
                     label = Label(
                         text=str(y),
-                        pos=(label_position_x-38, label_position_y * 0.985 - 15),   #changes!
+                        pos=(label_position_x-38, label_position_y * 0.985 -8),   #changes!
                         color=label_color.rgb,
                         font_size=sp(10),
                     )
@@ -1960,7 +1960,7 @@ class GraphWindow(Screen): #3rd window
             points = []
             for x, y in zip(listX, listY):
                 points.extend([
-                    self.ids.temp_layout.x + position_offset[0] + self.ids.temp_layout.width * (x / max(listX)) * (0.9)-40, #changes!
+                    self.ids.temp_layout.x + position_offset[0] + self.ids.temp_layout.width * (x / max(listX)) * (0.925)-40, #changes!
                     self.ids.temp_layout.y + position_offset[1] + self.ids.temp_layout.height * (y / max(listY)) * 0.7
                 ])
             for x, y in zip(listX, listY):
