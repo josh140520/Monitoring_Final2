@@ -1863,8 +1863,7 @@ class GraphWindow(Screen): #3rd window
     def show_temp(self, instance):
         global temp_active, n, interval_time, temp_sum
         drawY = []
-        self.ids.temp_layout.canvas.clear()
-        self.ids.temp_layout.clear_widgets()
+
 
         # Add a blue rectangle to the canvas
         image = Image(source='graph-background.png', width=self.ids.temp_layout.width, size_hint_x=1)
@@ -1876,7 +1875,7 @@ class GraphWindow(Screen): #3rd window
 
             # Calculate line coordinates based on listX and listY
             listX = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
-            listY = list(temp_active.values())
+            listY = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
             print(f"the y values: {listY} and lenY {len(listY)} and lenX {len(listX)}")
 
 
@@ -1910,17 +1909,17 @@ class GraphWindow(Screen): #3rd window
                     line_points = [line_position_x, line_position_y,
                                    line_position_x + line_length, line_position_y]
                     Line(points=line_points, width=1, color=line_color)
-                    for y in listY:
-                        if y is not None:
-                            label_color = Color(0, 0, 0, 1)  # Black color, fully opaque
-                            label_position_x = self.ids.temp_layout.x + position_offset[0]
-                            label_position_y = (self.ids.temp_layout.y + position_offset[1] +
-                                                self.ids.temp_layout.height * (y / max(listY)) * 0.7)
-                            print(f'the y: {y}')
+            for y in listY:
+                if y is not None:
+                    label_color = Color(0, 0, 0, 1)  # Black color, fully opaque
+                    label_position_x = self.ids.temp_layout.x + position_offset[0]
+                    label_position_y = (self.ids.temp_layout.y + position_offset[1] +
+                                        self.ids.temp_layout.height * (y / max(listY)) * 0.7)
+                    print(f'the y: {y}')
 
-                            label = Label(text=str(y), pos=(label_position_x, label_position_y * 0.985),
-                                          color=label_color.rgb, font_size=sp(10))
-                            label.texture_update()
+                    label = Label(text=str(y), pos=(label_position_x, label_position_y * 0.985),
+                                  color=label_color.rgb, font_size=sp(10))
+                    label.texture_update()
 
                     # Draw the label on the canvas with a colored rectangle
 
@@ -1993,11 +1992,10 @@ class GraphWindow(Screen): #3rd window
     def show_flow(self, instance):
         global flow_active, n, interval_time, flow_sum
         drawY = []
-        self.ids.flow_layout.canvas.clear()
-        self.ids.flow_layout.clear_widgets()
+
 
         # Add a blue rectangle to the canvas
-        image = Image(source='graph-background.png', width=self.ids.flow_layout.width, size_hint_x=1)
+        image = Image(source='graph1-background.png', width=self.ids.flow_layout.width, size_hint_x=1)
 
         # Add the Image widget to the BoxLayout
         self.ids.flow_layout.add_widget(image)
@@ -2006,7 +2004,7 @@ class GraphWindow(Screen): #3rd window
 
             # Calculate line coordinates based on listX and listY
             listX = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
-            listY = list(flow_active.values())
+            listY = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
             print(f"the y values: {listY} and lenY {len(listY)} and lenX {len(listX)}")
             #listY = [max(0, x) for x in listY]
 
@@ -2040,17 +2038,17 @@ class GraphWindow(Screen): #3rd window
                     line_points = [line_position_x, line_position_y,
                                    line_position_x + line_length, line_position_y]
                     Line(points=line_points, width=1, color=line_color)
-                    for y in listY:
-                        if y is not None:
-                            label_color = Color(0, 0, 0, 1)  # Black color, fully opaque
-                            label_position_x = self.ids.flow_layout.x + position_offset[0]
-                            label_position_y = (self.ids.flow_layout.y + position_offset[1] +
-                                                self.ids.flow_layout.height * (y / max(listY)) * 0.7)
-                            print(f'the y: {y}')
+            for y in listY:
+                if y is not None:
+                    label_color = Color(0, 0, 0, 1)  # Black color, fully opaque
+                    label_position_x = self.ids.flow_layout.x + position_offset[0]
+                    label_position_y = (self.ids.flow_layout.y + position_offset[1] +
+                                        self.ids.flow_layout.height * (y / max(listY)) * 0.7)
+                    print(f'the y: {y}')
 
-                            label = Label(text=str(y), pos=(label_position_x, label_position_y * 0.985),
-                                          color=label_color.rgb, font_size=sp(10))
-                            label.texture_update()
+                    label = Label(text=str(y), pos=(label_position_x, label_position_y * 0.985),
+                                  color=label_color.rgb, font_size=sp(10))
+                    label.texture_update()
 
                     # Draw the label on the canvas with a colored rectangle
 
@@ -2122,11 +2120,10 @@ class GraphWindow(Screen): #3rd window
     def show_pressure(self, instance):
         global pressure_active, n, interval_time, pressure_sum
         drawY = []
-        self.ids.pressure_layout.canvas.clear()
-        self.ids.pressure_layout.clear_widgets()
+
 
         # Add a blue rectangle to the canvas
-        image = Image(source='graph-background.png', width=self.ids.pressure_layout.width, size_hint_x=1)
+        image = Image(source='graph2-background.png', width=self.ids.pressure_layout.width, size_hint_x=1)
 
         # Add the Image widget to the BoxLayout
         self.ids.pressure_layout.add_widget(image)
@@ -2135,7 +2132,7 @@ class GraphWindow(Screen): #3rd window
 
             # Calculate line coordinates based on listX and listY
             listX = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
-            listY = list(pressure_active.values())
+            listY = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
             print(f"the y values: {listY} and lenY {len(listY)} and lenX {len(listX)}")
 
 
@@ -2169,17 +2166,17 @@ class GraphWindow(Screen): #3rd window
                     line_points = [line_position_x, line_position_y,
                                    line_position_x + line_length, line_position_y]
                     Line(points=line_points, width=1, color=line_color)
-                    for y in listY:
-                        if y is not None:
-                            label_color = Color(0, 0, 0, 1)  # Black color, fully opaque
-                            label_position_x = self.ids.pressure_layout.x + position_offset[0]
-                            label_position_y = (self.ids.pressure_layout.y + position_offset[1] +
-                                                self.ids.pressure_layout.height * (y / max(listY)) * 0.7)
-                            print(f'the y: {y}')
+            for y in listY:
+                if y is not None:
+                    label_color = Color(0, 0, 0, 1)  # Black color, fully opaque
+                    label_position_x = self.ids.pressure_layout.x + position_offset[0]
+                    label_position_y = (self.ids.pressure_layout.y + position_offset[1] +
+                                        self.ids.pressure_layout.height * (y / max(listY)) * 0.7)
+                    print(f'the y: {y}')
 
-                            label = Label(text=str(y), pos=(label_position_x, label_position_y * 0.985),
-                                          color=label_color.rgb, font_size=sp(10))
-                            label.texture_update()
+                    label = Label(text=str(y), pos=(label_position_x, label_position_y * 0.985),
+                                  color=label_color.rgb, font_size=sp(10))
+                    label.texture_update()
 
                     # Draw the label on the canvas with a colored rectangle
 
@@ -2256,11 +2253,10 @@ class GraphWindow(Screen): #3rd window
     def show_batt(self, instance):
         global batt_active, n, interval_time, batt_sum
         drawY = []
-        self.ids.batt_layout.canvas.clear()
-        self.ids.batt_layout.clear_widgets()
+
 
         # Add a blue rectangle to the canvas
-        image = Image(source='graph-background.png', width=self.ids.batt_layout.width, size_hint_x=1)
+        image = Image(source='graph3-background.png', width=self.ids.batt_layout.width, size_hint_x=1)
 
         # Add the Image widget to the BoxLayout
         self.ids.batt_layout.add_widget(image)
@@ -2269,7 +2265,7 @@ class GraphWindow(Screen): #3rd window
 
             # Calculate line coordinates based on listX and listY
             listX = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
-            listY = list(batt_active.values())
+            listY = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
             print(f"the y values: {listY} and lenY {len(listY)} and lenX {len(listX)}")
 
 
@@ -2303,17 +2299,17 @@ class GraphWindow(Screen): #3rd window
                     line_points = [line_position_x, line_position_y,
                                    line_position_x + line_length, line_position_y]
                     Line(points=line_points, width=1, color=line_color)
-                    for y in listY:
-                        if y is not None:
-                            label_color = Color(0, 0, 0, 1)  # Black color, fully opaque
-                            label_position_x = self.ids.batt_layout.x + position_offset[0]
-                            label_position_y = (self.ids.batt_layout.y + position_offset[1] +
-                                                self.ids.batt_layout.height * (y / max(listY)) * 0.7)
-                            print(f'the y: {y}')
+            for y in listY:
+                if y is not None:
+                    label_color = Color(0, 0, 0, 1)  # Black color, fully opaque
+                    label_position_x = self.ids.batt_layout.x + position_offset[0]
+                    label_position_y = (self.ids.batt_layout.y + position_offset[1] +
+                                        self.ids.batt_layout.height * (y / max(listY)) * 0.7)
+                    print(f'the y: {y}')
 
-                            label = Label(text=str(y), pos=(label_position_x, label_position_y * 0.985),
-                                          color=label_color.rgb, font_size=sp(10))
-                            label.texture_update()
+                    label = Label(text=str(y), pos=(label_position_x, label_position_y * 0.985),
+                                  color=label_color.rgb, font_size=sp(10))
+                    label.texture_update()
 
                     # Draw the label on the canvas with a colored rectangle
 
@@ -2600,6 +2596,17 @@ class GraphWindow(Screen): #3rd window
 
             connection.commit()
             connection.close()
+            self.ids.temp_layout.canvas.clear()
+            self.ids.temp_layout.clear_widgets()
+
+            self.ids.flow_layout.canvas.clear()
+            self.ids.flow_layout.clear_widgets()
+
+            self.ids.pressure_layout.canvas.clear()
+            self.ids.pressure_layout.clear_widgets()
+
+            self.ids.batt_layout.canvas.clear()
+            self.ids.batt_layout.clear_widgets()
 
     ########
     '''def on_table_select(self, table_name):
