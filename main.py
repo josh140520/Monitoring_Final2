@@ -1875,7 +1875,7 @@ class GraphWindow(Screen): #3rd window
 
             # Calculate line coordinates based on listX and listY
             listX = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
-            listY = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
+            listY = list(temp_active.values())
             print(f"the y values: {listY} and lenY {len(listY)} and lenX {len(listX)}")
 
 
@@ -2004,7 +2004,7 @@ class GraphWindow(Screen): #3rd window
 
             # Calculate line coordinates based on listX and listY
             listX = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
-            listY = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
+            listY = list(flow_active.values())
             print(f"the y values: {listY} and lenY {len(listY)} and lenX {len(listX)}")
             #listY = [max(0, x) for x in listY]
 
@@ -2132,7 +2132,7 @@ class GraphWindow(Screen): #3rd window
 
             # Calculate line coordinates based on listX and listY
             listX = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
-            listY = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
+            listY = list(pressure_active.values())
             print(f"the y values: {listY} and lenY {len(listY)} and lenX {len(listX)}")
 
 
@@ -2265,7 +2265,7 @@ class GraphWindow(Screen): #3rd window
 
             # Calculate line coordinates based on listX and listY
             listX = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
-            listY = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
+            listY = list(batt_active.values())
             print(f"the y values: {listY} and lenY {len(listY)} and lenX {len(listX)}")
 
 
