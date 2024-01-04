@@ -1905,7 +1905,7 @@ class GraphWindow(Screen): #3rd window
             for y in listY:
                 if y is not None:
                     line_color = Color(1, 0, 1, 1)  # Red line, fully opaque
-                    line_position_x = self.ids.temp_layout.x + position_offset[0] + self.ids.temp_layout.width * (1 / max(listX)) * (0.5)
+                    line_position_x = self.ids.temp_layout.x + position_offset[0] + self.ids.temp_layout.width * (1 / max(listX)) * (0.5) #changes! 0.5
                     line_position_y = (self.ids.temp_layout.y + position_offset[1] +
                                        self.ids.temp_layout.height * (y / max(listY)) * 0.7)
                     line_length = self.ids.temp_layout.width * 0.9  # Adjust the length as needed
@@ -1931,7 +1931,7 @@ class GraphWindow(Screen): #3rd window
 
                     label = Label(
                         text=str(y),
-                        pos=(label_position_x-38, label_position_y * 0.985 - 35),   #changes!
+                        pos=(label_position_x-38, label_position_y * 0.985 - 30),   #changes!
                         color=label_color.rgb,
                         font_size=sp(10),
                     )
@@ -1960,7 +1960,7 @@ class GraphWindow(Screen): #3rd window
             points = []
             for x, y in zip(listX, listY):
                 points.extend([
-                    self.ids.temp_layout.x + position_offset[0] + self.ids.temp_layout.width * (x / max(listX)) * (0.925),
+                    self.ids.temp_layout.x + position_offset[0] + self.ids.temp_layout.width * (x / max(listX)) * (0.5), #changes 0.5
                     self.ids.temp_layout.y + position_offset[1] + self.ids.temp_layout.height * (y / max(listY)) * 0.7
                 ])
             for x, y in zip(listX, listY):
