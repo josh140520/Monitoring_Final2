@@ -1931,7 +1931,7 @@ class GraphWindow(Screen): #3rd window
 
                     label = Label(
                         text=str(y),
-                        pos=(label_position_x, label_position_y * 0.985 - 45),
+                        pos=(label_position_x-40, label_position_y * 0.985 - 40),
                         color=label_color.rgb,
                         font_size=sp(10),
                     )
