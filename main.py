@@ -1470,7 +1470,7 @@ class GraphWindow(Screen): #3rd window
     WidthDivider = NumericProperty(16)
     Y_Adjuster = NumericProperty(15)
     HighLowFont = sp(10)
-    HighLowButtonFont = sp(7)
+    HighLowButtonFont = sp(10)
 
     #################################
     GraphPicSize = NumericProperty(150)
@@ -1861,6 +1861,9 @@ class GraphWindow(Screen): #3rd window
 
 
     def show_temp(self, instance):
+
+        self.ids.temp_layout.clear_widgets()
+
         global temp_active, n, interval_time, temp_sum
         drawY = []
 
@@ -1875,7 +1878,7 @@ class GraphWindow(Screen): #3rd window
 
             # Calculate line coordinates based on listX and listY
             listX = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
-            listY = list(temp_active.values())
+            listY = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
             print(f"the y values: {listY} and lenY {len(listY)} and lenX {len(listX)}")
 
 
@@ -1917,7 +1920,7 @@ class GraphWindow(Screen): #3rd window
                                         self.ids.temp_layout.height * (y / max(listY)) * 0.7)
                     print(f'the y: {y}')
 
-                    label = Label(text=str(y), pos=(label_position_x, label_position_y * 0.985),
+                    label = Label(text=str(y), pos=(label_position_x, label_position_y * 0.985-45),
                                   color=label_color.rgb, font_size=sp(10))
                     label.texture_update()
 
@@ -1990,6 +1993,8 @@ class GraphWindow(Screen): #3rd window
 
 
     def show_flow(self, instance):
+
+        self.ids.flow_layout.clear_widgets()
         global flow_active, n, interval_time, flow_sum
         drawY = []
 
@@ -2004,7 +2009,7 @@ class GraphWindow(Screen): #3rd window
 
             # Calculate line coordinates based on listX and listY
             listX = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
-            listY = list(flow_active.values())
+            listY = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
             print(f"the y values: {listY} and lenY {len(listY)} and lenX {len(listX)}")
             #listY = [max(0, x) for x in listY]
 
@@ -2046,7 +2051,7 @@ class GraphWindow(Screen): #3rd window
                                         self.ids.flow_layout.height * (y / max(listY)) * 0.7)
                     print(f'the y: {y}')
 
-                    label = Label(text=str(y), pos=(label_position_x, label_position_y * 0.985),
+                    label = Label(text=str(y), pos=(label_position_x, label_position_y * 0.985-45),
                                   color=label_color.rgb, font_size=sp(10))
                     label.texture_update()
 
@@ -2118,6 +2123,8 @@ class GraphWindow(Screen): #3rd window
 
 
     def show_pressure(self, instance):
+
+        self.ids.pressure_layout.clear_widgets()
         global pressure_active, n, interval_time, pressure_sum
         drawY = []
 
@@ -2132,7 +2139,7 @@ class GraphWindow(Screen): #3rd window
 
             # Calculate line coordinates based on listX and listY
             listX = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
-            listY = list(pressure_active.values())
+            listY = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
             print(f"the y values: {listY} and lenY {len(listY)} and lenX {len(listX)}")
 
 
@@ -2174,7 +2181,7 @@ class GraphWindow(Screen): #3rd window
                                         self.ids.pressure_layout.height * (y / max(listY)) * 0.7)
                     print(f'the y: {y}')
 
-                    label = Label(text=str(y), pos=(label_position_x, label_position_y * 0.985),
+                    label = Label(text=str(y), pos=(label_position_x, label_position_y * 0.985-45),
                                   color=label_color.rgb, font_size=sp(10))
                     label.texture_update()
 
@@ -2251,6 +2258,9 @@ class GraphWindow(Screen): #3rd window
 
 
     def show_batt(self, instance):
+
+        self.ids.batt_layout.clear_widgets()
+
         global batt_active, n, interval_time, batt_sum
         drawY = []
 
@@ -2265,7 +2275,7 @@ class GraphWindow(Screen): #3rd window
 
             # Calculate line coordinates based on listX and listY
             listX = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
-            listY = list(batt_active.values())
+            listY = [24, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
             print(f"the y values: {listY} and lenY {len(listY)} and lenX {len(listX)}")
 
 
@@ -2307,7 +2317,7 @@ class GraphWindow(Screen): #3rd window
                                         self.ids.batt_layout.height * (y / max(listY)) * 0.7)
                     print(f'the y: {y}')
 
-                    label = Label(text=str(y), pos=(label_position_x, label_position_y * 0.985),
+                    label = Label(text=str(y), pos=(label_position_x, label_position_y * 0.985-45),
                                   color=label_color.rgb, font_size=sp(10))
                     label.texture_update()
 
@@ -2596,17 +2606,11 @@ class GraphWindow(Screen): #3rd window
 
             connection.commit()
             connection.close()
-            self.ids.temp_layout.canvas.clear()
-            self.ids.temp_layout.clear_widgets()
+        self.ids.temp_layout.canvas.clear()
+        self.ids.flow_layout.canvas.clear()
+        self.ids.pressure_layout.canvas.clear()
+        self.ids.batt_layout.canvas.clear()
 
-            self.ids.flow_layout.canvas.clear()
-            self.ids.flow_layout.clear_widgets()
-
-            self.ids.pressure_layout.canvas.clear()
-            self.ids.pressure_layout.clear_widgets()
-
-            self.ids.batt_layout.canvas.clear()
-            self.ids.batt_layout.clear_widgets()
 
     ########
     '''def on_table_select(self, table_name):
