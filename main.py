@@ -1508,7 +1508,12 @@ class GraphWindow(Screen): #3rd window
 
 
     def summary_popup(self):
-        global temp_sum, flow_sum, pressure_sum
+        global temp_sum, flow_sum, pressure_sum, temp_dict, flow_dict, pressure_dict
+        temp_sum = temp_dict
+        flow_sum = flow_dict
+        pressure_sum = pressure_dict
+
+
 
         temp_sum = {key: value for key, value in temp_sum.items() if value is not None and not 38.8 <= value <= 41.2}
         flow_sum = {key: value for key, value in flow_sum.items() if value is not None and not 14.55 <= value <= 15}
@@ -1829,7 +1834,14 @@ class GraphWindow(Screen): #3rd window
         print(pressure_active)
         print(batt_active)
 
-        if data:
+
+
+
+
+
+
+        today = datetime.datetime.now().strftime("%B %d %Y")
+        if self.selected_table == today:
             print("It is today")
             self.show_temp(instance)
             self.show_flow(instance)
@@ -1841,8 +1853,8 @@ class GraphWindow(Screen): #3rd window
             self.show_flow(instance)
             self.show_pressure(instance)
             self.show_batt(instance)
-            pass
 
+        instance.parent.parent.parent.parent.parent.dismiss()
 
 
 
@@ -2618,7 +2630,7 @@ class GraphWindow(Screen): #3rd window
 
         # Add buttons to the buttons_layout
         buttons_layout.add_widget(
-            Button(text='Confirm', on_press=self.write_graph, size_hint=(1, None), size=(120*Multiplier_Confirmation, 50*Multiplier_Confirmation), background_color=(0, 0.5, 0, 0.7)))
+            Button(text='Confirm', on_press=self.active_graph, size_hint=(1, None), size=(120*Multiplier_Confirmation, 50*Multiplier_Confirmation), background_color=(0, 0.5, 0, 0.7)))
         buttons_layout.add_widget(
             Button(text='Cancel', on_press=self.on_cancel_write, size_hint=(1, None), size=(120*Multiplier_Confirmation, 50*Multiplier_Confirmation),background_color=(0.5, 0, 0, 0.7)))
 
@@ -2637,20 +2649,7 @@ class GraphWindow(Screen): #3rd window
         # Dismiss the popup when the "Cancel" button is pressed
         instance.parent.parent.parent.parent.parent.dismiss()
 
-    def write_graph(self, instance):
-        today = datetime.datetime.now().strftime("%B %d %Y")
-        if self.selected_table == today:
-            print("it is today")
-            self.show_temp(self)
-            #self.show_flow(self)
-            #self.show_pressure(self)
-            #self.show_batt(self)
-        else:
-            self.show_temp(self)
-            #self.show_flow(self)
-            #self.show_pressure(self)
-            #self.show_batt(self)
-        instance.parent.parent.parent.parent.parent.dismiss()
+
 
 
 
