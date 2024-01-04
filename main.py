@@ -11,7 +11,7 @@ import datetime
 
 from statistics import mean
 from kivy.graphics import Rectangle, Color, Line
-
+from kivy.uix.floatlayout import FloatLayout
 #import matplotlib.pyplot as plt
 import kivy
 
@@ -1912,17 +1912,39 @@ class GraphWindow(Screen): #3rd window
                     line_points = [line_position_x, line_position_y,
                                    line_position_x + line_length, line_position_y]
                     Line(points=line_points, width=1, color=line_color)
+
+            ################################
+            temp_layout = self.ids.temp_layout
+
+            # Create a new FloatLayout for floating labels
+            float_layout = FloatLayout(size_hint=(None, None))
+            temp_layout.add_widget(float_layout)
             for y in listY:
                 if y is not None:
                     label_color = Color(0, 0, 0, 1)  # Black color, fully opaque
-                    label_position_x = self.ids.temp_layout.x + position_offset[0]
-                    label_position_y = (self.ids.temp_layout.y + position_offset[1] +
-                                        self.ids.temp_layout.height * (y / max(listY)) * 0.7)
-                    print(f'the y: {y}')
+                    label_position_x = temp_layout.x + position_offset[0]
+                    label_position_y = (
+                            temp_layout.y
+                            + position_offset[1]
+                            + temp_layout.height * (y / max(listY)) * 0.7
+                    )
 
-                    label = Label(text=str(y), pos=(label_position_x, label_position_y * 0.985-45),
-                                  color=label_color.rgb, font_size=sp(10))
-                    label.texture_update()
+                    label = Label(
+                        text=str(y),
+                        pos=(label_position_x, label_position_y * 0.985 - 45),
+                        color=label_color.rgb,
+                        font_size=sp(10),
+                    )
+
+                    # Add the label to the new FloatLayout
+                    float_layout.add_widget(label)
+
+
+
+
+
+
+
 
                     # Draw the label on the canvas with a colored rectangle
 
