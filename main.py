@@ -1931,7 +1931,7 @@ class GraphWindow(Screen): #3rd window
 
                     label = Label(
                         text=str(y),
-                        pos=(label_position_x-38, label_position_y * 0.985 -2),   #changes!
+                        pos=(label_position_x - 38, label_position_y * 0.985 -2),   #changes!
                         color=label_color.rgb,
                         font_size=sp(5),
                     )
@@ -2084,7 +2084,7 @@ class GraphWindow(Screen): #3rd window
 
                     label = Label(
                         text=str(y),
-                        pos=(label_position_x - 38, label_position_y * 0.985 - 30),  # changes!
+                        pos=(label_position_x - 38, label_position_y * 0.985 - 25),  # changes!
                         color=label_color.rgb,
                         font_size=sp(5),
                     )
@@ -2231,7 +2231,7 @@ class GraphWindow(Screen): #3rd window
 
                     label = Label(
                         text=str(y),
-                        pos=(label_position_x - 38, label_position_y * 0.985 - 2),  # changes!
+                        pos=(label_position_x - 38, label_position_y * 0.985 - 25),  # changes!
                         color=label_color.rgb,
                         font_size=sp(5),
                     )
@@ -2382,7 +2382,7 @@ class GraphWindow(Screen): #3rd window
 
                     label = Label(
                         text=str(y),
-                        pos=(label_position_x - 38, label_position_y * 0.985 - 2),  # changes!
+                        pos=(label_position_x - 38, label_position_y * 0.985 - 25),  # changes!
                         color=label_color.rgb,
                         font_size=sp(5),
                     )
