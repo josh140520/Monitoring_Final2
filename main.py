@@ -2329,7 +2329,7 @@ class GraphWindow(Screen): #3rd window
 
             # Calculate line coordinates based on listX and listY
             listX = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
-            listY = [24, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
+            listY = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
             print(f"the y values: {listY} and lenY {len(listY)} and lenX {len(listX)}")
 
 
@@ -2382,7 +2382,7 @@ class GraphWindow(Screen): #3rd window
 
                     label = Label(
                         text=str(y),
-                        pos=(label_position_x - 38, label_position_y * 0.985 - 35),  # changes!
+                        pos=(label_position_x - 38, label_position_y * 0.985 - 40),  # changes!
                         color=label_color.rgb,
                         font_size=sp(5),
                     )
