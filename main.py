@@ -1933,7 +1933,7 @@ class GraphWindow(Screen): #3rd window
                         text=str(y),
                         pos=(label_position_x-38, label_position_y * 0.985 -2),   #changes!
                         color=label_color.rgb,
-                        font_size=sp(10),
+                        font_size=sp(5),
                     )
 
                     # Add the label to the new FloatLayout
@@ -2053,29 +2053,46 @@ class GraphWindow(Screen): #3rd window
 
 
 
-            position_offset = (self.ids.flow_layout.width * (0.0415), self.ids.flow_layout.height * 0.25)
+            position_offset = (self.ids.flow_layout.width * (0.038), self.ids.flow_layout.height * 0.25)
             listY = [round(item, 1) for item in listY]
             for y in listY:
                 if y is not None:
                     line_color = Color(1, 1, 1, 1)  # Red line, fully opaque
-                    line_position_x = self.ids.flow_layout.x + position_offset[0] + self.ids.flow_layout.width * (1 / max(listX)) * (0.925)
+                    line_position_x = self.ids.flow_layout.x + position_offset[0] + self.ids.flow_layout.width * (1 / max(listX)) * (0.5)
                     line_position_y = (self.ids.flow_layout.y + position_offset[1] +
                                        self.ids.flow_layout.height * (y / max(listY)) * 0.7)
                     line_length = self.ids.flow_layout.width * 0.9  # Adjust the length as needed
                     line_points = [line_position_x, line_position_y,
                                    line_position_x + line_length, line_position_y]
                     Line(points=line_points, width=1, color=line_color)
+
+            ################################
+            flow_layout = self.ids.flow_layout
+
+            # Create a new FloatLayout for floating labels
+            float_layout = FloatLayout(size_hint=(None, None))
+            flow_layout.add_widget(float_layout)
             for y in listY:
                 if y is not None:
                     label_color = Color(0, 0, 0, 1)  # Black color, fully opaque
-                    label_position_x = self.ids.flow_layout.x + position_offset[0]
-                    label_position_y = (self.ids.flow_layout.y + position_offset[1] +
-                                        self.ids.flow_layout.height * (y / max(listY)) * 0.7)
-                    print(f'the y: {y}')
+                    label_position_x = flow_layout.x + position_offset[0]
+                    label_position_y = (
+                            flow_layout.y
+                            + position_offset[1]
+                            + flow_layout.height * (y / max(listY)) * 0.7
+                    )
 
-                    label = Label(text=str(y), pos=(label_position_x, label_position_y * 0.985-45),
-                                  color=label_color.rgb, font_size=sp(10))
-                    label.texture_update()
+                    label = Label(
+                        text=str(y),
+                        pos=(label_position_x - 38, label_position_y * 0.985 - 2),  # changes!
+                        color=label_color.rgb,
+                        font_size=sp(5),
+                    )
+
+                    # Add the label to the new FloatLayout
+                    float_layout.add_widget(label)
+
+
 
                     # Draw the label on the canvas with a colored rectangle
 
@@ -2091,7 +2108,7 @@ class GraphWindow(Screen): #3rd window
             points = []
             for x, y in zip(listX, listY):
                 points.extend([
-                    self.ids.flow_layout.x + position_offset[0] + self.ids.flow_layout.width * (x / max(listX)) * (0.925),
+                    self.ids.flow_layout.x + position_offset[0] + self.ids.flow_layout.width * (x / max(listX)) * (0.925)-40,
                     self.ids.flow_layout.y + position_offset[1] + self.ids.flow_layout.height * (y / max(listY)) * 0.7
                 ])
             for x, y in zip(listX, listY):
@@ -2183,29 +2200,44 @@ class GraphWindow(Screen): #3rd window
 
 
 
-            position_offset = (self.ids.pressure_layout.width * (0.0415), self.ids.pressure_layout.height * 0.25)
+            position_offset = (self.ids.pressure_layout.width * (0.038), self.ids.pressure_layout.height * 0.25)
             listY = [round(item, 1) for item in listY]
             for y in listY:
                 if y is not None:
                     line_color = Color(1, 1, 1, 1)  # Red line, fully opaque
-                    line_position_x = self.ids.pressure_layout.x + position_offset[0] + self.ids.pressure_layout.width * (1 / max(listX)) * (0.925)
+                    line_position_x = self.ids.pressure_layout.x + position_offset[0] + self.ids.pressure_layout.width * (1 / max(listX)) * (0.5)
                     line_position_y = (self.ids.pressure_layout.y + position_offset[1] +
                                        self.ids.pressure_layout.height * (y / max(listY)) * 0.7)
                     line_length = self.ids.pressure_layout.width * 0.9  # Adjust the length as needed
                     line_points = [line_position_x, line_position_y,
                                    line_position_x + line_length, line_position_y]
                     Line(points=line_points, width=1, color=line_color)
+
+            ################################
+            pressure_layout = self.ids.pressure_layout
+
+            # Create a new FloatLayout for floating labels
+            float_layout = FloatLayout(size_hint=(None, None))
+            pressure_layout.add_widget(float_layout)
             for y in listY:
                 if y is not None:
                     label_color = Color(0, 0, 0, 1)  # Black color, fully opaque
-                    label_position_x = self.ids.pressure_layout.x + position_offset[0]
-                    label_position_y = (self.ids.pressure_layout.y + position_offset[1] +
-                                        self.ids.pressure_layout.height * (y / max(listY)) * 0.7)
-                    print(f'the y: {y}')
+                    label_position_x = pressure_layout.x + position_offset[0]
+                    label_position_y = (
+                            pressure_layout.y
+                            + position_offset[1]
+                            + pressure_layout.height * (y / max(listY)) * 0.7
+                    )
 
-                    label = Label(text=str(y), pos=(label_position_x, label_position_y * 0.985-45),
-                                  color=label_color.rgb, font_size=sp(10))
-                    label.texture_update()
+                    label = Label(
+                        text=str(y),
+                        pos=(label_position_x - 38, label_position_y * 0.985 - 2),  # changes!
+                        color=label_color.rgb,
+                        font_size=sp(5),
+                    )
+
+                    # Add the label to the new FloatLayout
+                    float_layout.add_widget(label)
 
                     # Draw the label on the canvas with a colored rectangle
 
@@ -2221,7 +2253,7 @@ class GraphWindow(Screen): #3rd window
             points = []
             for x, y in zip(listX, listY):
                 points.extend([
-                    self.ids.pressure_layout.x + position_offset[0] + self.ids.pressure_layout.width * (x / max(listX)) * (0.925),
+                    self.ids.pressure_layout.x + position_offset[0] + self.ids.pressure_layout.width * (x / max(listX)) * (0.925)-40,
                     self.ids.pressure_layout.y + position_offset[1] + self.ids.pressure_layout.height * (y / max(listY)) * 0.7
                 ])
             for x, y in zip(listX, listY):
@@ -2319,29 +2351,44 @@ class GraphWindow(Screen): #3rd window
 
 
 
-            position_offset = (self.ids.batt_layout.width * (0.0415), self.ids.batt_layout.height * 0.25)
+            position_offset = (self.ids.batt_layout.width * (0.038), self.ids.batt_layout.height * 0.25)
             listY = [round(item, 1) for item in listY]
             for y in listY:
                 if y is not None:
                     line_color = Color(1, 1, 1, 1)  # Red line, fully opaque
-                    line_position_x = self.ids.batt_layout.x + position_offset[0] + self.ids.batt_layout.width * (1 / max(listX)) * (0.925)
+                    line_position_x = self.ids.batt_layout.x + position_offset[0] + self.ids.batt_layout.width * (1 / max(listX)) * (0.5)
                     line_position_y = (self.ids.batt_layout.y + position_offset[1] +
                                        self.ids.batt_layout.height * (y / max(listY)) * 0.7)
                     line_length = self.ids.batt_layout.width * 0.9  # Adjust the length as needed
                     line_points = [line_position_x, line_position_y,
                                    line_position_x + line_length, line_position_y]
                     Line(points=line_points, width=1, color=line_color)
+
+            ################################
+            batt_layout = self.ids.batt_layout
+
+            # Create a new FloatLayout for floating labels
+            float_layout = FloatLayout(size_hint=(None, None))
+            batt_layout.add_widget(float_layout)
             for y in listY:
                 if y is not None:
                     label_color = Color(0, 0, 0, 1)  # Black color, fully opaque
-                    label_position_x = self.ids.batt_layout.x + position_offset[0]
-                    label_position_y = (self.ids.batt_layout.y + position_offset[1] +
-                                        self.ids.batt_layout.height * (y / max(listY)) * 0.7)
-                    print(f'the y: {y}')
+                    label_position_x = batt_layout.x + position_offset[0]
+                    label_position_y = (
+                            batt_layout.y
+                            + position_offset[1]
+                            + batt_layout.height * (y / max(listY)) * 0.7
+                    )
 
-                    label = Label(text=str(y), pos=(label_position_x, label_position_y * 0.985-45),
-                                  color=label_color.rgb, font_size=sp(10))
-                    label.texture_update()
+                    label = Label(
+                        text=str(y),
+                        pos=(label_position_x - 38, label_position_y * 0.985 - 2),  # changes!
+                        color=label_color.rgb,
+                        font_size=sp(5),
+                    )
+
+                    # Add the label to the new FloatLayout
+                    float_layout.add_widget(label)
 
                     # Draw the label on the canvas with a colored rectangle
 
@@ -2357,7 +2404,7 @@ class GraphWindow(Screen): #3rd window
             points = []
             for x, y in zip(listX, listY):
                 points.extend([
-                    self.ids.batt_layout.x + position_offset[0] + self.ids.batt_layout.width * (x / max(listX)) * (0.925),
+                    self.ids.batt_layout.x + position_offset[0] + self.ids.batt_layout.width * (x / max(listX)) * (0.925)-40,
                     self.ids.batt_layout.y + position_offset[1] + self.ids.batt_layout.height * (y / max(listY)) * 0.7
                 ])
             for x, y in zip(listX, listY):
@@ -2609,10 +2656,10 @@ class GraphWindow(Screen): #3rd window
                 AND pressure IS NULL
                 AND battery IS NULL;
             ''')
-            new_temperature = 0
-            new_flow = 0
-            new_pressure = 0
-            new_battery = 0
+            new_temperature = None
+            new_flow = None
+            new_pressure = None
+            new_battery = None
 
             # Use an SQL query to update the rows with id = 5 and id = 86395
             update_query = f'''UPDATE {data}
