@@ -1132,7 +1132,7 @@ class MainWindow(Screen): #Main screen
 
 
         # Add a blue rectangle to the canvas
-        image = Image(source='graph-background.png', width=self.ids.temp_layout.width, size_hint_x=1)
+        image = Image(source='graph-background (1).png', width=self.ids.temp_layout.width, size_hint_x=1)
 
         # Add the Image widget to the BoxLayout
         self.ids.temp_layout.add_widget(image)
