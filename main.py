@@ -2007,7 +2007,7 @@ class GraphWindow(Screen): #3rd window
         Color(0, 0, 0, 1)  # Set color to blue with alpha (RGB values + alpha)
         self.rectangle = Rectangle(
             pos=(self.ids.temp_layout.x + (self.ids.temp_layout.width * (1 - position_factor)) / 2 -55,
-                 self.ids.temp_layout.y + (self.ids.temp_layout.height * ((1 - heightposition_factor)) / 0.63 + 2.5)),
+                 self.ids.temp_layout.y + (self.ids.temp_layout.height * ((1 - heightposition_factor)) / 0.63 + 5)),
             size=(self.ids.temp_layout.width * resize_factor, self.ids.temp_layout.height * height_factor))
 
 
@@ -2155,7 +2155,7 @@ class GraphWindow(Screen): #3rd window
         Color(0, 0, 0, 1)  # Set color to blue with alpha (RGB values + alpha)
         self.rectangle = Rectangle(
             pos=(self.ids.flow_layout.x + (self.ids.flow_layout.width * (1 - position_factor)) / 2 -55,
-                 self.ids.flow_layout.y + (self.ids.flow_layout.height * ((1 - heightposition_factor)) / 0.63 + 2.5)),
+                 self.ids.flow_layout.y + (self.ids.flow_layout.height * ((1 - heightposition_factor)) / 0.63 + 5)),
             size=(self.ids.flow_layout.width * resize_factor, self.ids.flow_layout.height * height_factor))
 
 
@@ -2300,7 +2300,7 @@ class GraphWindow(Screen): #3rd window
         Color(0, 0, 0, 1)  # Set color to blue with alpha (RGB values + alpha)
         self.rectangle = Rectangle(
             pos=(self.ids.pressure_layout.x + (self.ids.pressure_layout.width * (1 - position_factor)) / 2 -55,
-                 self.ids.pressure_layout.y + (self.ids.pressure_layout.height * ((1 - heightposition_factor)) / 0.63 + 2.5)),
+                 self.ids.pressure_layout.y + (self.ids.pressure_layout.height * ((1 - heightposition_factor)) / 0.63 + 5)),
             size=(self.ids.pressure_layout.width * resize_factor, self.ids.pressure_layout.height * height_factor))
 
 
@@ -2451,7 +2451,7 @@ class GraphWindow(Screen): #3rd window
         Color(0, 0, 0, 1)  # Set color to blue with alpha (RGB values + alpha)
         self.rectangle = Rectangle(
             pos=(self.ids.batt_layout.x + (self.ids.batt_layout.width * (1 - position_factor)) / 2 -55,
-                 self.ids.batt_layout.y + (self.ids.batt_layout.height * ((1 - heightposition_factor)) / 0.63 + 2.5)),
+                 self.ids.batt_layout.y + (self.ids.batt_layout.height * ((1 - heightposition_factor)) / 0.63 + 5)),
             size=(self.ids.batt_layout.width * resize_factor, self.ids.batt_layout.height * height_factor))
 
 
