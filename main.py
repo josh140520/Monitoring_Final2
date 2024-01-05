@@ -1997,10 +1997,10 @@ class GraphWindow(Screen): #3rd window
 
 
     def draw_rectangle(self, listypos):
-        x1 = 0.042
+        x1 = 0.047
         x2 = 0.0352
         resize_factor = x1  # per hour 0.037
-        height_factor = 0.74
+        height_factor = 0.78
         heightposition_factor = 0.84
         position_factor = 0.84 - (2.1 * (listypos * x2))  # hour position
 
@@ -2145,10 +2145,10 @@ class GraphWindow(Screen): #3rd window
 
 
     def draw_rectangle1(self, listypos):
-        x1 = 0.042
+        x1 = 0.047
         x2 = 0.0352
         resize_factor = x1  # per hour 0.037
-        height_factor = 0.74
+        height_factor = 0.78
         heightposition_factor = 0.84
         position_factor = 0.84 - (2.1 * (listypos * x2))  # hour position
 
@@ -2290,10 +2290,10 @@ class GraphWindow(Screen): #3rd window
 
 
     def draw_rectangle2(self, listypos):
-        x1 = 0.042
+        x1 = 0.047
         x2 = 0.0352
         resize_factor = x1  # per hour 0.037
-        height_factor = 0.74
+        height_factor = 0.78
         heightposition_factor = 0.84
         position_factor = 0.84 - (2.1 * (listypos * x2))  # hour position
 
@@ -2441,10 +2441,10 @@ class GraphWindow(Screen): #3rd window
 
 
     def draw_rectangle3(self, listypos):
-        x1 = 0.042
+        x1 = 0.047
         x2 = 0.0352
         resize_factor = x1  # per hour 0.037
-        height_factor = 0.74
+        height_factor = 0.78
         heightposition_factor = 0.84
         position_factor = 0.84 - (2.1 * (listypos * x2))  # hour position
 
