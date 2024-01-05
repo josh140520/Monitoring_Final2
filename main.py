@@ -1878,7 +1878,7 @@ class GraphWindow(Screen): #3rd window
 
             # Calculate line coordinates based on listX and listY
             listX = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
-            listY = list(temp_active.values())
+            listY = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
             print(f"the y values: {listY} and lenY {len(listY)} and lenX {len(listX)}")
 
 
@@ -1900,7 +1900,7 @@ class GraphWindow(Screen): #3rd window
 
 
 
-            position_offset = (self.ids.temp_layout.width * (0.04), self.ids.temp_layout.height * 0.25) #changes!
+            position_offset = (self.ids.temp_layout.width * (0.038), self.ids.temp_layout.height * 0.25) #changes!
             listY = [round(item, 1) for item in listY]
             for y in listY:
                 if y is not None:
