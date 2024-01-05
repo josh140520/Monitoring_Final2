@@ -2549,7 +2549,7 @@ class GraphWindow(Screen): #3rd window
 
             # Calculate line coordinates based on listX and listY
             listX = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
-            listY = list(temp_active.values())
+            listY = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
             print(f"the y values: {listY} and lenY {len(listY)} and lenX {len(listX)}")
 
 
@@ -2572,13 +2572,22 @@ class GraphWindow(Screen): #3rd window
 
 
             position_offset = (self.ids.temp_layout.width * (0.038), self.ids.temp_layout.height * 0.25) #changes!
+
+            full = round(max(listY), 2)
+            quarter = round(max(listY) / 3, 2)
+            half = round(max(listY) / 2, 2)
+            zero = 0
+            line_listY = [int(zero), int(half), int(quarter), int(full)]
+
+
             listY = [round(item, 1) for item in listY]
-            for y in listY:
+
+            for y in line_listY:
                 if y is not None:
                     line_color = Color(1, 1, 1, 1)  # Red line, fully opaque
                     line_position_x = self.ids.temp_layout.x + position_offset[0] + self.ids.temp_layout.width * (1 / max(listX)) * (0.5) #changes! 0.5
                     line_position_y = (self.ids.temp_layout.y + position_offset[1] +
-                                       self.ids.temp_layout.height * (y / max(listY)) * 0.7)
+                                       self.ids.temp_layout.height * (y / max(line_listY)) * 0.7)
                     line_length = self.ids.temp_layout.width * 0.9  # Adjust the length as needed
                     line_points = [line_position_x, line_position_y,
                                    line_position_x + line_length, line_position_y]
@@ -2590,14 +2599,14 @@ class GraphWindow(Screen): #3rd window
             # Create a new FloatLayout for floating labels
             float_layout = FloatLayout(size_hint=(None, None))
             temp_layout.add_widget(float_layout)
-            for y in listY:
+            for y in line_listY:
                 if y is not None:
                     label_color = Color(0, 0, 0, 1)  # Black color, fully opaque
                     label_position_x = temp_layout.x + position_offset[0]
                     label_position_y = (
                             temp_layout.y
                             + position_offset[1]
-                            + temp_layout.height * (y / max(listY)) * 0.7
+                            + temp_layout.height * (y / max(line_listY)) * 0.7
                     )
 
                     label = Label(
