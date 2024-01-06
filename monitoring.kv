@@ -657,8 +657,15 @@ WindowManager:
 
             GridLayout:
                 cols: 1
-                rows: 3
+                rows: 4
                 size_hint_x: 2/5
+                Button:
+                    text: "Change ESP WiFi"
+                    font_size: root.ConnFontSize
+                    background_color: 0, 0, 1, 0.9
+                    on_press:
+                        root.changewifi(self)
+
                 Button:
                     text: "Port Set Up"
                     font_size: root.ConnFontSize
@@ -668,6 +675,8 @@ WindowManager:
                         self.background_color = (0.7, 0, 0, 1)
                     on_release:
                         self.background_color = (0.7, 0, 0, 0.7)
+
+
 
 
                 Button:

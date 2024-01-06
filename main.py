@@ -10,6 +10,8 @@ import datetime
 
 
 from statistics import mean
+
+import requests
 from kivy.graphics import Rectangle, Color, Line
 from kivy.uix.floatlayout import FloatLayout
 #import matplotlib.pyplot as plt
@@ -1895,6 +1897,60 @@ class ConnWindow(Screen):
         popup.content = content_layout
         popup.open()
 
+    def changewifi(self, instance):
+        # Create a BoxLayout to hold the content and the buttons
+        box_layout = BoxLayout(orientation='vertical')
+
+        # Content of the popup (Labels and TextInputs)
+        ssid_label = Label(text="SSID:")
+        ssid_input = TextInput(multiline=False)
+        box_layout.add_widget(ssid_label)
+        box_layout.add_widget(ssid_input)
+
+        pass_label = Label(text="Password:")
+        pass_input = TextInput(multiline=False, password=True)
+        box_layout.add_widget(pass_label)
+        box_layout.add_widget(pass_input)
+
+        ip_label = Label(text="IP:")
+        ip_input = TextInput(multiline=False)
+        box_layout.add_widget(ip_label)
+        box_layout.add_widget(ip_input)
+
+        # Add a button to apply changes
+        apply_button = Button(text="Apply Changes",
+                              on_press=lambda x: self.apply_wifi_changes(ssid_input.text, pass_input.text,
+                                                                         ip_input.text))
+        box_layout.add_widget(apply_button)
+
+        # Add a button to close the popup
+        close_button = Button(text="Close", on_press=lambda x: wifi_popup.dismiss())
+        box_layout.add_widget(close_button)
+
+        # Create and open the WiFiChangePopup
+        wifi_popup = Popup(title='WiFi Settings', content=box_layout, size_hint=(None, None), size=(400, 300))
+        wifi_popup.open()
+
+    def apply_wifi_changes(self, ssid, password, ip):
+        global port_number, host
+
+        # Implement the logic to apply WiFi changes using ssid, password, and ip
+        # For example, you can print them for now
+        print("SSID:", ssid)
+        print("Password:", password)
+        print("ESP8266 IP:", ip)
+
+        try:
+
+            esp8266_url = f"http://{ip}/update_wifi"
+            print(f"{host} the host")
+
+            payload = {'ssid': ssid, 'password': password, 'serverAddress': str(host), 'serverPort': port_number}
+            response = requests.post(esp8266_url, data=payload)
+
+            print(response.text)
+        except:
+            pass
 
 
 
