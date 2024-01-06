@@ -1132,7 +1132,7 @@ class MainWindow(Screen): #Main screen
 
 
         # Add a blue rectangle to the canvas
-        image = Image(source='graph-background (1).png', width=self.ids.temp_layout.width, size_hint_x=1)
+        image = Image(source='graph-background.png', width=self.ids.temp_layout.width, size_hint_x=1)
 
         # Add the Image widget to the BoxLayout
         self.ids.temp_layout.add_widget(image)
@@ -1199,12 +1199,12 @@ class MainWindow(Screen): #Main screen
                     label_position_y = (
                             temp_layout.y
                             + position_offset[1]
-                            + temp_layout.height * (y / max(line_listY)) * 0.7
+                            + temp_layout.height * (y / max(line_listY)) * 0.65 #bago
                     )
 
                     label = Label(
                         text=str(y),
-                        pos=(label_position_x - 38, label_position_y * 0.985 -2),   #changes!
+                        pos=(label_position_x - 38, (label_position_y * 0.985)-50),   #bago
                         color=label_color.rgb,
                         font_size=sp(10),
                     )
