@@ -1199,12 +1199,12 @@ class MainWindow(Screen): #Main screen
                     label_position_y = (
                             temp_layout.y
                             + position_offset[1]
-                            + temp_layout.height * (y / max(line_listY)) * 0.55 #bago
+                            + temp_layout.height * (y / max(line_listY)) * 0.54 #bago
                     )
 
                     label = Label(
                         text=str(y),
-                        pos=(label_position_x - 38, (label_position_y * 0.985)-30),   #bago
+                        pos=(label_position_x - 38, (label_position_y * 0.985)-20),   #bago
                         color=label_color.rgb,
                         font_size=sp(10),
                     )
