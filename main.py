@@ -1204,7 +1204,7 @@ class MainWindow(Screen): #Main screen
 
                     label = Label(
                         text=str(y),
-                        pos=(label_position_x - 38, (label_position_y * 0.985)-20),   #bago
+                        pos=(label_position_x - 38, (label_position_y * 0.985)),   #bago
                         color=label_color.rgb,
                         font_size=sp(10),
                     )
