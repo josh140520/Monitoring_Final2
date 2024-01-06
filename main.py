@@ -1928,7 +1928,7 @@ class ConnWindow(Screen):
         box_layout.add_widget(close_button)
 
         # Create and open the WiFiChangePopup
-        wifi_popup = Popup(title='WiFi Settings', content=box_layout, size_hint=(None, None), size=(400, 300))
+        wifi_popup = Popup(title='WiFi Settings', content=box_layout, size_hint=(None, None), size=(300*2.75, 200*2.75))
         wifi_popup.open()
 
     def apply_wifi_changes(self, ssid, password, ip):
@@ -1945,7 +1945,7 @@ class ConnWindow(Screen):
             esp8266_url = f"http://{ip}/update_wifi"
             print(f"{host} the host")
 
-            payload = {'ssid': ssid, 'password': password, 'serverAddress': str(host), 'serverPort': port_number}
+            payload = {'ssid': ssid, 'password': password, 'serverAddress': host, 'serverPort': port_number}
             response = requests.post(esp8266_url, data=payload)
 
             print(response.text)
