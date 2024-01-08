@@ -1903,27 +1903,27 @@ class ConnWindow(Screen):
 
         # Content of the popup (Labels and TextInputs)
         ssid_label = Label(text="SSID:")
-        ssid_input = TextInput(multiline=False)
+        ssid_input = TextInput(multiline=False, hint_text='Enter WiFi Name for ESP8266')
         box_layout.add_widget(ssid_label)
         box_layout.add_widget(ssid_input)
 
         pass_label = Label(text="Password:")
-        pass_input = TextInput(multiline=False, password=False)
+        pass_input = TextInput(multiline=False, password=False, hint_text='Enter WiFi Password')
         box_layout.add_widget(pass_label)
         box_layout.add_widget(pass_input)
 
         ipdestination_label = Label(text="New IP Destination:")
-        ipdestination_input = TextInput(multiline=False)
+        ipdestination_input = TextInput(multiline=False, hint_text='Enter the IP of the App')
         box_layout.add_widget(ipdestination_label)
         box_layout.add_widget(ipdestination_input)
 
         port_label = Label(text="Port Number:")
-        port_input = TextInput(multiline=False)
+        port_input = TextInput(multiline=False, hint_text='Enter the port number of the App')
         box_layout.add_widget(port_label)
         box_layout.add_widget(port_input)
 
         ip_label = Label(text="ESP8266 IP:")
-        ip_input = TextInput(multiline=False)
+        ip_input = TextInput(multiline=False, hint_text='Enter the IP of the LCD in ESP8266')
         box_layout.add_widget(ip_label)
         box_layout.add_widget(ip_input)
 
@@ -1938,7 +1938,7 @@ class ConnWindow(Screen):
         box_layout.add_widget(close_button)
 
         # Create and open the WiFiChangePopup
-        wifi_popup = Popup(title='WiFi Settings', content=box_layout, size_hint=(None, None), size=(300*2.75, 200*2.75))
+        wifi_popup = Popup(title='WiFi Settings', content=box_layout, size_hint=(None, None), size=(420*2.75, 320*2.75))
         wifi_popup.open()
 
     def apply_wifi_changes(self, ssid, password, ip, ipdestination, port):
