@@ -1908,11 +1908,21 @@ class ConnWindow(Screen):
         box_layout.add_widget(ssid_input)
 
         pass_label = Label(text="Password:")
-        pass_input = TextInput(multiline=False, password=True)
+        pass_input = TextInput(multiline=False, password=False)
         box_layout.add_widget(pass_label)
         box_layout.add_widget(pass_input)
 
-        ip_label = Label(text="IP:")
+        ipdestination_label = Label(text="New IP Destination:")
+        ipdestination_input = TextInput(multiline=False)
+        box_layout.add_widget(ipdestination_label)
+        box_layout.add_widget(ipdestination_input)
+
+        port_label = Label(text="Port Number:")
+        port_input = TextInput(multiline=False)
+        box_layout.add_widget(port_label)
+        box_layout.add_widget(port_input)
+
+        ip_label = Label(text="ESP8266 IP:")
         ip_input = TextInput(multiline=False)
         box_layout.add_widget(ip_label)
         box_layout.add_widget(ip_input)
@@ -1920,7 +1930,7 @@ class ConnWindow(Screen):
         # Add a button to apply changes
         apply_button = Button(text="Apply Changes",
                               on_press=lambda x: self.apply_wifi_changes(ssid_input.text, pass_input.text,
-                                                                         ip_input.text))
+                                                                         ip_input.text, ipdestination_input.text, port_input.text))
         box_layout.add_widget(apply_button)
 
         # Add a button to close the popup
@@ -1931,26 +1941,29 @@ class ConnWindow(Screen):
         wifi_popup = Popup(title='WiFi Settings', content=box_layout, size_hint=(None, None), size=(300*2.75, 200*2.75))
         wifi_popup.open()
 
-    def apply_wifi_changes(self, ssid, password, ip):
+    def apply_wifi_changes(self, ssid, password, ip, ipdestination, port):
         global port_number, host
 
         # Implement the logic to apply WiFi changes using ssid, password, and ip
         # For example, you can print them for now
         print("SSID:", ssid)
         print("Password:", password)
-        print("ESP8266 IP:", ip)
+        print("Port Number: ", port)
+        print("IP Destination: ", ipdestination)
+        print("ESP8266 IP:",ip)
 
         try:
 
             esp8266_url = f"http://{ip}/update_wifi"
-            print(f"{host} the host")
 
-            payload = {'ssid': ssid, 'password': password, 'serverAddress': host, 'serverPort': port_number}
+
+
+            payload = {'ssid': ssid, 'password': password, 'serverAddress': ipdestination, 'serverPort': port, 'Switch': True}
             response = requests.post(esp8266_url, data=payload)
 
             print(response.text)
-        except:
-            pass
+        except Exception as e:
+            print(f"An error occurred: {e}")
 
 
 
