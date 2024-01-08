@@ -1939,8 +1939,8 @@ class ConnWindow(Screen):
 
         # Create and open the WiFiChangePopup
         if platform == "android":
-            x = 450
-            y = 700
+            x = 350
+            y = 500
         else:
             x = 300
             y = 200
