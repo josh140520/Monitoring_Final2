@@ -1938,7 +1938,13 @@ class ConnWindow(Screen):
         box_layout.add_widget(close_button)
 
         # Create and open the WiFiChangePopup
-        wifi_popup = Popup(title='WiFi Settings', content=box_layout, size_hint=(None, None), size=(420*2.75, 320*2.75))
+        if platform == "android":
+            x = 450
+            y = 700
+        else:
+            x = 300
+            y = 200
+        wifi_popup = Popup(title='WiFi Settings', content=box_layout, size_hint=(None, None), size=(x*2.75, y*2.75))
         wifi_popup.open()
 
     def apply_wifi_changes(self, ssid, password, ip, ipdestination, port):
