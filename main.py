@@ -2020,9 +2020,9 @@ class ConnWindow(Screen):
 
 
     def start_server(self):
-        global connecttoESP, port_number
+        global connecttoESP, port_number, host
         try:
-            if port_number is not None and not isinstance(port_number, str):
+            if (port_number is not None and not isinstance(port_number, str) and host is not None):
                 if not self.server_thread or not self.server_thread.is_alive():
                     MainWindow.stop_testing(self,instance=None)
                     self.server_thread = threading.Thread(target=self.run_flask_server, daemon=True)
@@ -2057,7 +2057,11 @@ class ConnWindow(Screen):
         except Exception as e:
             # Replace 'print("hh")' with a Kivy popup
             layout = BoxLayout(orientation='vertical', spacing=10)
-            label = Label(text='Server failed: No port number found', font_size=ServerFontSize)
+            if host is None:
+                label = Label(text='No Internet Connection', font_size=ServerFontSize)
+            else:
+                label = Label(text='Server failed: No port number found', font_size=ServerFontSize)
+
             cancel_button = Button(text='Confirm', size_hint=(None, None), size=(120*MultiplierServer, 50*MultiplierServer),pos_hint={'center_x': 0.5, 'center_y': 0.5}, background_color=(1, 0, 0, 0.8))
 
             # Define the button callback to dismiss the popup
