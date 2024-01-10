@@ -1839,6 +1839,8 @@ class ConnWindow(Screen):
     ESP_status = StringProperty()
     global data_transfer
     data_transfer = False
+    global displayswitch
+    displayswitch = True
     global MultiplierPortSelect, MultiplierDisplay, MultiplierServer, ServerFontSize
     ##########################################
     ConnFontSize = NumericProperty(sp(25))
@@ -1930,11 +1932,11 @@ class ConnWindow(Screen):
         # Add a button to apply changes
         apply_button = Button(text="Apply Changes",
                               on_press=lambda x: self.apply_wifi_changes(ssid_input.text, pass_input.text,
-                                                                         ip_input.text, ipdestination_input.text, port_input.text))
+                                                                         ip_input.text, ipdestination_input.text, port_input.text), background_color=(0, 0.8, 0, 0.8))
         box_layout.add_widget(apply_button)
 
         # Add a button to close the popup
-        close_button = Button(text="Close", on_press=lambda x: wifi_popup.dismiss())
+        close_button = Button(text="Close", on_press=lambda x: wifi_popup.dismiss(), background_color=(0.8, 0, 0, 0.8))
         box_layout.add_widget(close_button)
 
         # Create and open the WiFiChangePopup
@@ -1944,11 +1946,13 @@ class ConnWindow(Screen):
         else:
             x = 300
             y = 200
-        wifi_popup = Popup(title='WiFi Settings', content=box_layout, size_hint=(None, None), size=(x*2.75, y*2.75))
+        wifi_popup = Popup(title='WiFi Settings', content=box_layout, size_hint=(None, None), size=(x*2.75, y*2.75), background_color=(0.318, 0.749, 1, 0.8))
         wifi_popup.open()
 
+
+
     def apply_wifi_changes(self, ssid, password, ip, ipdestination, port):
-        global port_number, host
+        global port_number, host, result_message
 
         # Implement the logic to apply WiFi changes using ssid, password, and ip
         # For example, you can print them for now
@@ -1962,40 +1966,61 @@ class ConnWindow(Screen):
 
             esp8266_url = f"http://{ip}/update_wifi"
 
-
-
             payload = {'ssid': ssid, 'password': password, 'serverAddress': ipdestination, 'serverPort': port, 'Switch': True}
             response = requests.post(esp8266_url, data=payload)
 
             print(response.text)
+            result_message = f"Success: {response.text}"
         except Exception as e:
-            print(f"An error occurred: {e}")
+            result_message = f"Failed to Update ESP8266!"
+        self.show_result_popup(result_message)
+    def show_result_popup(self, message):
+        global result_message
+        label = Label(text=message)
+
+        # Create a close button
+        close_button = Button(text='Close', size_hint=(None, None), size=(120*2.75, 50*2.75), pos_hint={'center_x': 0.5, 'center_y': 0.5}, background_color=(1, 0, 0, 0.8))
+        close_button.bind(on_press=lambda instance: popup.dismiss())  # Bind the button press to dismiss the Popup
+
+        # Create a layout to hold the label and close button
+        layout = BoxLayout(orientation='vertical')
+        layout.add_widget(label)
+        layout.add_widget(close_button)
+
+        # Create the Popup with the layout as content
+        popup = Popup(title='Update Result', content=layout, size_hint=(None, None), size=(300*2.75, 200*2.75), background_color=(0.318, 0.749, 1, 0.8))
+
+        # Open the Popup
+        popup.open()
+
 
 
 
 
     def display(self):
-        global temp_dict, port_number, host, connecttoESP
-
-        try:
-            if port_number is None or isinstance(port_number, str):
-                self.flask_server = 'OFF'
-            else:
-                if host is None:
-                    self.flask_server = "OFF"
-                    self.running_server = 'No Internet Connection'
+        global temp_dict, port_number, host, connecttoESP, displayswitch
+        if displayswitch is True:
+            try:
+                if port_number is None or isinstance(port_number, str):
+                    self.flask_server = 'OFF'
                 else:
-                    self.flask_server = "ON"
-                    self.running_server = f'{host}:{port_number}'
-        except:
-            self.flask_server = 'OFF'
-            self.running_server = 'No Server'
+                    if host is None:
+                        self.flask_server = "OFF"
+                        self.running_server = 'No Internet Connection'
+                    else:
+                        self.flask_server = "ON"
+                        self.running_server = f'{host}:{port_number}'
+            except:
+                self.flask_server = 'OFF'
+                self.running_server = 'No Server'
+            displayswitch = False
         if data_transfer is True:
 
             self.ESP_status = 'CONNECTED'
         else:
 
             self.ESP_status = "DISCONNECTED"
+
 
     def get_local_ip(self, instance):
         try:
@@ -2020,7 +2045,7 @@ class ConnWindow(Screen):
 
 
     def start_server(self):
-        global connecttoESP, port_number, host
+        global connecttoESP, port_number, host, displayswitch
         try:
             if port_number is not None and not isinstance(port_number, str):
                 if not self.server_thread or not self.server_thread.is_alive():
@@ -2028,6 +2053,7 @@ class ConnWindow(Screen):
                     self.server_thread = threading.Thread(target=self.run_flask_server, daemon=True)
                     self.server_thread.start()
                     connecttoESP = True
+                    displayswitch = True
                     print(connecttoESP)
                     layout = BoxLayout(orientation='vertical', spacing=10)
                     label = Label(text='Flask Server Successfully Created', font_size=ServerFontSize)
@@ -2087,7 +2113,7 @@ class ConnWindow(Screen):
     def port_selection(self, instance):
         # Your existing code for the 'port' method
         global port_number
-        port_number = None
+        #port_number = None
 
         # Function to handle the "Submit" button click
         def on_submit(instance):
