@@ -1981,8 +1981,12 @@ class ConnWindow(Screen):
             if port_number is None or isinstance(port_number, str):
                 self.flask_server = 'OFF'
             else:
-                self.flask_server = "ON"
-                self.running_server = f'{host}:{port_number}'
+                if host is None:
+                    self.flask_server = "OFF"
+                    self.running_server = 'No Internet Connection'
+                else:
+                    self.flask_server = "ON"
+                    self.running_server = f'{host}:{port_number}'
         except:
             self.flask_server = 'OFF'
             self.running_server = 'No Server'
@@ -2111,7 +2115,7 @@ class ConnWindow(Screen):
                     button_layout.add_widget(cancel_button)
 
                     # Bind the buttons to their respective actions
-                    confirm_button.bind(on_press=lambda instance: popup.dismiss())
+                    confirm_button.bind(on_press=on_cancel)
                     cancel_button.bind(on_press=lambda instance: popup.dismiss())
 
                     # Add the button layout to the main content layout
