@@ -1840,6 +1840,8 @@ class ConnWindow(Screen):
     global data_transfer
     data_transfer = False
     global MultiplierPortSelect, MultiplierDisplay, MultiplierServer, ServerFontSize
+    global host
+    host = ''
     ##########################################
     ConnFontSize = NumericProperty(sp(25))
     MultiplierPortSelect = 2.75
