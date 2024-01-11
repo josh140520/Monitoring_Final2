@@ -1297,7 +1297,7 @@ class MainWindow(Screen): #Main screen
         resize_factor = x1  # per hour 0.037
         height_factor = 0.515 #bago
         heightposition_factor = 0.74 #bago
-        position_factor = 0.77 - (2.1 * (listypos * x2))  # hour position
+        position_factor = 0.785 - (2.15 * (listypos * x2))  # hour position
 
         Color(0, 0, 0, 1)  # Set color to blue with alpha (RGB values + alpha)
         self.rectangle = Rectangle(
