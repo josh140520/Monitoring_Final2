@@ -1201,7 +1201,7 @@ class MainWindow(Screen): #Main screen
                 if y is not None:
                     line_color = Color(0, 1, 1, 1)  # Red line, fully opaque
                     line_position_x = self.ids.temp_layout.x + position_offset[0] + self.ids.temp_layout.width * (1 / max(listX)) * (0.5) + 2 #bago
-                    line_position_y = (self.ids.temp_layout.y + position_offset[1] + 85 + #bago
+                    line_position_y = (self.ids.temp_layout.y + position_offset[1] + 90 + #bago
                                        self.ids.temp_layout.height * (y / max(line_listY)) * 0.7) - 2 #bago
                     line_length = self.ids.temp_layout.width * 1  #bago
                     line_points = [line_position_x, line_position_y,
