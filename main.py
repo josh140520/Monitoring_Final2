@@ -1228,7 +1228,7 @@ class MainWindow(Screen): #Main screen
                         text=str(y),
                         pos=(label_position_x - 38, (label_position_y * 0.985)+70),   #bago
                         color=label_color.rgb,
-                        font_size=sp(10),
+                        font_size=sp(5),
                     )
 
                     # Add the label to the new FloatLayout
@@ -1297,7 +1297,7 @@ class MainWindow(Screen): #Main screen
         resize_factor = x1  # per hour 0.037
         height_factor = 0.515 #bago
         heightposition_factor = 0.74 #bago
-        position_factor = 0.785 - (2.15 * (listypos * x2))  # hour position
+        position_factor = 0.788 - (2.15 * (listypos * x2))  #bago
 
         Color(0, 0, 0, 1)  # Set color to blue with alpha (RGB values + alpha)
         self.rectangle = Rectangle(
