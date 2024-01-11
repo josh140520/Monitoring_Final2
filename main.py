@@ -1256,7 +1256,7 @@ class MainWindow(Screen): #Main screen
             for x, y in zip(listX, listY):
                 points.extend([
                     self.ids.temp_layout.x + position_offset[0] + self.ids.temp_layout.width * (x / max(listX)) * (0.94)-20, #changes!
-                    self.ids.temp_layout.y + position_offset[1] + 50 + self.ids.temp_layout.height * (y / max(listY)) * 0.5
+                    self.ids.temp_layout.y + position_offset[1] + 80 + self.ids.temp_layout.height * (y / max(listY)) * 0.54
                 ])
             for x, y in zip(listX, listY):
                 x_pos = self.ids.temp_layout.x + position_offset[0] + self.ids.temp_layout.width * (x / max(listX)) * (
