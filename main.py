@@ -1200,9 +1200,9 @@ class MainWindow(Screen): #Main screen
             for y in line_listY:
                 if y is not None:
                     line_color = Color(1, 1, 1, 1)  # Red line, fully opaque
-                    line_position_x = self.ids.temp_layout.x + position_offset[0] + self.ids.temp_layout.width * (1 / max(listX)) * (0.5) #changes! 0.5
+                    line_position_x = self.ids.temp_layout.x + position_offset[0] + self.ids.temp_layout.width * (1 / max(listX)) * (0.5) +50 #bago
                     line_position_y = (self.ids.temp_layout.y + position_offset[1] +
-                                       self.ids.temp_layout.height * (y / max(line_listY)) * 0.7)
+                                       self.ids.temp_layout.height * (y / max(line_listY)) * 0.7) + 25 #bago
                     line_length = self.ids.temp_layout.width * 0.9  # Adjust the length as needed
                     line_points = [line_position_x, line_position_y,
                                    line_position_x + line_length, line_position_y]
@@ -1226,7 +1226,7 @@ class MainWindow(Screen): #Main screen
 
                     label = Label(
                         text=str(y),
-                        pos=(label_position_x - 38, (label_position_y * 0.985)+65),   #bago
+                        pos=(label_position_x - 38, (label_position_y * 0.985)+70),   #bago
                         color=label_color.rgb,
                         font_size=sp(10),
                     )
