@@ -560,14 +560,6 @@ class MainWindow(Screen): #Main screen
                         batt = 0
                         self.stop_testing(instance=None)
                         data_transfer = False
-                        popup_content = Label(text='Hello, this is a basic popup!')
-
-                        # Create a popup with the defined content
-                        popup = Popup(title='Basic Popup', content=popup_content, size_hint=(None, None),
-                                      size=(400, 200))
-
-                        # Open the popup
-                        popup.open()
                         current_time = datetime.datetime.now().time()
                         self.update_data(temp, flow, pressure, batt, current_time)
 
@@ -1229,12 +1221,12 @@ class MainWindow(Screen): #Main screen
                     label_position_y = (
                             temp_layout.y
                             + position_offset[1]
-                            + temp_layout.height * (y / max(line_listY)) * 0.55 #bago
+                            + temp_layout.height * (y / max(line_listY)) * 0.5 #bago
                     )
 
                     label = Label(
                         text=str(y),
-                        pos=(label_position_x - 38, (label_position_y * 0.985)+55),   #bago
+                        pos=(label_position_x - 38, (label_position_y * 0.985)+60),   #bago
                         color=label_color.rgb,
                         font_size=sp(10),
                     )
