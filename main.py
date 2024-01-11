@@ -1187,15 +1187,15 @@ class MainWindow(Screen): #Main screen
 
             position_offset = (self.ids.temp_layout.width * (0.038), self.ids.temp_layout.height * 0.25) #changes!
 
-            full = round(max(listY), 2)
-            quarter = round(max(listY) / 4, 2)
-            half = round(max(listY) / 2, 2)
-            quarter2 = round(max(listY)*3/4, 2)
+            full = round(max(listY), 1)
+            quarter = round(max(listY) / 4, 1)
+            half = round(max(listY) / 2, 1)
+            quarter2 = round(max(listY)*3/4, 1)
             zero = 0
-            line_listY = [int(zero), int(quarter), int(half), int(quarter2), int(full)]
+            line_listY = [zero, quarter, half, quarter2, full] #bago
 
 
-            listY = [round(item, 2) for item in listY] #bago
+            listY = [round(item, 1) for item in listY] #bago
 
             for y in line_listY:
                 if y is not None:
@@ -1226,7 +1226,7 @@ class MainWindow(Screen): #Main screen
 
                     label = Label(
                         text=str(y),
-                        pos=(label_position_x - 42, (label_position_y * 0.985)+70),   #bago
+                        pos=(label_position_x - 50, (label_position_y * 0.985)+70),   #bago
                         color=label_color.rgb,
                         font_size=sp(7),
                     )
