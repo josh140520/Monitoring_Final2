@@ -1163,7 +1163,7 @@ class MainWindow(Screen): #Main screen
 
             # Calculate line coordinates based on listX and listY
             listX = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
-            listY = [None, None, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, None]
+            listY = [1, None, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, None]
             print(f"the y values: {listY} and lenY {len(listY)} and lenX {len(listX)}")
 
 
@@ -1195,7 +1195,7 @@ class MainWindow(Screen): #Main screen
             line_listY = [int(zero), int(quarter), int(half), int(quarter2), int(full)]
 
 
-            listY = [round(item, 1) for item in listY]
+            listY = [round(item, 2) for item in listY] #bago
 
             for y in line_listY:
                 if y is not None:
@@ -1226,9 +1226,9 @@ class MainWindow(Screen): #Main screen
 
                     label = Label(
                         text=str(y),
-                        pos=(label_position_x - 38, (label_position_y * 0.985)+70),   #bago
+                        pos=(label_position_x - 42, (label_position_y * 0.985)+70),   #bago
                         color=label_color.rgb,
-                        font_size=sp(5),
+                        font_size=sp(7),
                     )
 
                     # Add the label to the new FloatLayout
