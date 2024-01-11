@@ -107,6 +107,7 @@ class MainWindow(Screen): #Main screen
     global notification_val
     global ringing
     global msg_box, StartStopFont, MultiplierStartStop, NotificationFontSize, MultiplierNotification
+    global activelist
     add_interval = ''
     '''global temp
     global flow
@@ -121,7 +122,7 @@ class MainWindow(Screen): #Main screen
     data = {}
     ringing = False
     msg_box = None
-
+    activelist = []
 
     table_names = ListProperty([])
     switch_data = BooleanProperty(False)
@@ -532,17 +533,44 @@ class MainWindow(Screen): #Main screen
 
     def testing_thread(self):
         global temp, flow, pressure, batt, current_time
-        global temp1, flow1, pressure1, batt1
+        global temp1, flow1, pressure1, batt1, temptest, active1, activelist, data_transfer
         error_count = 0
         while MainWindow.switch is False:
             if MainWindow.testing_enabled is True:
                 try:
-                    temp = float(temp1)
-                    flow = float(flow1)
-                    pressure = float(pressure1)
-                    batt = float(batt1)
-                    current_time = datetime.datetime.now().time()
-                    self.update_data(temp, flow, pressure, batt, current_time)
+                    activelist.append(active1)
+                    if len(activelist) > 5:
+                        activelist.pop(0)
+                    print(activelist)
+                    x = all(item == activelist[0] for item in activelist)
+                    print(f"are all the same: {x}")
+
+                    if x is False:
+                        temp = float(temp1)
+                        flow = float(flow1)
+                        pressure = float(pressure1)
+                        batt = float(batt1)
+                        data_transfer = True
+                        current_time = datetime.datetime.now().time()
+                        self.update_data(temp, flow, pressure, batt, current_time)
+                    else:
+                        temp = 0
+                        flow = 0
+                        pressure = 0
+                        batt = 0
+                        self.stop_testing(instance=None)
+                        data_transfer = False
+                        popup_content = Label(text='Hello, this is a basic popup!')
+
+                        # Create a popup with the defined content
+                        popup = Popup(title='Basic Popup', content=popup_content, size_hint=(None, None),
+                                      size=(400, 200))
+
+                        # Open the popup
+                        popup.open()
+                        current_time = datetime.datetime.now().time()
+                        self.update_data(temp, flow, pressure, batt, current_time)
+
                 except Exception as e:
                     MainWindow.switch = True
                     if error_count == 0:
@@ -1842,6 +1870,8 @@ class ConnWindow(Screen):
     global displayswitch
     displayswitch = True
     global MultiplierPortSelect, MultiplierDisplay, MultiplierServer, ServerFontSize
+    global temptest
+    temptest = None
     ##########################################
     ConnFontSize = NumericProperty(sp(25))
     MultiplierPortSelect = 2.75
@@ -1861,25 +1891,35 @@ class ConnWindow(Screen):
         self.flow = None
         self.pressure = None
         self.battery = None
+        self.active = None
         self.server_thread = None
 
         @self.app.route('/receive_data', methods=['GET'])
         def receive_data():
-            global temp1, flow1, pressure1, batt1
-            global data_transfer
+
+            global temp1, flow1, pressure1, batt1, active1
+            global data_transfer, temptest
             self.temperature = request.args.get('temperature')
             self.flow = request.args.get('flow')
             self.pressure = request.args.get('pressure')
             self.battery = request.args.get('battery')
+            self.active = request.args.get('active')
 
-            print(f"Received Data - Temperature: {self.temperature}, Flow: {self.flow}, Pressure: {self.pressure}, Battery: {self.battery}")
+            print(f"Received Data - Temperature: {self.temperature}, Flow: {self.flow}, Pressure: {self.pressure}, Battery: {self.battery}, Active: {self.active}")
             # Additional processing or database storage can be done here
             data_transfer = True
             temp1 = self.temperature
             flow1 = self.flow
             pressure1 = self.pressure
             batt1 = self.battery
+            active1 = self.active
+
+
+            temptest = self.temperature
+
             return "Data Received"
+
+
 
     def conn_guide(self, instance):
         image_content = Image(source='CONN_guide.png', size=(200, 300), allow_stretch=True)
@@ -1946,7 +1986,7 @@ class ConnWindow(Screen):
         else:
             x = 300
             y = 200
-        wifi_popup = Popup(title='WiFi Settings', content=box_layout, size_hint=(None, None), size=(x*2.75, y*2.75), background_color=(0.318, 0.749, 1, 0.8))
+        wifi_popup = Popup(title='ESP8266 WiFi Settings', content=box_layout, size_hint=(None, None), size=(x*2.75, y*2.75), background_color=(0.318, 0.749, 1, 0.8))
         wifi_popup.open()
 
 
@@ -1998,11 +2038,13 @@ class ConnWindow(Screen):
 
 
     def display(self):
-        global temp_dict, port_number, host, connecttoESP, displayswitch
+        global temp_dict, port_number, host, connecttoESP, displayswitch, temptest, data_transfer
+        print(temptest)
         if displayswitch is True:
             try:
                 if port_number is None or isinstance(port_number, str):
                     self.flask_server = 'OFF'
+                    self.running_server = 'No Server'
                 else:
                     if host is None:
                         self.flask_server = "OFF"
@@ -2047,7 +2089,7 @@ class ConnWindow(Screen):
     def start_server(self):
         global connecttoESP, port_number, host, displayswitch
         try:
-            if port_number is not None and not isinstance(port_number, str):
+            if port_number is not None and not isinstance(port_number, str) and 0 < port_number <= 65535:
                 if not self.server_thread or not self.server_thread.is_alive():
                     MainWindow.stop_testing(self,instance=None)
                     self.server_thread = threading.Thread(target=self.run_flask_server, daemon=True)
@@ -2084,6 +2126,7 @@ class ConnWindow(Screen):
             # Replace 'print("hh")' with a Kivy popup
             layout = BoxLayout(orientation='vertical', spacing=10)
             label = Label(text='Server failed: No port number found', font_size=ServerFontSize)
+            displayswitch = True
 
             cancel_button = Button(text='Confirm', size_hint=(None, None), size=(120*MultiplierServer, 50*MultiplierServer),pos_hint={'center_x': 0.5, 'center_y': 0.5}, background_color=(1, 0, 0, 0.8))
 
@@ -2156,8 +2199,10 @@ class ConnWindow(Screen):
                     popup.open()
                 else:
                     show_error_popup("Invalid Port Number", "Please enter a valid port number range (0-65535).")
+                    port_number = None
             except ValueError:
                 show_error_popup("Invalid Input", "Please enter a numeric value for the port.")
+                port_number = None
 
         def on_cancel(instance):
             popup.dismiss()
