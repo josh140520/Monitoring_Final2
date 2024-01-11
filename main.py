@@ -1185,7 +1185,7 @@ class MainWindow(Screen): #Main screen
 
 
 
-            position_offset = (self.ids.temp_layout.width * (0.038), self.ids.temp_layout.height * 0.25) #changes!
+            position_offset = (self.ids.temp_layout.width * (0.038), self.ids.temp_layout.height * 0.2) #bago
 
             full = round(max(listY), 2)
             quarter = round(max(listY) / 4, 2)
@@ -1256,13 +1256,13 @@ class MainWindow(Screen): #Main screen
             for x, y in zip(listX, listY):
                 points.extend([
                     self.ids.temp_layout.x + position_offset[0] + self.ids.temp_layout.width * (x / max(listX)) * (0.925)-15, #bago
-                    self.ids.temp_layout.y + position_offset[1] + self.ids.temp_layout.height * (y / max(listY)) * 0.7
+                    self.ids.temp_layout.y + position_offset[1] + self.ids.temp_layout.height * (y / max(listY)) * 0.7 + 50 #bago
                 ])
             for x, y in zip(listX, listY):
                 x_pos = self.ids.temp_layout.x + position_offset[0] + self.ids.temp_layout.width * (x / max(listX)) * (
                     0.925)
                 y_pos = self.ids.temp_layout.y + position_offset[1] + self.ids.temp_layout.height * (
-                            y / max(listY)) * 0.7 +50
+                            y / max(listY)) * 0.7
             print(f"Point Coordinates: ({x_pos}, {y_pos})")
 
             print(f"Position Offset: {position_offset}")
