@@ -1199,7 +1199,7 @@ class MainWindow(Screen): #Main screen
 
             for y in line_listY:
                 if y is not None:
-                    line_color = Color(1, 1, 1, 1)  # Red line, fully opaque
+                    line_color = Color(0, 1, 1, 1)  # Red line, fully opaque
                     line_position_x = self.ids.temp_layout.x + position_offset[0] + self.ids.temp_layout.width * (1 / max(listX)) * (0.5) + 2 #bago
                     line_position_y = (self.ids.temp_layout.y + position_offset[1] +
                                        self.ids.temp_layout.height * (y / max(line_listY)) * 0.7) - 2 #bago
@@ -1256,7 +1256,7 @@ class MainWindow(Screen): #Main screen
             for x, y in zip(listX, listY):
                 points.extend([
                     self.ids.temp_layout.x + position_offset[0] + self.ids.temp_layout.width * (x / max(listX)) * (0.94)-20, #changes!
-                    self.ids.temp_layout.y + position_offset[1] + self.ids.temp_layout.height * (y / max(listY)) * 0.7
+                    self.ids.temp_layout.y + position_offset[1] + 50 + self.ids.temp_layout.height * (y / max(listY)) * 0.5
                 ])
             for x, y in zip(listX, listY):
                 x_pos = self.ids.temp_layout.x + position_offset[0] + self.ids.temp_layout.width * (x / max(listX)) * (
