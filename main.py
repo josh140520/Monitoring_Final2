@@ -1163,7 +1163,7 @@ class MainWindow(Screen): #Main screen
 
             # Calculate line coordinates based on listX and listY
             listX = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
-            listY = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
+            listY = [None, None, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, None]
             print(f"the y values: {listY} and lenY {len(listY)} and lenX {len(listX)}")
 
 
@@ -1292,12 +1292,12 @@ class MainWindow(Screen): #Main screen
 
 
     def draw_rectangle(self, listypos):
-        x1 = 0.043
+        x1 = 0.0575 #bago
         x2 = 0.0352
         resize_factor = x1  # per hour 0.037
-        height_factor = 0.7
-        heightposition_factor = 0.84
-        position_factor = 0.84 - (2.1 * (listypos * x2))  # hour position
+        height_factor = 0.515 #bago
+        heightposition_factor = 0.74 #bago
+        position_factor = 0.77 - (2.1 * (listypos * x2))  # hour position
 
         Color(0, 0, 0, 1)  # Set color to blue with alpha (RGB values + alpha)
         self.rectangle = Rectangle(
