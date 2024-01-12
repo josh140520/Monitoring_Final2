@@ -1199,7 +1199,7 @@ class MainWindow(Screen): #Main screen
 
             for y in line_listY:
                 if y is not None:
-                    line_color = Color(0, 1, 1, 1)  # Red line, fully opaque
+                    line_color = Color(1, 1, 1, 1)  # Red line, fully opaque
                     line_position_x = self.ids.temp_layout.x + position_offset[0] + self.ids.temp_layout.width * (1 / max(listX)) * (0.5) + 2
                     line_position_y = (self.ids.temp_layout.y + position_offset[1] + 90 +
                                        self.ids.temp_layout.height * (y / max(line_listY)) * 0.7) - 2
@@ -1388,7 +1388,7 @@ class MainWindow(Screen): #Main screen
 
                     label = Label(
                         text=str(y),
-                        pos=(label_position_x - 50, (label_position_y * 0.985)+70),
+                        pos=(label_position_x - 50, (label_position_y * 0.985)+60),
                         color=label_color.rgb,
                         font_size=sp(7),
                     )
@@ -1544,7 +1544,7 @@ class MainWindow(Screen): #Main screen
 
                     label = Label(
                         text=str(y),
-                        pos=(label_position_x - 50, (label_position_y * 0.985)+70),
+                        pos=(label_position_x - 50, (label_position_y * 0.985)+50),
                         color=label_color.rgb,
                         font_size=sp(7),
                     )
@@ -1697,7 +1697,7 @@ class MainWindow(Screen): #Main screen
 
                     label = Label(
                         text=str(y),
-                        pos=(label_position_x - 50, (label_position_y * 0.985)+70),
+                        pos=(label_position_x - 50, (label_position_y * 0.985)+40),
                         color=label_color.rgb,
                         font_size=sp(7),
                     )
