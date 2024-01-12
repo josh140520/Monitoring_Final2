@@ -1077,50 +1077,53 @@ class MainWindow(Screen): #Main screen
 
 
     def active_graph(self, instance):
-        repeat = 1
-        interval_time = ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00',
-                         '08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00',
-                         '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00']
-        global temp_active, flow_active, pressure_active, batt_active
-        temp_active = {}
-        flow_active = {}
-        pressure_active = {}
-        batt_active = {}
+        try:
+            repeat = 1
+            interval_time = ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00',
+                             '08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00',
+                             '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00']
+            global temp_active, flow_active, pressure_active, batt_active
+            temp_active = {}
+            flow_active = {}
+            pressure_active = {}
+            batt_active = {}
 
 
-        connection = sqlite3.connect(db_file)
-        cursor = connection.cursor()
-        data = datetime.datetime.now().strftime("Data_%B_%d_%Y")
+            connection = sqlite3.connect(db_file)
+            cursor = connection.cursor()
+            data = datetime.datetime.now().strftime("Data_%B_%d_%Y")
 
 
-        print(f'the date: {data}')
+            print(f'the date: {data}')
 
 
-        for i in range(0, 86400, 3600):
-            start_id = i
-            end_id = i + 3600
-            query = f"""
-                SELECT AVG(temperature) as avg_temp, AVG(flow) as avg_flow, AVG(pressure) as avg_pressure, AVG(battery) as avg_batt 
-                FROM {data} 
-                WHERE id BETWEEN {start_id} AND {end_id}
-            """
-            try:
-                cursor.execute(query)
-                results = cursor.fetchall()
-                print(f'the result: {results}')
-                for row in results:
-                    avg_temp, avg_flow, avg_pressure, avg_batt = row
-                    temp_active[end_id] = avg_temp
-                    flow_active[end_id] = avg_flow
-                    pressure_active[end_id] = avg_pressure
-                    batt_active[end_id] = avg_batt
-            except:
-                print('Date does not exist!')
+            for i in range(0, 86400, 3600):
+                start_id = i
+                end_id = i + 3600
+                query = f"""
+                    SELECT AVG(temperature) as avg_temp, AVG(flow) as avg_flow, AVG(pressure) as avg_pressure, AVG(battery) as avg_batt 
+                    FROM {data} 
+                    WHERE id BETWEEN {start_id} AND {end_id}
+                """
+                try:
+                    cursor.execute(query)
+                    results = cursor.fetchall()
+                    print(f'the result: {results}')
+                    for row in results:
+                        avg_temp, avg_flow, avg_pressure, avg_batt = row
+                        temp_active[end_id] = avg_temp
+                        flow_active[end_id] = avg_flow
+                        pressure_active[end_id] = avg_pressure
+                        batt_active[end_id] = avg_batt
+                except:
+                    print('Date does not exist!')
 
-        print(temp_active)
-        print(flow_active)
-        print(pressure_active)
-        print(batt_active)
+            print(temp_active)
+            print(flow_active)
+            print(pressure_active)
+            print(batt_active)
+        except:
+            print("No Database!")
 
 
 
@@ -1163,7 +1166,7 @@ class MainWindow(Screen): #Main screen
 
             # Calculate line coordinates based on listX and listY
             listX = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
-            listY = [1, None, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, None]
+            listY = list(temp_active.values())
             print(f"the y values: {listY} and lenY {len(listY)} and lenX {len(listX)}")
 
 
@@ -1186,16 +1189,25 @@ class MainWindow(Screen): #Main screen
 
 
             position_offset = (self.ids.temp_layout.width * (0.038), self.ids.temp_layout.height * 0.25) #changes!
+            try:
+                full = round(max(listY), 1)
+                quarter = round(max(listY) / 4, 1)
+                half = round(max(listY) / 2, 1)
+                quarter2 = round(max(listY)*3/4, 1)
+                zero = 0
+                listY = [round(item, 1) for item in listY]
+            except:
+                full = 4
+                quarter = 1
+                half = 2
+                quarter2 = 3
+                zero = 0
 
-            full = round(max(listY), 1)
-            quarter = round(max(listY) / 4, 1)
-            half = round(max(listY) / 2, 1)
-            quarter2 = round(max(listY)*3/4, 1)
-            zero = 0
+
             line_listY = [zero, quarter, half, quarter2, full]
 
 
-            listY = [round(item, 1) for item in listY]
+
 
             for y in line_listY:
                 if y is not None:
@@ -1263,9 +1275,7 @@ class MainWindow(Screen): #Main screen
                     0.925)
                 y_pos = self.ids.temp_layout.y + position_offset[1] + self.ids.temp_layout.height * (
                             y / max(listY)) * 0.7
-            print(f"Point Coordinates: ({x_pos}, {y_pos})")
 
-            print(f"Position Offset: {position_offset}")
 
 
             self.line_color = Color(0, 0, 1)
@@ -1278,13 +1288,15 @@ class MainWindow(Screen): #Main screen
 
 
 
-
-            if drawY[0] is None:
-                drawY[0] = 0
-                self.draw_rectangle(0)
-            for i in range(1, 24):
-                if drawY[i] is None:
-                    self.draw_rectangle(i)
+            try:
+                if drawY[0] is None:
+                    drawY[0] = 0
+                    self.draw_rectangle(0)
+                for i in range(1, 24):
+                    if drawY[i] is None:
+                        self.draw_rectangle(i)
+            except:
+                print("No Database!")
 
 
 
@@ -1350,14 +1362,22 @@ class MainWindow(Screen): #Main screen
 
             position_offset = (self.ids.flow_layout.width * (0.038), self.ids.flow_layout.height * 0.25)
 
-            full = round(max(listY), 1)
-            quarter = round(max(listY) / 4, 1)
-            half = round(max(listY) / 2, 1)
-            quarter2 = round(max(listY) * 3 / 4, 1)
-            zero = 0
+            try:
+                full = round(max(listY), 1)
+                quarter = round(max(listY) / 4, 1)
+                half = round(max(listY) / 2, 1)
+                quarter2 = round(max(listY)*3/4, 1)
+                zero = 0
+                listY = [round(item, 1) for item in listY]
+            except:
+                full = 4
+                quarter = 1
+                half = 2
+                quarter2 = 3
+                zero = 0
             line_listY = [zero, quarter, half, quarter2, full]
 
-            listY = [round(item, 1) for item in listY]
+
 
             for y in line_listY:
                 if y is not None:
@@ -1420,9 +1440,7 @@ class MainWindow(Screen): #Main screen
                     0.925)
                 y_pos = self.ids.flow_layout.y + position_offset[1] + self.ids.flow_layout.height * (
                             y / max(listY)) * 0.7
-            print(f"Point Coordinates: ({x_pos}, {y_pos})")
 
-            print(f"Position Offset: {position_offset}")
 
 
             self.line_color = Color(0, 0, 1)
@@ -1436,12 +1454,15 @@ class MainWindow(Screen): #Main screen
 
 
 
-            if drawY[0] is None:
-                drawY[0] = 0
-                self.draw_rectangle1(0)
-            for i in range(1, 24):
-                if drawY[i] is None:
-                    self.draw_rectangle1(i)
+            try:
+                if drawY[0] is None:
+                    drawY[0] = 0
+                    self.draw_rectangle1(0)
+                for i in range(1, 24):
+                    if drawY[i] is None:
+                        self.draw_rectangle1(i)
+            except:
+                print("No Database!")
 
 
 
@@ -1506,14 +1527,22 @@ class MainWindow(Screen): #Main screen
 
             position_offset = (self.ids.pressure_layout.width * (0.038), self.ids.pressure_layout.height * 0.25)
 
-            full = round(max(listY), 1)
-            quarter = round(max(listY) / 4, 1)
-            half = round(max(listY) / 2, 1)
-            quarter2 = round(max(listY) * 3 / 4, 1)
-            zero = 0
+            try:
+                full = round(max(listY), 1)
+                quarter = round(max(listY) / 4, 1)
+                half = round(max(listY) / 2, 1)
+                quarter2 = round(max(listY)*3/4, 1)
+                zero = 0
+                listY = [round(item, 1) for item in listY]
+            except:
+                full = 4
+                quarter = 1
+                half = 2
+                quarter2 = 3
+                zero = 0
             line_listY = [zero, quarter, half, quarter2, full]
 
-            listY = [round(item, 1) for item in listY]
+
 
             for y in line_listY:
                 if y is not None:
@@ -1574,9 +1603,7 @@ class MainWindow(Screen): #Main screen
                     0.925)
                 y_pos = self.ids.pressure_layout.y + position_offset[1] + self.ids.pressure_layout.height * (
                             y / max(listY)) * 0.7
-            print(f"Point Coordinates: ({x_pos}, {y_pos})")
 
-            print(f"Position Offset: {position_offset}")
 
 
             self.line_color = Color(0, 0, 1)
@@ -1590,12 +1617,15 @@ class MainWindow(Screen): #Main screen
 
 
 
-            if drawY[0] is None:
-                drawY[0] = 0
-                self.draw_rectangle2(0)
-            for i in range(1, 24):
-                if drawY[i] is None:
-                    self.draw_rectangle2(i)
+            try:
+                if drawY[0] is None:
+                    drawY[0] = 0
+                    self.draw_rectangle2(0)
+                for i in range(1, 24):
+                    if drawY[i] is None:
+                        self.draw_rectangle2(i)
+            except:
+                print("No Database!")
 
 
 
@@ -1659,14 +1689,22 @@ class MainWindow(Screen): #Main screen
 
             position_offset = (self.ids.batt_layout.width * (0.038), self.ids.batt_layout.height * 0.25)
 
-            full = round(max(listY), 2)
-            quarter = round(max(listY) / 4, 2)
-            half = round(max(listY) / 2, 2)
-            quarter2 = round(max(listY) * 3 / 4, 2)
-            zero = 0
+            try:
+                full = round(max(listY), 1)
+                quarter = round(max(listY) / 4, 1)
+                half = round(max(listY) / 2, 1)
+                quarter2 = round(max(listY)*3/4, 1)
+                zero = 0
+                listY = [round(item, 1) for item in listY]
+            except:
+                full = 4
+                quarter = 1
+                half = 2
+                quarter2 = 3
+                zero = 0
             line_listY = [int(zero), int(quarter), int(half), int(quarter2), int(full)]
 
-            listY = [round(item, 1) for item in listY]
+
 
             for y in line_listY:
                 if y is not None:
@@ -1697,7 +1735,7 @@ class MainWindow(Screen): #Main screen
 
                     label = Label(
                         text=str(y),
-                        pos=(label_position_x - 50, (label_position_y * 0.985)+40),
+                        pos=(label_position_x - 50, (label_position_y * 0.985)+45),
                         color=label_color.rgb,
                         font_size=sp(7),
                     )
@@ -1727,9 +1765,7 @@ class MainWindow(Screen): #Main screen
                     0.925)
                 y_pos = self.ids.batt_layout.y + position_offset[1] + self.ids.batt_layout.height * (
                             y / max(listY)) * 0.7
-            print(f"Point Coordinates: ({x_pos}, {y_pos})")
 
-            print(f"Position Offset: {position_offset}")
 
 
             self.line_color = Color(0, 0, 1)
@@ -1743,12 +1779,15 @@ class MainWindow(Screen): #Main screen
 
 
 
-            if drawY[0] is None:
-                drawY[0] = 0
-                self.draw_rectangle3(0)
-            for i in range(1, 24):
-                if drawY[i] is None:
-                    self.draw_rectangle3(i)
+            try:
+                if drawY[0] is None:
+                    drawY[0] = 0
+                    self.draw_rectangle3(0)
+                for i in range(1, 24):
+                    if drawY[i] is None:
+                        self.draw_rectangle3(i)
+            except:
+                print("No Database!")
 
 
 
@@ -2641,72 +2680,75 @@ class GraphWindow(Screen): #3rd window
 
 
     def active_graph(self, instance):
-        repeat = 1
-        interval_time = ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00',
-                         '08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00',
-                         '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00']
-        global temp_active, flow_active, pressure_active, batt_active
-        temp_active = {}
-        flow_active = {}
-        pressure_active = {}
-        batt_active = {}
+        try:
+            repeat = 1
+            interval_time = ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00',
+                             '08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00',
+                             '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00']
+            global temp_active, flow_active, pressure_active, batt_active
+            temp_active = {}
+            flow_active = {}
+            pressure_active = {}
+            batt_active = {}
 
 
-        connection = sqlite3.connect(db_file)
-        cursor = connection.cursor()
-        #data = datetime.datetime.now().strftime("Data_%B_%d_%Y")
+            connection = sqlite3.connect(db_file)
+            cursor = connection.cursor()
+            #data = datetime.datetime.now().strftime("Data_%B_%d_%Y")
 
-        data = f"Data_{self.selected_table.replace(' ', '_')}"
-        print(f'the date: {data}')
-
-
-        for i in range(0, 86400, 3600):
-            start_id = i
-            end_id = i + 3600
-            query = f"""
-                SELECT AVG(temperature) as avg_temp, AVG(flow) as avg_flow, AVG(pressure) as avg_pressure, AVG(battery) as avg_batt 
-                FROM {data} 
-                WHERE id BETWEEN {start_id} AND {end_id}
-            """
-            try:
-                cursor.execute(query)
-                results = cursor.fetchall()
-                print(f'the result: {results}')
-                for row in results:
-                    avg_temp, avg_flow, avg_pressure, avg_batt = row
-                    temp_active[end_id] = avg_temp
-                    flow_active[end_id] = avg_flow
-                    pressure_active[end_id] = avg_pressure
-                    batt_active[end_id] = avg_batt
-            except:
-                print('Date does not exist!')
-
-        print(temp_active)
-        print(flow_active)
-        print(pressure_active)
-        print(batt_active)
+            data = f"Data_{self.selected_table.replace(' ', '_')}"
+            print(f'the date: {data}')
 
 
+            for i in range(0, 86400, 3600):
+                start_id = i
+                end_id = i + 3600
+                query = f"""
+                    SELECT AVG(temperature) as avg_temp, AVG(flow) as avg_flow, AVG(pressure) as avg_pressure, AVG(battery) as avg_batt 
+                    FROM {data} 
+                    WHERE id BETWEEN {start_id} AND {end_id}
+                """
+                try:
+                    cursor.execute(query)
+                    results = cursor.fetchall()
+                    print(f'the result: {results}')
+                    for row in results:
+                        avg_temp, avg_flow, avg_pressure, avg_batt = row
+                        temp_active[end_id] = avg_temp
+                        flow_active[end_id] = avg_flow
+                        pressure_active[end_id] = avg_pressure
+                        batt_active[end_id] = avg_batt
+                except:
+                    print('Date does not exist!')
 
-
+            print(temp_active)
+            print(flow_active)
+            print(pressure_active)
+            print(batt_active)
 
 
 
-        today = datetime.datetime.now().strftime("%B %d %Y")
-        if self.selected_table == today:
-            print("It is today")
-            self.show_temp(instance)
-            self.show_flow(instance)
-            self.show_pressure(instance)
-            self.show_batt(instance)
 
-        else:
-            self.show_temp(instance)
-            self.show_flow(instance)
-            self.show_pressure(instance)
-            self.show_batt(instance)
 
-        instance.parent.parent.parent.parent.parent.dismiss()
+
+
+            today = datetime.datetime.now().strftime("%B %d %Y")
+            if self.selected_table == today:
+                print("It is today")
+                self.show_temp(instance)
+                self.show_flow(instance)
+                self.show_pressure(instance)
+                self.show_batt(instance)
+
+            else:
+                self.show_temp(instance)
+                self.show_flow(instance)
+                self.show_pressure(instance)
+                self.show_batt(instance)
+
+            instance.parent.parent.parent.parent.parent.dismiss()
+        except:
+            print("No Database!")
 
 
 
@@ -2753,11 +2795,18 @@ class GraphWindow(Screen): #3rd window
 
             position_offset = (self.ids.temp_layout.width * (0.038), self.ids.temp_layout.height * 0.25) #changes!
 
-            full = round(max(listY), 1)
-            quarter = round(max(listY) / 4, 1)
-            half = round(max(listY) / 2, 1)
-            quarter2 = round(max(listY) * 3 / 4, 1)
-            zero = 0
+            try:
+                full = round(max(listY), 1)
+                quarter = round(max(listY) / 4, 1)
+                half = round(max(listY) / 2, 1)
+                quarter2 = round(max(listY)*3/4, 1)
+                zero = 0
+            except:
+                full = 4
+                quarter = 1
+                half = 2
+                quarter2 = 3
+                zero = 0
             line_listY = [zero, quarter, half, quarter2, full]
 
             listY = [round(item, 1) for item in listY]
@@ -2828,9 +2877,7 @@ class GraphWindow(Screen): #3rd window
                     0.925)
                 y_pos = self.ids.temp_layout.y + position_offset[1] + self.ids.temp_layout.height * (
                             y / max(listY)) * 0.7
-            print(f"Point Coordinates: ({x_pos}, {y_pos})")
 
-            print(f"Position Offset: {position_offset}")
 
 
             self.line_color = Color(0, 0, 1)
@@ -2840,16 +2887,15 @@ class GraphWindow(Screen): #3rd window
             )
             print(drawY)
 
-
-
-
-
-            if drawY[0] is None:
-                drawY[0] = 0
-                self.draw_rectangle(0)
-            for i in range(1, 24):
-                if drawY[i] is None:
-                    self.draw_rectangle(i)
+            try:
+                if drawY[0] is None:
+                    drawY[0] = 0
+                    self.draw_rectangle(0)
+                for i in range(1, 24):
+                    if drawY[i] is None:
+                        self.draw_rectangle(i)
+            except:
+                print("No Database!")
 
 
 
@@ -2915,11 +2961,18 @@ class GraphWindow(Screen): #3rd window
 
             position_offset = (self.ids.flow_layout.width * (0.038), self.ids.flow_layout.height * 0.25)
 
-            full = round(max(listY), 1)
-            quarter = round(max(listY) / 4, 1)
-            half = round(max(listY) / 2, 1)
-            quarter2 = round(max(listY) * 3 / 4, 1)
-            zero = 0
+            try:
+                full = round(max(listY), 1)
+                quarter = round(max(listY) / 4, 1)
+                half = round(max(listY) / 2, 1)
+                quarter2 = round(max(listY)*3/4, 1)
+                zero = 0
+            except:
+                full = 4
+                quarter = 1
+                half = 2
+                quarter2 = 3
+                zero = 0
             line_listY = [zero, quarter, half, quarter2, full]
 
             listY = [round(item, 1) for item in listY]
@@ -2985,9 +3038,7 @@ class GraphWindow(Screen): #3rd window
                     0.925)
                 y_pos = self.ids.flow_layout.y + position_offset[1] + self.ids.flow_layout.height * (
                             y / max(listY)) * 0.7
-            print(f"Point Coordinates: ({x_pos}, {y_pos})")
 
-            print(f"Position Offset: {position_offset}")
 
 
             self.line_color = Color(0, 0, 1)
@@ -2997,16 +3048,15 @@ class GraphWindow(Screen): #3rd window
             )
             print(drawY)
 
-
-
-
-
-            if drawY[0] is None:
-                drawY[0] = 0
-                self.draw_rectangle1(0)
-            for i in range(1, 24):
-                if drawY[i] is None:
-                    self.draw_rectangle1(i)
+            try:
+                if drawY[0] is None:
+                    drawY[0] = 0
+                    self.draw_rectangle1(0)
+                for i in range(1, 24):
+                    if drawY[i] is None:
+                        self.draw_rectangle1(i)
+            except:
+                print("No Database!")
 
 
 
@@ -3071,11 +3121,18 @@ class GraphWindow(Screen): #3rd window
 
             position_offset = (self.ids.pressure_layout.width * (0.038), self.ids.pressure_layout.height * 0.25)
 
-            full = round(max(listY), 1)
-            quarter = round(max(listY) / 4, 1)
-            half = round(max(listY) / 2, 1)
-            quarter2 = round(max(listY) * 3 / 4, 1)
-            zero = 0
+            try:
+                full = round(max(listY), 1)
+                quarter = round(max(listY) / 4, 1)
+                half = round(max(listY) / 2, 1)
+                quarter2 = round(max(listY)*3/4, 1)
+                zero = 0
+            except:
+                full = 4
+                quarter = 1
+                half = 2
+                quarter2 = 3
+                zero = 0
             line_listY = [zero, quarter, half, quarter2, full]
 
             listY = [round(item, 1) for item in listY]
@@ -3140,9 +3197,7 @@ class GraphWindow(Screen): #3rd window
                     0.925)
                 y_pos = self.ids.pressure_layout.y + position_offset[1] + self.ids.pressure_layout.height * (
                             y / max(listY)) * 0.7
-            print(f"Point Coordinates: ({x_pos}, {y_pos})")
 
-            print(f"Position Offset: {position_offset}")
 
 
             self.line_color = Color(0, 0, 1)
@@ -3152,16 +3207,15 @@ class GraphWindow(Screen): #3rd window
             )
             print(drawY)
 
-
-
-
-
-            if drawY[0] is None:
-                drawY[0] = 0
-                self.draw_rectangle2(0)
-            for i in range(1, 24):
-                if drawY[i] is None:
-                    self.draw_rectangle2(i)
+            try:
+                if drawY[0] is None:
+                    drawY[0] = 0
+                    self.draw_rectangle2(0)
+                for i in range(1, 24):
+                    if drawY[i] is None:
+                        self.draw_rectangle2(i)
+            except:
+                print("No Database!")
 
 
 
@@ -3225,11 +3279,18 @@ class GraphWindow(Screen): #3rd window
 
             position_offset = (self.ids.batt_layout.width * (0.038), self.ids.batt_layout.height * 0.25)
 
-            full = round(max(listY), 2)
-            quarter = round(max(listY) / 4, 2)
-            half = round(max(listY) / 2, 2)
-            quarter2 = round(max(listY) * 3 / 4, 2)
-            zero = 0
+            try:
+                full = round(max(listY), 1)
+                quarter = round(max(listY) / 4, 1)
+                half = round(max(listY) / 2, 1)
+                quarter2 = round(max(listY)*3/4, 1)
+                zero = 0
+            except:
+                full = 4
+                quarter = 1
+                half = 2
+                quarter2 = 3
+                zero = 0
             line_listY = [int(zero), int(quarter), int(half), int(quarter2), int(full)]
 
             listY = [round(item, 1) for item in listY]
@@ -3293,9 +3354,7 @@ class GraphWindow(Screen): #3rd window
                     0.925)
                 y_pos = self.ids.batt_layout.y + position_offset[1] + self.ids.batt_layout.height * (
                             y / max(listY)) * 0.7
-            print(f"Point Coordinates: ({x_pos}, {y_pos})")
 
-            print(f"Position Offset: {position_offset}")
 
 
             self.line_color = Color(0, 0, 1)
@@ -3305,16 +3364,15 @@ class GraphWindow(Screen): #3rd window
             )
             print(drawY)
 
-
-
-
-
-            if drawY[0] is None:
-                drawY[0] = 0
-                self.draw_rectangle3(0)
-            for i in range(1, 24):
-                if drawY[i] is None:
-                    self.draw_rectangle3(i)
+            try:
+                if drawY[0] is None:
+                    drawY[0] = 0
+                    self.draw_rectangle3(0)
+                for i in range(1, 24):
+                    if drawY[i] is None:
+                        self.draw_rectangle3(i)
+            except:
+                print("No Database!")
 
 
 
