@@ -1192,18 +1192,18 @@ class MainWindow(Screen): #Main screen
             half = round(max(listY) / 2, 1)
             quarter2 = round(max(listY)*3/4, 1)
             zero = 0
-            line_listY = [zero, quarter, half, quarter2, full] #bago
+            line_listY = [zero, quarter, half, quarter2, full]
 
 
-            listY = [round(item, 1) for item in listY] #bago
+            listY = [round(item, 1) for item in listY]
 
             for y in line_listY:
                 if y is not None:
                     line_color = Color(0, 1, 1, 1)  # Red line, fully opaque
-                    line_position_x = self.ids.temp_layout.x + position_offset[0] + self.ids.temp_layout.width * (1 / max(listX)) * (0.5) + 2 #bago
-                    line_position_y = (self.ids.temp_layout.y + position_offset[1] + 90 + #bago
-                                       self.ids.temp_layout.height * (y / max(line_listY)) * 0.7) - 2 #bago
-                    line_length = self.ids.temp_layout.width * 1  #bago
+                    line_position_x = self.ids.temp_layout.x + position_offset[0] + self.ids.temp_layout.width * (1 / max(listX)) * (0.5) + 2
+                    line_position_y = (self.ids.temp_layout.y + position_offset[1] + 90 +
+                                       self.ids.temp_layout.height * (y / max(line_listY)) * 0.7) - 2
+                    line_length = self.ids.temp_layout.width * 1
                     line_points = [line_position_x, line_position_y,
                                    line_position_x + line_length, line_position_y]
                     Line(points=line_points, width=1, color=line_color)
@@ -1221,12 +1221,12 @@ class MainWindow(Screen): #Main screen
                     label_position_y = (
                             temp_layout.y
                             + position_offset[1]
-                            + temp_layout.height * (y / max(line_listY)) * 0.5 #bago
+                            + temp_layout.height * (y / max(line_listY)) * 0.5
                     )
 
                     label = Label(
                         text=str(y),
-                        pos=(label_position_x - 50, (label_position_y * 0.985)+70),   #bago
+                        pos=(label_position_x - 50, (label_position_y * 0.985)+70),
                         color=label_color.rgb,
                         font_size=sp(7),
                     )
@@ -1255,8 +1255,8 @@ class MainWindow(Screen): #Main screen
             points = []
             for x, y in zip(listX, listY):
                 points.extend([
-                    self.ids.temp_layout.x + position_offset[0] + self.ids.temp_layout.width * (x / max(listX)) * (0.94)-20, #bago
-                    self.ids.temp_layout.y + position_offset[1] + 80 + self.ids.temp_layout.height * (y / max(listY)) * 0.54 #bago
+                    self.ids.temp_layout.x + position_offset[0] + self.ids.temp_layout.width * (x / max(listX)) * (0.94)-20,
+                    self.ids.temp_layout.y + position_offset[1] + 80 + self.ids.temp_layout.height * (y / max(listY)) * 0.54
                 ])
             for x, y in zip(listX, listY):
                 x_pos = self.ids.temp_layout.x + position_offset[0] + self.ids.temp_layout.width * (x / max(listX)) * (
@@ -1292,12 +1292,12 @@ class MainWindow(Screen): #Main screen
 
 
     def draw_rectangle(self, listypos):
-        x1 = 0.0575 #bago
+        x1 = 0.0575
         x2 = 0.0352
         resize_factor = x1  # per hour 0.037
-        height_factor = 0.515 #bago
-        heightposition_factor = 0.74 #bago
-        position_factor = 0.788 - (2.15 * (listypos * x2))  #bago
+        height_factor = 0.515
+        heightposition_factor = 0.74
+        position_factor = 0.788 - (2.15 * (listypos * x2))
 
         Color(0, 0, 0, 1)  # Set color to blue with alpha (RGB values + alpha)
         self.rectangle = Rectangle(
@@ -1350,21 +1350,22 @@ class MainWindow(Screen): #Main screen
 
             position_offset = (self.ids.flow_layout.width * (0.038), self.ids.flow_layout.height * 0.25)
 
-            full = round(max(listY), 2)
-            quarter = round(max(listY) / 4, 2)
-            half = round(max(listY) / 2, 2)
-            quarter2 = round(max(listY) * 3 / 4, 2)
+            full = round(max(listY), 1)
+            quarter = round(max(listY) / 4, 1)
+            half = round(max(listY) / 2, 1)
+            quarter2 = round(max(listY) * 3 / 4, 1)
             zero = 0
-            line_listY = [int(zero), int(quarter), int(half), int(quarter2), int(full)]
+            line_listY = [zero, quarter, half, quarter2, full]
 
             listY = [round(item, 1) for item in listY]
+
             for y in line_listY:
                 if y is not None:
                     line_color = Color(1, 1, 1, 1)  # Red line, fully opaque
-                    line_position_x = self.ids.flow_layout.x + position_offset[0] + self.ids.flow_layout.width * (1 / max(listX)) * (0.5)
-                    line_position_y = (self.ids.flow_layout.y + position_offset[1] +
-                                       self.ids.flow_layout.height * (y / max(line_listY)) * 0.7)
-                    line_length = self.ids.flow_layout.width * 0.9  # Adjust the length as needed
+                    line_position_x = self.ids.flow_layout.x + position_offset[0] + self.ids.flow_layout.width * (1 / max(listX)) * (0.5) + 2
+                    line_position_y = (self.ids.flow_layout.y + position_offset[1] + 90 +
+                                       self.ids.flow_layout.height * (y / max(line_listY)) * 0.7) - 2
+                    line_length = self.ids.flow_layout.width * 1  # Adjust the length as needed
                     line_points = [line_position_x, line_position_y,
                                    line_position_x + line_length, line_position_y]
                     Line(points=line_points, width=1, color=line_color)
@@ -1382,14 +1383,14 @@ class MainWindow(Screen): #Main screen
                     label_position_y = (
                             flow_layout.y
                             + position_offset[1]
-                            + flow_layout.height * (y / max(line_listY)) * 0.7
+                            + flow_layout.height * (y / max(line_listY)) * 0.5
                     )
 
                     label = Label(
                         text=str(y),
-                        pos=(label_position_x - 38, label_position_y * 0.985 - 20),  # changes!
+                        pos=(label_position_x - 50, (label_position_y * 0.985)+70),
                         color=label_color.rgb,
-                        font_size=sp(10),
+                        font_size=sp(7),
                     )
 
                     # Add the label to the new FloatLayout
@@ -1411,8 +1412,8 @@ class MainWindow(Screen): #Main screen
             points = []
             for x, y in zip(listX, listY):
                 points.extend([
-                    self.ids.flow_layout.x + position_offset[0] + self.ids.flow_layout.width * (x / max(listX)) * (0.925)-40,
-                    self.ids.flow_layout.y + position_offset[1] + self.ids.flow_layout.height * (y / max(listY)) * 0.7
+                    self.ids.flow_layout.x + position_offset[0] + self.ids.flow_layout.width * (x / max(listX)) * (0.94)-20,
+                    self.ids.flow_layout.y + position_offset[1] + 80 + self.ids.flow_layout.height * (y / max(listY)) * 0.54
                 ])
             for x, y in zip(listX, listY):
                 x_pos = self.ids.flow_layout.x + position_offset[0] + self.ids.flow_layout.width * (x / max(listX)) * (
@@ -1448,12 +1449,12 @@ class MainWindow(Screen): #Main screen
 
 
     def draw_rectangle1(self, listypos):
-        x1 = 0.043
+        x1 = 0.0575
         x2 = 0.0352
         resize_factor = x1  # per hour 0.037
-        height_factor = 0.7
-        heightposition_factor = 0.84
-        position_factor = 0.84 - (2.1 * (listypos * x2))  # hour position
+        height_factor = 0.515
+        heightposition_factor = 0.74
+        position_factor = 0.788 - (2.15 * (listypos * x2))
 
         Color(0, 0, 0, 1)  # Set color to blue with alpha (RGB values + alpha)
         self.rectangle = Rectangle(
@@ -1505,23 +1506,22 @@ class MainWindow(Screen): #Main screen
 
             position_offset = (self.ids.pressure_layout.width * (0.038), self.ids.pressure_layout.height * 0.25)
 
-            full = round(max(listY), 2)
-            quarter = round(max(listY) / 4, 2)
-            half = round(max(listY) / 2, 2)
-            quarter2 = round(max(listY) * 3 / 4, 2)
+            full = round(max(listY), 1)
+            quarter = round(max(listY) / 4, 1)
+            half = round(max(listY) / 2, 1)
+            quarter2 = round(max(listY) * 3 / 4, 1)
             zero = 0
-            line_listY = [int(zero), int(quarter), int(half), int(quarter2), int(full)]
+            line_listY = [zero, quarter, half, quarter2, full]
 
             listY = [round(item, 1) for item in listY]
-
 
             for y in line_listY:
                 if y is not None:
                     line_color = Color(1, 1, 1, 1)  # Red line, fully opaque
-                    line_position_x = self.ids.pressure_layout.x + position_offset[0] + self.ids.pressure_layout.width * (1 / max(listX)) * (0.5)
-                    line_position_y = (self.ids.pressure_layout.y + position_offset[1] +
-                                       self.ids.pressure_layout.height * (y / max(line_listY)) * 0.7)
-                    line_length = self.ids.pressure_layout.width * 0.9  # Adjust the length as needed
+                    line_position_x = self.ids.pressure_layout.x + position_offset[0] + self.ids.pressure_layout.width * (1 / max(listX)) * (0.5) + 2
+                    line_position_y = (self.ids.pressure_layout.y + position_offset[1] + 90 +
+                                       self.ids.pressure_layout.height * (y / max(line_listY)) * 0.7) - 2
+                    line_length = self.ids.pressure_layout.width * 1  # Adjust the length as needed
                     line_points = [line_position_x, line_position_y,
                                    line_position_x + line_length, line_position_y]
                     Line(points=line_points, width=1, color=line_color)
@@ -1539,14 +1539,14 @@ class MainWindow(Screen): #Main screen
                     label_position_y = (
                             pressure_layout.y
                             + position_offset[1]
-                            + pressure_layout.height * (y / max(line_listY)) * 0.7
+                            + pressure_layout.height * (y / max(line_listY)) * 0.5
                     )
 
                     label = Label(
                         text=str(y),
-                        pos=(label_position_x - 38, label_position_y * 0.985 - 25),  # changes!
+                        pos=(label_position_x - 50, (label_position_y * 0.985)+70),
                         color=label_color.rgb,
-                        font_size=sp(10),
+                        font_size=sp(7),
                     )
 
                     # Add the label to the new FloatLayout
@@ -1566,8 +1566,8 @@ class MainWindow(Screen): #Main screen
             points = []
             for x, y in zip(listX, listY):
                 points.extend([
-                    self.ids.pressure_layout.x + position_offset[0] + self.ids.pressure_layout.width * (x / max(listX)) * (0.925)-40,
-                    self.ids.pressure_layout.y + position_offset[1] + self.ids.pressure_layout.height * (y / max(listY)) * 0.7
+                    self.ids.pressure_layout.x + position_offset[0] + self.ids.pressure_layout.width * (x / max(listX)) * (0.94)-20,
+                    self.ids.pressure_layout.y + position_offset[1] + 80 + self.ids.pressure_layout.height * (y / max(listY)) * 0.54
                 ])
             for x, y in zip(listX, listY):
                 x_pos = self.ids.pressure_layout.x + position_offset[0] + self.ids.pressure_layout.width * (x / max(listX)) * (
@@ -1603,12 +1603,12 @@ class MainWindow(Screen): #Main screen
 
 
     def draw_rectangle2(self, listypos):
-        x1 = 0.043
+        x1 = 0.0575
         x2 = 0.0352
         resize_factor = x1  # per hour 0.037
-        height_factor = 0.7
-        heightposition_factor = 0.84
-        position_factor = 0.84 - (2.1 * (listypos * x2))  # hour position
+        height_factor = 0.515
+        heightposition_factor = 0.74
+        position_factor = 0.788 - (2.15 * (listypos * x2))
 
         Color(0, 0, 0, 1)  # Set color to blue with alpha (RGB values + alpha)
         self.rectangle = Rectangle(
@@ -1671,10 +1671,10 @@ class MainWindow(Screen): #Main screen
             for y in line_listY:
                 if y is not None:
                     line_color = Color(1, 1, 1, 1)  # Red line, fully opaque
-                    line_position_x = self.ids.batt_layout.x + position_offset[0] + self.ids.batt_layout.width * (1 / max(listX)) * (0.5)
-                    line_position_y = (self.ids.batt_layout.y + position_offset[1] +
-                                       self.ids.batt_layout.height * (y / max(line_listY)) * 0.7)
-                    line_length = self.ids.batt_layout.width * 0.9  # Adjust the length as needed
+                    line_position_x = self.ids.batt_layout.x + position_offset[0] + self.ids.batt_layout.width * (1 / max(listX)) * (0.5) + 2
+                    line_position_y = (self.ids.batt_layout.y + position_offset[1] + 90 +
+                                       self.ids.batt_layout.height * (y / max(line_listY)) * 0.7) - 2
+                    line_length = self.ids.batt_layout.width * 1  # Adjust the length as needed
                     line_points = [line_position_x, line_position_y,
                                    line_position_x + line_length, line_position_y]
                     Line(points=line_points, width=1, color=line_color)
@@ -1692,14 +1692,14 @@ class MainWindow(Screen): #Main screen
                     label_position_y = (
                             batt_layout.y
                             + position_offset[1]
-                            + batt_layout.height * (y / max(line_listY)) * 0.7
+                            + batt_layout.height * (y / max(line_listY)) * 0.5
                     )
 
                     label = Label(
                         text=str(y),
-                        pos=(label_position_x - 38, label_position_y * 0.985 - 40),  # changes!
+                        pos=(label_position_x - 50, (label_position_y * 0.985)+70),
                         color=label_color.rgb,
-                        font_size=sp(10),
+                        font_size=sp(7),
                     )
 
                     # Add the label to the new FloatLayout
@@ -1719,8 +1719,8 @@ class MainWindow(Screen): #Main screen
             points = []
             for x, y in zip(listX, listY):
                 points.extend([
-                    self.ids.batt_layout.x + position_offset[0] + self.ids.batt_layout.width * (x / max(listX)) * (0.925)-40,
-                    self.ids.batt_layout.y + position_offset[1] + self.ids.batt_layout.height * (y / max(listY)) * 0.7
+                    self.ids.batt_layout.x + position_offset[0] + self.ids.batt_layout.width * (x / max(listX)) * (0.94)-20,
+                    self.ids.batt_layout.y + position_offset[1] + 80 + self.ids.batt_layout.height * (y / max(listY)) * 0.54
                 ])
             for x, y in zip(listX, listY):
                 x_pos = self.ids.batt_layout.x + position_offset[0] + self.ids.batt_layout.width * (x / max(listX)) * (
@@ -1755,12 +1755,12 @@ class MainWindow(Screen): #Main screen
             # Bind line points to update dynamically when the layout size changes
 
     def draw_rectangle3(self, listypos):
-        x1 = 0.043
+        x1 = 0.0575
         x2 = 0.0352
         resize_factor = x1  # per hour 0.037
-        height_factor = 0.7
-        heightposition_factor = 0.84
-        position_factor = 0.84 - (2.1 * (listypos * x2))  # hour position
+        height_factor = 0.515
+        heightposition_factor = 0.74
+        position_factor = 0.788 - (2.15 * (listypos * x2))
 
         Color(0, 0, 0, 1)  # Set color to blue with alpha (RGB values + alpha)
         self.rectangle = Rectangle(
@@ -2753,13 +2753,12 @@ class GraphWindow(Screen): #3rd window
 
             position_offset = (self.ids.temp_layout.width * (0.038), self.ids.temp_layout.height * 0.25) #changes!
 
-            full = round(max(listY), 2)
-            quarter = round(max(listY) / 4, 2)
-            half = round(max(listY) / 2, 2)
-            quarter2 = round(max(listY)*3/4, 2)
+            full = round(max(listY), 1)
+            quarter = round(max(listY) / 4, 1)
+            half = round(max(listY) / 2, 1)
+            quarter2 = round(max(listY) * 3 / 4, 1)
             zero = 0
-            line_listY = [int(zero), int(quarter), int(half), int(quarter2), int(full)]
-
+            line_listY = [zero, quarter, half, quarter2, full]
 
             listY = [round(item, 1) for item in listY]
 
@@ -2916,14 +2915,15 @@ class GraphWindow(Screen): #3rd window
 
             position_offset = (self.ids.flow_layout.width * (0.038), self.ids.flow_layout.height * 0.25)
 
-            full = round(max(listY), 2)
-            quarter = round(max(listY) / 4, 2)
-            half = round(max(listY) / 2, 2)
-            quarter2 = round(max(listY) * 3 / 4, 2)
+            full = round(max(listY), 1)
+            quarter = round(max(listY) / 4, 1)
+            half = round(max(listY) / 2, 1)
+            quarter2 = round(max(listY) * 3 / 4, 1)
             zero = 0
-            line_listY = [int(zero), int(quarter), int(half), int(quarter2), int(full)]
+            line_listY = [zero, quarter, half, quarter2, full]
 
             listY = [round(item, 1) for item in listY]
+
             for y in line_listY:
                 if y is not None:
                     line_color = Color(1, 1, 1, 1)  # Red line, fully opaque
@@ -3071,12 +3071,12 @@ class GraphWindow(Screen): #3rd window
 
             position_offset = (self.ids.pressure_layout.width * (0.038), self.ids.pressure_layout.height * 0.25)
 
-            full = round(max(listY), 2)
-            quarter = round(max(listY) / 4, 2)
-            half = round(max(listY) / 2, 2)
-            quarter2 = round(max(listY) * 3 / 4, 2)
+            full = round(max(listY), 1)
+            quarter = round(max(listY) / 4, 1)
+            half = round(max(listY) / 2, 1)
+            quarter2 = round(max(listY) * 3 / 4, 1)
             zero = 0
-            line_listY = [int(zero), int(quarter), int(half), int(quarter2), int(full)]
+            line_listY = [zero, quarter, half, quarter2, full]
 
             listY = [round(item, 1) for item in listY]
 
