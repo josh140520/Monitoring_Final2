@@ -1134,10 +1134,7 @@ class MainWindow(Screen): #Main screen
         try:
             if today:
                 print("It is today")
-                self.ids.temp_layout.clear_widgets()
-                self.ids.flow_layout.clear_widgets()
-                self.ids.pressure_layout.clear_widgets()
-                self.ids.batt_layout.clear_widgets()
+                
 
                 self.show_temp(instance)
                 self.show_flow(instance)
@@ -1145,10 +1142,7 @@ class MainWindow(Screen): #Main screen
                 self.show_batt(instance)
 
             else:
-                self.ids.temp_layout.clear_widgets()
-                self.ids.flow_layout.clear_widgets()
-                self.ids.pressure_layout.clear_widgets()
-                self.ids.batt_layout.clear_widgets()
+
 
                 self.show_temp(instance)
                 self.show_flow(instance)
@@ -3538,7 +3532,6 @@ class GraphWindow(Screen): #3rd window
             # Open the Popup
             self.popup.open()
         else:
-            
             self.selected_table = f'{month}_{day}_{year}'.replace("_", " ")
             print("Selected Table:", self.selected_table)
             self.popup.dismiss()
