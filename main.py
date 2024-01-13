@@ -1134,7 +1134,7 @@ class MainWindow(Screen): #Main screen
         try:
             if today:
                 print("It is today")
-                
+
 
                 self.show_temp(instance)
                 self.show_flow(instance)
