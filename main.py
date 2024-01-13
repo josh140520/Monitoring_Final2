@@ -1077,53 +1077,52 @@ class MainWindow(Screen): #Main screen
 
 
     def active_graph(self, instance):
-        try:
-            repeat = 1
-            interval_time = ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00',
-                             '08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00',
-                             '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00']
-            global temp_active, flow_active, pressure_active, batt_active
-            temp_active = {}
-            flow_active = {}
-            pressure_active = {}
-            batt_active = {}
+
+        repeat = 1
+        interval_time = ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00',
+                         '08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00',
+                         '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00']
+        global temp_active, flow_active, pressure_active, batt_active
+        temp_active = {}
+        flow_active = {}
+        pressure_active = {}
+        batt_active = {}
 
 
-            connection = sqlite3.connect(db_file)
-            cursor = connection.cursor()
-            data = datetime.datetime.now().strftime("Data_%B_%d_%Y")
+        connection = sqlite3.connect(db_file)
+        cursor = connection.cursor()
+        data = datetime.datetime.now().strftime("Data_%B_%d_%Y")
 
 
-            print(f'the date: {data}')
+        print(f'the date: {data}')
 
 
-            for i in range(0, 86400, 3600):
-                start_id = i
-                end_id = i + 3600
-                query = f"""
-                    SELECT AVG(temperature) as avg_temp, AVG(flow) as avg_flow, AVG(pressure) as avg_pressure, AVG(battery) as avg_batt 
-                    FROM {data} 
-                    WHERE id BETWEEN {start_id} AND {end_id}
-                """
-                try:
-                    cursor.execute(query)
-                    results = cursor.fetchall()
-                    print(f'the result: {results}')
-                    for row in results:
-                        avg_temp, avg_flow, avg_pressure, avg_batt = row
-                        temp_active[end_id] = avg_temp
-                        flow_active[end_id] = avg_flow
-                        pressure_active[end_id] = avg_pressure
-                        batt_active[end_id] = avg_batt
-                except:
-                    print('Date does not exist!')
+        for i in range(0, 86400, 3600):
+            start_id = i
+            end_id = i + 3600
+            query = f"""
+                SELECT AVG(temperature) as avg_temp, AVG(flow) as avg_flow, AVG(pressure) as avg_pressure, AVG(battery) as avg_batt 
+                FROM {data} 
+                WHERE id BETWEEN {start_id} AND {end_id}
+            """
+            try:
+                cursor.execute(query)
+                results = cursor.fetchall()
+                print(f'the result: {results}')
+                for row in results:
+                    avg_temp, avg_flow, avg_pressure, avg_batt = row
+                    temp_active[end_id] = avg_temp
+                    flow_active[end_id] = avg_flow
+                    pressure_active[end_id] = avg_pressure
+                    batt_active[end_id] = avg_batt
+            except:
+                print('Date does not exist!')
 
-            print(temp_active)
-            print(flow_active)
-            print(pressure_active)
-            print(batt_active)
-        except:
-            print("No Database!")
+        print(temp_active)
+        print(flow_active)
+        print(pressure_active)
+        print(batt_active)
+
 
 
 
@@ -1132,18 +1131,35 @@ class MainWindow(Screen): #Main screen
 
 
         today = datetime.datetime.now().strftime("%B %d %Y")
-        if today:
-            print("It is today")
-            self.show_temp(instance)
-            self.show_flow(instance)
-            self.show_pressure(instance)
-            self.show_batt(instance)
+        try:
+            if today:
+                print("It is today")
+                self.ids.temp_layout.clear_widgets()
+                self.ids.flow_layout.clear_widgets()
+                self.ids.pressure_layout.clear_widgets()
+                self.ids.batt_layout.clear_widgets()
 
-        else:
-            self.show_temp(instance)
-            self.show_flow(instance)
-            self.show_pressure(instance)
-            self.show_batt(instance)
+                self.show_temp(instance)
+                self.show_flow(instance)
+                self.show_pressure(instance)
+                self.show_batt(instance)
+
+            else:
+                self.ids.temp_layout.clear_widgets()
+                self.ids.flow_layout.clear_widgets()
+                self.ids.pressure_layout.clear_widgets()
+                self.ids.batt_layout.clear_widgets()
+                
+                self.show_temp(instance)
+                self.show_flow(instance)
+                self.show_pressure(instance)
+                self.show_batt(instance)
+        except:
+            print("Date does not exist!")
+            self.ids.temp_layout.clear_widgets()
+            self.ids.flow_layout.clear_widgets()
+            self.ids.pressure_layout.clear_widgets()
+            self.ids.batt_layout.clear_widgets()
 
 
 
