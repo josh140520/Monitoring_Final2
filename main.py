@@ -1149,7 +1149,7 @@ class MainWindow(Screen): #Main screen
                 self.ids.flow_layout.clear_widgets()
                 self.ids.pressure_layout.clear_widgets()
                 self.ids.batt_layout.clear_widgets()
-                
+
                 self.show_temp(instance)
                 self.show_flow(instance)
                 self.show_pressure(instance)
@@ -3538,6 +3538,7 @@ class GraphWindow(Screen): #3rd window
             # Open the Popup
             self.popup.open()
         else:
+            
             self.selected_table = f'{month}_{day}_{year}'.replace("_", " ")
             print("Selected Table:", self.selected_table)
             self.popup.dismiss()
@@ -3633,10 +3634,7 @@ class GraphWindow(Screen): #3rd window
 
             connection.commit()
             connection.close()
-        self.ids.temp_layout.canvas.clear()
-        self.ids.flow_layout.canvas.clear()
-        self.ids.pressure_layout.canvas.clear()
-        self.ids.batt_layout.canvas.clear()
+
 
 
     ########
