@@ -2749,6 +2749,10 @@ class GraphWindow(Screen): #3rd window
             instance.parent.parent.parent.parent.parent.dismiss()
         except:
             print("No Database!")
+            self.ids.temp_layout.clear_widgets()
+            self.ids.flow_layout.clear_widgets()
+            self.ids.pressure_layout.clear_widgets()
+            self.ids.batt_layout.clear_widgets()
 
 
 
