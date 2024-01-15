@@ -820,53 +820,56 @@ class MainWindow(Screen): #Main screen
                                     'battery': average_battery
                                 }
                             }
+                            if average_temperature is None and average_flow is None and average_pressure is None and average_battery is None:
+                                print("Stop recording!")
+                            else:
 
-                            current_date = datetime.date.today().strftime("Data_%B_%d_%Y")
-                            connection = sqlite3.connect("monitoring_database.db")
-                            cursor = connection.cursor()
-                            print("Connected to the database.")
+                                current_date = datetime.date.today().strftime("Data_%B_%d_%Y")
+                                connection = sqlite3.connect("monitoring_database.db")
+                                cursor = connection.cursor()
+                                print("Connected to the database.")
 
-                            table_name = f'{current_date}'
-                            create_table_query = f'''
-                                        CREATE TABLE IF NOT EXISTS {table_name} (
-                                            time TEXT PRIMARY KEY,
-                                            id REAL,
-                                            temperature REAL NULL,
-                                            flow REAL NULL,
-                                            pressure REAL NULL,
-                                            battery INTEGER NULL
-                                        )
-                                    '''
-                            cursor.execute(create_table_query)
+                                table_name = f'{current_date}'
+                                create_table_query = f'''
+                                            CREATE TABLE IF NOT EXISTS {table_name} (
+                                                time TEXT PRIMARY KEY,
+                                                id REAL,
+                                                temperature REAL NULL,
+                                                flow REAL NULL,
+                                                pressure REAL NULL,
+                                                battery INTEGER NULL
+                                            )
+                                        '''
+                                cursor.execute(create_table_query)
 
-                            for time_key, values in average_data.items():
-                                # Check if the time already exists in the table
-                                cursor.execute(f'SELECT * FROM {table_name} WHERE time = ?', (time_key,))
-                                existing_record = cursor.fetchone()
+                                for time_key, values in average_data.items():
+                                    # Check if the time already exists in the table
+                                    cursor.execute(f'SELECT * FROM {table_name} WHERE time = ?', (time_key,))
+                                    existing_record = cursor.fetchone()
 
-                                if existing_record:
-                                    # Time exists, update the record
-                                    update_query = f'''
-                                        UPDATE {table_name}
-                                        SET id=?, temperature=?, flow=?, pressure=?, battery=?
-                                        WHERE time=?
-                                    '''
-                                    cursor.execute(update_query, (
-                                    values['id'], values['temperature'], values['flow'], values['pressure'], values['battery'],
-                                    time_key))
-                                else:
-                                    # Time doesn't exist, insert a new record
-                                    insert_query = f'''
-                                        INSERT INTO {table_name} (time, id, temperature, flow, pressure, battery)
-                                        VALUES (?, ?, ?, ?, ?, ?)
-                                    '''
-                                    cursor.execute(insert_query, (
-                                    time_key, values['id'], values['temperature'], values['flow'], values['pressure'],
-                                    values['battery']))
+                                    if existing_record:
+                                        # Time exists, update the record
+                                        update_query = f'''
+                                            UPDATE {table_name}
+                                            SET id=?, temperature=?, flow=?, pressure=?, battery=?
+                                            WHERE time=?
+                                        '''
+                                        cursor.execute(update_query, (
+                                        values['id'], values['temperature'], values['flow'], values['pressure'], values['battery'],
+                                        time_key))
+                                    else:
+                                        # Time doesn't exist, insert a new record
+                                        insert_query = f'''
+                                            INSERT INTO {table_name} (time, id, temperature, flow, pressure, battery)
+                                            VALUES (?, ?, ?, ?, ?, ?)
+                                        '''
+                                        cursor.execute(insert_query, (
+                                        time_key, values['id'], values['temperature'], values['flow'], values['pressure'],
+                                        values['battery']))
 
-                            # Commit the changes and close the connection
-                            connection.commit()
-                            connection.close()
+                                # Commit the changes and close the connection
+                                connection.commit()
+                                connection.close()
                             print(f"Data inserted into {table_name}")
                             print(f"Data  {average_data}")
                             print(type(average_data))
