@@ -1150,10 +1150,7 @@ class MainWindow(Screen): #Main screen
                 self.show_batt(instance)
         except:
             print("Date does not exist!")
-            self.ids.temp_layout.clear_widgets()
-            self.ids.flow_layout.clear_widgets()
-            self.ids.pressure_layout.clear_widgets()
-            self.ids.batt_layout.clear_widgets()
+            
 
 
 
@@ -3692,19 +3689,19 @@ class GraphWindow(Screen): #3rd window
         content = BoxLayout(orientation='vertical')
         content.add_widget(Label(text="Select Action for Database Deletion"))
 
-        reset_button = Button(text=f"Delete: {self.selected_table}", size_hint=(None, 1),
+        reset_button = Button(text=f"Delete: {self.selected_table}", size_hint=(1, 1),
                               size=(120 * Multiplier_Delete, 50 * Multiplier_Delete),
                               background_color=(0.5, 0, 0, 0.7),
                               pos_hint={'center_x': 0.5, 'center_y': 0.5})
         reset_button.bind(on_release=self.confirmation2) #self.delete_data
 
-        cancel_button = Button(text="Delete All Data", size_hint=(None, 1),
+        cancel_button = Button(text="Delete All Data", size_hint=(1, 1),
                                size=(120 * Multiplier_Delete, 50 * Multiplier_Delete),
                                background_color=(0.5, 0, 0, 0.7),
                                pos_hint={'center_x': 0.5, 'center_y': 0.5})
         cancel_button.bind(on_release=self.confirmation)
 
-        cancel_button2 = Button(text="Cancel", size_hint=(None, 1),
+        cancel_button2 = Button(text="Cancel", size_hint=(1, 1),
                                 size=(120 * Multiplier_Delete, 50 * Multiplier_Delete),
                                 background_color=(0.5, 0.5, 0.5, 0.8),
                                 pos_hint={'center_x': 0.5, 'center_y': 0.5})
@@ -3843,7 +3840,7 @@ class GraphWindow(Screen): #3rd window
                 cursor.close()
                 conn.close()
 
-                content = Button(text=f'Table {self.selected_table} Successfully Deleted!')
+                content = Button(text=f'{self.selected_table} Successfully Deleted!')
                 popup = Popup(title='Deletion Success', content=content, size_hint=(None, None), size=(300*2.75, 200*2.75))
                 content.bind(on_press=popup.dismiss)
                 popup.open()
