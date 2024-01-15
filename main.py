@@ -352,7 +352,7 @@ class MainWindow(Screen): #Main screen
         global notif_temperatures, notif_flows, notif_pressures, notif_battery
         global msg_box
         fsize = sp(15)
-        val_limit = 60
+        val_limit = 5
 
         # Check if the variables are defined
         if 'temperatures_sum' not in globals() or 'flows_sum' not in globals() or 'pressures_sum' not in globals():
