@@ -820,56 +820,53 @@ class MainWindow(Screen): #Main screen
                                     'battery': average_battery
                                 }
                             }
-                            if average_temperature is None and average_flow is None and average_pressure is None and average_battery is None:
-                                print("Stop recording!")
-                            else:
 
-                                current_date = datetime.date.today().strftime("Data_%B_%d_%Y")
-                                connection = sqlite3.connect("monitoring_database.db")
-                                cursor = connection.cursor()
-                                print("Connected to the database.")
+                            current_date = datetime.date.today().strftime("Data_%B_%d_%Y")
+                            connection = sqlite3.connect("monitoring_database.db")
+                            cursor = connection.cursor()
+                            print("Connected to the database.")
 
-                                table_name = f'{current_date}'
-                                create_table_query = f'''
-                                            CREATE TABLE IF NOT EXISTS {table_name} (
-                                                time TEXT PRIMARY KEY,
-                                                id REAL,
-                                                temperature REAL NULL,
-                                                flow REAL NULL,
-                                                pressure REAL NULL,
-                                                battery INTEGER NULL
-                                            )
-                                        '''
-                                cursor.execute(create_table_query)
+                            table_name = f'{current_date}'
+                            create_table_query = f'''
+                                        CREATE TABLE IF NOT EXISTS {table_name} (
+                                            time TEXT PRIMARY KEY,
+                                            id REAL,
+                                            temperature REAL NULL,
+                                            flow REAL NULL,
+                                            pressure REAL NULL,
+                                            battery INTEGER NULL
+                                        )
+                                    '''
+                            cursor.execute(create_table_query)
 
-                                for time_key, values in average_data.items():
-                                    # Check if the time already exists in the table
-                                    cursor.execute(f'SELECT * FROM {table_name} WHERE time = ?', (time_key,))
-                                    existing_record = cursor.fetchone()
+                            for time_key, values in average_data.items():
+                                # Check if the time already exists in the table
+                                cursor.execute(f'SELECT * FROM {table_name} WHERE time = ?', (time_key,))
+                                existing_record = cursor.fetchone()
 
-                                    if existing_record:
-                                        # Time exists, update the record
-                                        update_query = f'''
-                                            UPDATE {table_name}
-                                            SET id=?, temperature=?, flow=?, pressure=?, battery=?
-                                            WHERE time=?
-                                        '''
-                                        cursor.execute(update_query, (
-                                        values['id'], values['temperature'], values['flow'], values['pressure'], values['battery'],
-                                        time_key))
-                                    else:
-                                        # Time doesn't exist, insert a new record
-                                        insert_query = f'''
-                                            INSERT INTO {table_name} (time, id, temperature, flow, pressure, battery)
-                                            VALUES (?, ?, ?, ?, ?, ?)
-                                        '''
-                                        cursor.execute(insert_query, (
-                                        time_key, values['id'], values['temperature'], values['flow'], values['pressure'],
-                                        values['battery']))
+                                if existing_record:
+                                    # Time exists, update the record
+                                    update_query = f'''
+                                        UPDATE {table_name}
+                                        SET id=?, temperature=?, flow=?, pressure=?, battery=?
+                                        WHERE time=?
+                                    '''
+                                    cursor.execute(update_query, (
+                                    values['id'], values['temperature'], values['flow'], values['pressure'], values['battery'],
+                                    time_key))
+                                else:
+                                    # Time doesn't exist, insert a new record
+                                    insert_query = f'''
+                                        INSERT INTO {table_name} (time, id, temperature, flow, pressure, battery)
+                                        VALUES (?, ?, ?, ?, ?, ?)
+                                    '''
+                                    cursor.execute(insert_query, (
+                                    time_key, values['id'], values['temperature'], values['flow'], values['pressure'],
+                                    values['battery']))
 
-                                # Commit the changes and close the connection
-                                connection.commit()
-                                connection.close()
+                            # Commit the changes and close the connection
+                            connection.commit()
+                            connection.close()
                             print(f"Data inserted into {table_name}")
                             print(f"Data  {average_data}")
                             print(type(average_data))
@@ -3563,83 +3560,86 @@ class GraphWindow(Screen): #3rd window
                 batt_dict[current_time] = batt
 
             print(f'the table: {self.selected_table}')
+            try:
 
 
-            interval_start = datetime.datetime(1, 1, 1, 0, 0, 0)
-            original_interval_end = datetime.datetime(1, 1, 1, 23, 59, 59)
-            second_step = 10
-            time_step = datetime.timedelta(seconds=second_step)
+                interval_start = datetime.datetime(1, 1, 1, 0, 0, 0)
+                original_interval_end = datetime.datetime(1, 1, 1, 23, 59, 59)
+                second_step = 10
+                time_step = datetime.timedelta(seconds=second_step)
 
-            end_intervals = []
+                end_intervals = []
 
-            while interval_start <= original_interval_end:
-                interval_end = interval_start + time_step
-                interval_end_formatted = interval_end.strftime("%H:%M:%S")
-                end_intervals.append(interval_end_formatted)
-                interval_start = interval_end
+                while interval_start <= original_interval_end:
+                    interval_end = interval_start + time_step
+                    interval_end_formatted = interval_end.strftime("%H:%M:%S")
+                    end_intervals.append(interval_end_formatted)
+                    interval_start = interval_end
 
-            cursor.execute(f"SELECT time FROM {data}")
-            res = cursor.fetchall()
+                cursor.execute(f"SELECT time FROM {data}")
+                res = cursor.fetchall()
 
-            time_with_id = [(interval, i * second_step + second_step) for i, interval in enumerate(end_intervals)]
+                time_with_id = [(interval, i * second_step + second_step) for i, interval in enumerate(end_intervals)]
 
-            # Convert the result to datetime objects
-            res = [datetime.datetime.strptime(item[0], "%H:%M:%S") for item in res]
+                # Convert the result to datetime objects
+                res = [datetime.datetime.strptime(item[0], "%H:%M:%S") for item in res]
 
-            # Now you can format the datetime objects
-            formatted_res = [item.strftime("%H:%M:%S") for item in res]
+                # Now you can format the datetime objects
+                formatted_res = [item.strftime("%H:%M:%S") for item in res]
 
-            # Check which intervals are missing in the database
-            missing_intervals = [interval for interval in end_intervals if interval not in formatted_res]
+                # Check which intervals are missing in the database
+                missing_intervals = [interval for interval in end_intervals if interval not in formatted_res]
 
-            # Set the missing intervals to None in the database
-            for item in time_with_id:
-                if item[0] in missing_intervals:
-                    cursor.execute(
-                        f"INSERT INTO {data} (id, time, temperature, flow, pressure, battery) VALUES (?, ?, ?, ?, ?, ?)",
-                        (item[1], item[0], None, None, None, None)
-                    )
-            connection.commit()
+                # Set the missing intervals to None in the database
+                for item in time_with_id:
+                    if item[0] in missing_intervals:
+                        cursor.execute(
+                            f"INSERT INTO {data} (id, time, temperature, flow, pressure, battery) VALUES (?, ?, ?, ?, ?, ?)",
+                            (item[1], item[0], None, None, None, None)
+                        )
+                connection.commit()
 
-            # Create a temporary table, drop the original, and rename the temporary table
-            cursor.execute(f"CREATE TABLE temp_table AS SELECT * FROM {data} ORDER BY id ASC")
-            cursor.execute(f"DROP TABLE {data}")
-            cursor.execute(f"ALTER TABLE temp_table RENAME TO {data}")
+                # Create a temporary table, drop the original, and rename the temporary table
+                cursor.execute(f"CREATE TABLE temp_table AS SELECT * FROM {data} ORDER BY id ASC")
+                cursor.execute(f"DROP TABLE {data}")
+                cursor.execute(f"ALTER TABLE temp_table RENAME TO {data}")
 
-            # Remove duplicate entries with NULL values in time, temperature, flow, pressure, and battery
-            cursor.execute(f'''
-                DELETE FROM {data}
-                WHERE (time, temperature, flow, pressure, battery) IN (
-                    SELECT time, temperature, flow, pressure, battery
-                    FROM {data}
-                    WHERE time IS NOT NULL
-                    GROUP BY time, temperature, flow, pressure, battery
-                    HAVING COUNT(*) > 1
-                ) 
-                AND temperature IS NULL
-                AND flow IS NULL
-                AND pressure IS NULL
-                AND battery IS NULL;
-            ''')
-            new_temperature = None
-            new_flow = None
-            new_pressure = None
-            new_battery = None
+                # Remove duplicate entries with NULL values in time, temperature, flow, pressure, and battery
+                cursor.execute(f'''
+                    DELETE FROM {data}
+                    WHERE (time, temperature, flow, pressure, battery) IN (
+                        SELECT time, temperature, flow, pressure, battery
+                        FROM {data}
+                        WHERE time IS NOT NULL
+                        GROUP BY time, temperature, flow, pressure, battery
+                        HAVING COUNT(*) > 1
+                    ) 
+                    AND temperature IS NULL
+                    AND flow IS NULL
+                    AND pressure IS NULL
+                    AND battery IS NULL;
+                ''')
+                new_temperature = None
+                new_flow = None
+                new_pressure = None
+                new_battery = None
 
-            # Use an SQL query to update the rows with id = 5 and id = 86395
-            update_query = f'''UPDATE {data}
-                              SET temperature = ?,
-                                  flow = ?,
-                                  pressure = ?,
-                                  battery = ?
-                              WHERE id IN (?, ?)'''
+                # Use an SQL query to update the rows with id = 5 and id = 86395
+                update_query = f'''UPDATE {data}
+                                  SET temperature = ?,
+                                      flow = ?,
+                                      pressure = ?,
+                                      battery = ?
+                                  WHERE id IN (?, ?)'''
 
-            # Execute the query with the data
-            cursor.execute(update_query, (new_temperature, new_flow, new_pressure, new_battery, 5, 10))
-            cursor.execute(update_query, (new_temperature, new_flow, new_pressure, new_battery, 5, 86390))
+                # Execute the query with the data
+                cursor.execute(update_query, (new_temperature, new_flow, new_pressure, new_battery, 5, 10))
+                cursor.execute(update_query, (new_temperature, new_flow, new_pressure, new_battery, 5, 86390))
 
-            connection.commit()
-            connection.close()
+                connection.commit()
+                connection.close()
+            except:
+                print("Try Again")
 
 
 
