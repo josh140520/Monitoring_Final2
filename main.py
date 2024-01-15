@@ -3678,75 +3678,183 @@ class GraphWindow(Screen): #3rd window
         # Dismiss the popup when the "Cancel" button is pressed
         instance.parent.parent.parent.parent.parent.dismiss()
 
-
-
-
-
     def open_reset_popup(self, instance):
-        # Create the popup
         content = BoxLayout(orientation='vertical')
-        content.add_widget(Label(text="Are you sure you want to reset the database?"))
+        content.add_widget(Label(text="Select Action for Database Deletion"))
 
-        def on_reset_button(instance):
-            global db_file
-            if os.path.exists(db_file):
-                os.remove(db_file)
-                print(f"{db_file} has been deleted!.")
-                conn = sqlite3.connect(db_file)
-                content = BoxLayout(orientation='vertical')
-                label = Label(text="A new database has been created.")
-                close_button = Button(text="Close",background_color=(0.5, 0, 0, 0.7))
-                content.add_widget(label)
-                content.add_widget(close_button)
+        reset_button = Button(text=f"Delete: {self.selected_table}", size_hint=(None, 1),
+                              size=(120 * Multiplier_Delete, 50 * Multiplier_Delete),
+                              background_color=(0, 0.5, 0, 0.7),
+                              pos_hint={'center_x': 0.5, 'center_y': 0.5})
+        reset_button.bind(on_release=self.confirmation2) #self.delete_data
 
-                popup = Popup(title="Deletion Successful",
-                              content=content,
-                              size_hint=(None, None), size=(300*Multiplier_Delete, 200*Multiplier_Delete),
-                              auto_dismiss=True,
-                              background_color=(0.5, 0.5, 0.8, 0.7))
+        cancel_button = Button(text="Delete All Data", size_hint=(None, 1),
+                               size=(120 * Multiplier_Delete, 50 * Multiplier_Delete),
+                               background_color=(0.5, 0, 0, 0.7),
+                               pos_hint={'center_x': 0.5, 'center_y': 0.5})
+        cancel_button.bind(on_release=self.confirmation)
 
-                close_button.bind(on_release=popup.dismiss)
-                popup.open()
+        cancel_button2 = Button(text="Cancel", size_hint=(None, 1),
+                                size=(120 * Multiplier_Delete, 50 * Multiplier_Delete),
+                                background_color=(0.5, 0, 0, 0.7),
+                                pos_hint={'center_x': 0.5, 'center_y': 0.5})
+        cancel_button2.bind(on_release=self.on_cancel_button)
 
-            else:
-                print(f"{db_file} does not exist, so create new one!.")
-                conn = sqlite3.connect(db_file)
-                content = BoxLayout(orientation='vertical')
-                label = Label(text="Resetting a New Database")
-                close_button = Button(text="Close",background_color=(0.5, 0, 0, 0.7))
-                content.add_widget(label)
-                content.add_widget(close_button)
-
-                popup = Popup(title="No Database Found",
-                              content=content,
-                              size_hint=(None, None), size=(300*Multiplier_Delete, 200*Multiplier_Delete),
-                              auto_dismiss=True,
-                              background_color=(0.5, 0.5, 0.8, 0.7))
-
-                close_button.bind(on_release=popup.dismiss)
-                popup.open()
-
-
-
-
-
-        def on_cancel_button(instance):
-            # Handle the "Cancel" button action here
-            # You can add any code for canceling the action
-            popup.dismiss()
-
-        reset_button = Button(text="Confirm", size_hint=(1,None),size=(120*Multiplier_Delete, 50*Multiplier_Delete),background_color=(0, 0.5, 0, 0.7))
-        reset_button.bind(on_release=on_reset_button)
-        cancel_button = Button(text="Cancel", size_hint=(1,None),size=(120*Multiplier_Delete, 50*Multiplier_Delete),background_color=(0.5, 0, 0, 0.7))
-        cancel_button.bind(on_release=on_cancel_button)
-
-        button_layout = BoxLayout(orientation='horizontal')
+        button_layout = BoxLayout(orientation='vertical')
         button_layout.add_widget(reset_button)
         button_layout.add_widget(cancel_button)
+        button_layout.add_widget(cancel_button2)
         content.add_widget(button_layout)
 
-        popup = Popup(title='Database Deletion', content=content, size_hint=(None, None), size=(300*Multiplier_Delete, 200*Multiplier_Delete), background_color=(0.5, 0.5, 0.8, 0.7))
-        popup.open()
+        self.main_popup = Popup(title='Database Deletion', content=content, size_hint=(None, None),
+                                size=(300 * Multiplier_Delete, 200 * Multiplier_Delete),
+                                background_color=(0.5, 0.5, 0.8, 0.7))
+        self.main_popup.open()
+
+    def on_reset_button(self, instance):
+        global db_file
+        if os.path.exists(db_file):
+            os.remove(db_file)
+            print(f"{db_file} has been deleted!.")
+            self.show_success_popup()
+        else:
+            print(f"{db_file} does not exist, so create a new one!.")
+            self.show_no_db_popup()
+
+    def show_success_popup(self):
+        content = BoxLayout(orientation='vertical')
+        label = Label(text="A new database has been created.")
+        close_button = Button(text="Close", background_color=(0.5, 0, 0, 0.7))
+        content.add_widget(label)
+        content.add_widget(close_button)
+
+        success_popup = Popup(title="Deletion Successful",
+                              content=content,
+                              size_hint=(None, None), size=(300 * Multiplier_Delete, 200 * Multiplier_Delete),
+                              auto_dismiss=True,
+                              background_color=(0.5, 0.5, 0.8, 0.7))
+
+        close_button.bind(on_release=success_popup.dismiss)
+        success_popup.open()
+
+    def show_no_db_popup(self):
+        content = BoxLayout(orientation='vertical')
+        label = Label(text="Resetting a New Database")
+        close_button = Button(text="Close", background_color=(0.5, 0, 0, 0.7))
+        content.add_widget(label)
+        content.add_widget(close_button)
+
+        no_db_popup = Popup(title="No Database Found",
+                            content=content,
+                            size_hint=(None, None), size=(300 * Multiplier_Delete, 200 * Multiplier_Delete),
+                            auto_dismiss=True,
+                            background_color=(0.5, 0.5, 0.8, 0.7))
+
+        close_button.bind(on_release=no_db_popup.dismiss)
+        no_db_popup.open()
+
+    def confirmation(self, instance):
+
+
+        cancel_button3 = Button(text="Cancel", size_hint=(1, None),
+                                size=(120 * Multiplier_Delete, 50 * Multiplier_Delete),
+                                background_color=(0.5, 0, 0, 0.7),
+                                pos_hint={'center_x': 0.5, 'center_y': 0.5})
+        cancel_button3.bind(on_release=self.confirmation_exit)
+
+        okay_button = Button(text="Confirm", size_hint=(1, None),
+                             size=(120 * Multiplier_Delete, 50 * Multiplier_Delete),
+                             background_color=(0, 0.5, 0, 0.7),
+                             pos_hint={'center_x': 0.5, 'center_y': 0.5})
+        okay_button.bind(on_release=self.on_reset_button)
+
+        confirm_layout = BoxLayout(orientation='horizontal')
+
+        confirm_layout.add_widget(okay_button)
+        confirm_layout.add_widget(cancel_button3)
+
+        content = BoxLayout(orientation='vertical')
+        content.add_widget(confirm_layout)
+
+        self.confirmation_popup = Popup(title='Do you want to delete all database!', content=content, size_hint=(None, None),
+                                        size=(200 * Multiplier_Delete, 150 * Multiplier_Delete),
+                                        background_color=(0.5, 0.5, 0.8, 0.7))
+        self.confirmation_popup.open()
+
+
+    def confirmation2(self, instance):
+
+        cancel_button3 = Button(text="Cancel", size_hint=(1, None),
+                                size=(120 * Multiplier_Delete, 50 * Multiplier_Delete),
+                                background_color=(0.5, 0, 0, 0.7),
+                                pos_hint={'center_x': 0.5, 'center_y': 0.5})
+        cancel_button3.bind(on_release=self.confirmation_exit)
+
+        okay_button = Button(text="Confirm", size_hint=(1, None),
+                             size=(120 * Multiplier_Delete, 50 * Multiplier_Delete),
+                             background_color=(0, 0.5, 0, 0.7),
+                             pos_hint={'center_x': 0.5, 'center_y': 0.5})
+        okay_button.bind(on_release=self.delete_data)
+
+        confirm_layout = BoxLayout(orientation='horizontal')
+
+        confirm_layout.add_widget(okay_button)
+        confirm_layout.add_widget(cancel_button3)
+
+        content = BoxLayout(orientation='vertical')
+        content.add_widget(confirm_layout)
+
+        self.confirmation_popup = Popup(title=f'Do you want to delete: {self.selected_table}', content=content,
+                                        size_hint=(None, None),
+                                        size=(200 * Multiplier_Delete, 150 * Multiplier_Delete),
+                                        background_color=(0.5, 0.5, 0.8, 0.7))
+        if self.selected_table:
+            self.confirmation_popup.open()
+    def delete_data(self, instance):
+        try:
+            print(self.selected_table)
+            if self.selected_table != 'None':
+                # Connect to the SQLite database
+                conn = sqlite3.connect(db_file)
+                cursor = conn.cursor()
+
+                # Example: Deleting all records from a table
+                # Construct the DELETE query without specific conditions
+
+                delete_query = f"DROP TABLE IF EXISTS Data_{self.selected_table.replace(' ', '_')};"
+
+                # Execute the query
+                cursor.execute(delete_query)
+
+                # Commit the changes to the database
+                conn.commit()
+
+                # Close the cursor and connection
+                cursor.close()
+                conn.close()
+
+                content = Button(text=f'Table {self.selected_table} Successfully Deleted!')
+                popup = Popup(title='Deletion Success', content=content, size_hint=(None, None), size=(300*2.75, 200*2.75))
+                content.bind(on_press=popup.dismiss)
+                popup.open()
+        except:
+            print("Data does not exist!")
+
+
+
+
+
+
+
+
+    def on_cancel_button(self, instance):
+        self.main_popup.dismiss()
+    def confirmation_exit(self, instance):
+        self.confirmation_popup.dismiss()
+
+
+
+
 
 
 class WindowManager(ScreenManager): #handle transition
