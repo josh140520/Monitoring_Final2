@@ -3682,21 +3682,21 @@ class GraphWindow(Screen): #3rd window
         content = BoxLayout(orientation='vertical')
         content.add_widget(Label(text="Select Action for Database Deletion"))
 
-        reset_button = Button(text=f"Delete: {self.selected_table}", size_hint=(None, 1),
+        reset_button = Button(text=f"Delete: {self.selected_table}", size_hint=(1, 1),
                               size=(120 * Multiplier_Delete, 50 * Multiplier_Delete),
-                              background_color=(0, 0.5, 0, 0.7),
+                              background_color=(0.5, 0, 0, 0.7),
                               pos_hint={'center_x': 0.5, 'center_y': 0.5})
         reset_button.bind(on_release=self.confirmation2) #self.delete_data
 
-        cancel_button = Button(text="Delete All Data", size_hint=(None, 1),
+        cancel_button = Button(text="Delete All Data", size_hint=(1, 1),
                                size=(120 * Multiplier_Delete, 50 * Multiplier_Delete),
                                background_color=(0.5, 0, 0, 0.7),
                                pos_hint={'center_x': 0.5, 'center_y': 0.5})
         cancel_button.bind(on_release=self.confirmation)
 
-        cancel_button2 = Button(text="Cancel", size_hint=(None, 1),
+        cancel_button2 = Button(text="Cancel", size_hint=(1, 1),
                                 size=(120 * Multiplier_Delete, 50 * Multiplier_Delete),
-                                background_color=(0.5, 0, 0, 0.7),
+                                background_color=(0.5, 0.5, 0.5, 0.8),
                                 pos_hint={'center_x': 0.5, 'center_y': 0.5})
         cancel_button2.bind(on_release=self.on_cancel_button)
 
@@ -3777,7 +3777,7 @@ class GraphWindow(Screen): #3rd window
         content.add_widget(confirm_layout)
 
         self.confirmation_popup = Popup(title='Do you want to delete all database!', content=content, size_hint=(None, None),
-                                        size=(200 * Multiplier_Delete, 150 * Multiplier_Delete),
+                                        size=(300 * Multiplier_Delete, 200 * Multiplier_Delete),
                                         background_color=(0.5, 0.5, 0.8, 0.7))
         self.confirmation_popup.open()
 
@@ -3806,7 +3806,7 @@ class GraphWindow(Screen): #3rd window
 
         self.confirmation_popup = Popup(title=f'Do you want to delete: {self.selected_table}', content=content,
                                         size_hint=(None, None),
-                                        size=(200 * Multiplier_Delete, 150 * Multiplier_Delete),
+                                        size=(300 * Multiplier_Delete, 200 * Multiplier_Delete),
                                         background_color=(0.5, 0.5, 0.8, 0.7))
         if self.selected_table:
             self.confirmation_popup.open()
