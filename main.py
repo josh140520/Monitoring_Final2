@@ -417,7 +417,7 @@ class MainWindow(Screen): #Main screen
                 #Column 2
             elif pressures_sum > val_limit and flows_sum == 0:
                 msg_box = 'Efficient, but not at\nmaximum capacity'
-            elif pressures_sum == 0 and flows_sum == 0:
+            elif pressures_sum == 0 and flows_sum == 0 and len(notif_temperatures) > 10 and len(notif_flows) > 10 and len(notif_pressures) > 10:
                 msg_box = 'Balanced performance,\nmoderate efficiency'
             elif pressures_sum < val_limit and flows_sum == 0:
                 msg_box = 'Insufficient pressure and\nflow, potential for system\nissues'
@@ -539,7 +539,7 @@ class MainWindow(Screen): #Main screen
             if MainWindow.testing_enabled is True:
                 try:
                     activelist.append(active1)
-                    if len(activelist) > 5:
+                    if len(activelist) > 7:
                         activelist.pop(0)
                     print(activelist)
                     x = all(item == activelist[0] for item in activelist)
@@ -1150,7 +1150,7 @@ class MainWindow(Screen): #Main screen
                 self.show_batt(instance)
         except:
             print("Date does not exist!")
-            
+
 
 
 
