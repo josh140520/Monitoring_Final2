@@ -1913,6 +1913,7 @@ class ConnWindow(Screen):
     global MultiplierPortSelect, MultiplierDisplay, MultiplierServer, ServerFontSize
     global temptest
     temptest = None
+
     ##########################################
     ConnFontSize = NumericProperty(sp(25))
     MultiplierPortSelect = 2.75
@@ -1934,19 +1935,22 @@ class ConnWindow(Screen):
         self.battery = None
         self.active = None
         self.server_thread = None
+        self.ESP_ip = None
+
 
         @self.app.route('/receive_data', methods=['GET'])
         def receive_data():
 
             global temp1, flow1, pressure1, batt1, active1
-            global data_transfer, temptest
+            global data_transfer, temptest, espip
             self.temperature = request.args.get('temperature')
             self.flow = request.args.get('flow')
             self.pressure = request.args.get('pressure')
             self.battery = request.args.get('battery')
             self.active = request.args.get('active')
+            self.ESP_ip = request.args.get('ESP_ip')
 
-            print(f"Received Data - Temperature: {self.temperature}, Flow: {self.flow}, Pressure: {self.pressure}, Battery: {self.battery}, Active: {self.active}")
+            print(f"Received Data - Temperature: {self.temperature}, Flow: {self.flow}, Pressure: {self.pressure}, Battery: {self.battery}, Active: {self.active}, IP: {self.ESP_ip}")
             # Additional processing or database storage can be done here
             data_transfer = True
             temp1 = self.temperature
@@ -1954,6 +1958,7 @@ class ConnWindow(Screen):
             pressure1 = self.pressure
             batt1 = self.battery
             active1 = self.active
+            espip = self.ESP_ip
 
 
             temptest = self.temperature
@@ -2079,8 +2084,13 @@ class ConnWindow(Screen):
 
 
     def display(self):
-        global temp_dict, port_number, host, connecttoESP, displayswitch, temptest, data_transfer
+        global temp_dict, port_number, host, connecttoESP, displayswitch, temptest, data_transfer, espip
+
         print(temptest)
+        try:
+            print(espip)
+        except:
+            espip = None
         if displayswitch is True:
             try:
                 if port_number is None or isinstance(port_number, str):
@@ -2097,9 +2107,9 @@ class ConnWindow(Screen):
                 self.flask_server = 'OFF'
                 self.running_server = 'No Server'
             displayswitch = False
-        if data_transfer is True:
+        if data_transfer is True and espip is not None:
 
-            self.ESP_status = 'CONNECTED'
+            self.ESP_status = f'CONNECTED: {espip}'
         else:
 
             self.ESP_status = "DISCONNECTED"
@@ -3682,19 +3692,19 @@ class GraphWindow(Screen): #3rd window
         content = BoxLayout(orientation='vertical')
         content.add_widget(Label(text="Select Action for Database Deletion"))
 
-        reset_button = Button(text=f"Delete: {self.selected_table}", size_hint=(1, 1),
+        reset_button = Button(text=f"Delete: {self.selected_table}", size_hint=(None, 1),
                               size=(120 * Multiplier_Delete, 50 * Multiplier_Delete),
                               background_color=(0.5, 0, 0, 0.7),
                               pos_hint={'center_x': 0.5, 'center_y': 0.5})
         reset_button.bind(on_release=self.confirmation2) #self.delete_data
 
-        cancel_button = Button(text="Delete All Data", size_hint=(1, 1),
+        cancel_button = Button(text="Delete All Data", size_hint=(None, 1),
                                size=(120 * Multiplier_Delete, 50 * Multiplier_Delete),
                                background_color=(0.5, 0, 0, 0.7),
                                pos_hint={'center_x': 0.5, 'center_y': 0.5})
         cancel_button.bind(on_release=self.confirmation)
 
-        cancel_button2 = Button(text="Cancel", size_hint=(1, 1),
+        cancel_button2 = Button(text="Cancel", size_hint=(None, 1),
                                 size=(120 * Multiplier_Delete, 50 * Multiplier_Delete),
                                 background_color=(0.5, 0.5, 0.5, 0.8),
                                 pos_hint={'center_x': 0.5, 'center_y': 0.5})
