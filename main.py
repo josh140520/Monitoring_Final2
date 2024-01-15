@@ -407,27 +407,30 @@ class MainWindow(Screen): #Main screen
                 msg_box = ''
 
                 #Column 1
-            elif pressures_sum > val_limit and flows_sum > val_limit and len(notif_temperatures)>10 and len(notif_flows)>10 and len(notif_pressures)>10:
+            elif pressures_sum > val_limit and flows_sum > val_limit:
                 msg_box = 'OPTIMAL CONDITION'
-            elif pressures_sum == 0 and flows_sum > val_limit and len(notif_temperatures)>10 and len(notif_flows)>10 and len(notif_pressures)>10:
+            elif pressures_sum == 0 and flows_sum > val_limit:
                 msg_box = 'Adequate pressure, good\nflow for most applications'
-            elif pressures_sum < val_limit and flows_sum > val_limit and len(notif_temperatures)>10 and len(notif_flows)>10 and len(notif_pressures)>10:
+            elif pressures_sum < val_limit and flows_sum > val_limit:
                 msg_box = 'Insufficient pressure, good\nflow indicates\nunderutilization'
 
                 #Column 2
-            elif pressures_sum > val_limit and flows_sum == 0 and len(notif_temperatures)>10 and len(notif_flows)>10 and len(notif_pressures)>10:
+            elif pressures_sum > val_limit and flows_sum == 0:
                 msg_box = 'Efficient, but not at\nmaximum capacity'
-            elif pressures_sum == 0 and flows_sum == 0 and len(notif_temperatures)>10 and len(notif_flows)>10 and len(notif_pressures)>10:
-                msg_box = 'Balanced performance,\nmoderate efficiency'
-            elif pressures_sum < val_limit and flows_sum == 0 and len(notif_temperatures)>10 and len(notif_flows)>10 and len(notif_pressures)>10:
+            elif pressures_sum == 0 and flows_sum == 0:
+                if len(notif_temperatures) > 10:
+                    msg_box = 'Balanced performance,\nmoderate efficiency'
+                else:
+                    msg_box = ''
+            elif pressures_sum < val_limit and flows_sum == 0:
                 msg_box = 'Insufficient pressure and\nflow, potential for system\nissues'
 
             #Column 3
-            elif pressures_sum > val_limit and flows_sum < val_limit and len(notif_temperatures)>10 and len(notif_flows)>10 and len(notif_pressures)>10:
+            elif pressures_sum > val_limit and flows_sum < val_limit:
                 msg_box = 'Potential issues, system\nmay not be performing well'
-            elif pressures_sum == 0 and flows_sum < val_limit and len(notif_temperatures)>10 and len(notif_flows)>10 and len(notif_pressures)>10:
+            elif pressures_sum == 0 and flows_sum < val_limit:
                 msg_box = 'Adequate pressure, but low\nflow may impact performance'
-            elif pressures_sum < val_limit and flows_sum < val_limit and len(notif_temperatures)>10 and len(notif_flows)>10 and len(notif_pressures)>10:
+            elif pressures_sum < val_limit and flows_sum < val_limit:
                 msg_box = 'Critical issues, system\nmay not operate as intended'
             else:
                 msg_box = ''
