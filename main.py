@@ -856,7 +856,7 @@ class MainWindow(Screen): #Main screen
                                 else:
                                     # Time doesn't exist, insert a new record
                                     insert_query = f'''
-                                        INSERT INTO {table_name} (time, id, temperature, flow, pressure, battery)
+                                        INSERT OR REPLACE INTO {table_name} (time, id, temperature, flow, pressure, battery)
                                         VALUES (?, ?, ?, ?, ?, ?)
                                     '''
                                     cursor.execute(insert_query, (
@@ -870,7 +870,7 @@ class MainWindow(Screen): #Main screen
                             print(f"Data  {average_data}")
                             print(type(average_data))
                             if any(val is None for nested_dict in data.values() for val in nested_dict.values()):
-                                print("no ringing in notif data")
+                                pass
                             else:
                                 notification_val.update(average_data)
                                 self.notif_data()
@@ -3592,7 +3592,7 @@ class GraphWindow(Screen): #3rd window
             for item in time_with_id:
                 if item[0] in missing_intervals:
                     cursor.execute(
-                        f"INSERT INTO {data} (id, time, temperature, flow, pressure, battery) VALUES (?, ?, ?, ?, ?, ?)",
+                        f"INSERT OR REPLACE INTO {data} (id, time, temperature, flow, pressure, battery) VALUES (?, ?, ?, ?, ?, ?)",
                         (item[1], item[0], None, None, None, None)
                     )
             connection.commit()
