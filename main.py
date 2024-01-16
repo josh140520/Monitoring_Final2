@@ -3514,130 +3514,144 @@ class GraphWindow(Screen): #3rd window
 
     def on_confirm_button_click(self, year, month, day):
         global Multiplier_ChooseDate
-        if year == 'Select Year' or month == 'Select Month' or day == 'Select Day':
-            self.selected_table == None
-            self.popup = Popup(
-                title="Date Selection Error",
-                title_align='center',
-                size_hint=(None, None),
-                size=(300*Multiplier_ChooseDate, 200*Multiplier_ChooseDate),
-                background_color=(0.5, 0.5, 0.5, 0.7),
-                separator_color=(1, 1, 1, 0)
-            )
-            content_layout = BoxLayout(orientation='vertical')
-            error_label = Label(text="     Invalid date.\nPlease try again.", size_hint=(1, 1))
+        try:
+            if year == 'Select Year' or month == 'Select Month' or day == 'Select Day':
+                self.selected_table == None
+                self.popup = Popup(
+                    title="Date Selection Error",
+                    title_align='center',
+                    size_hint=(None, None),
+                    size=(300*Multiplier_ChooseDate, 200*Multiplier_ChooseDate),
+                    background_color=(0.5, 0.5, 0.5, 0.7),
+                    separator_color=(1, 1, 1, 0)
+                )
+                content_layout = BoxLayout(orientation='vertical')
+                error_label = Label(text="     Invalid date.\nPlease try again.", size_hint=(1, 1))
 
-            # Create dismiss button
-            dismiss_button = Button(text='Close', size_hint=(0.5, 0.4),background_color=(1, 0.5, 0.5, 0.7),  pos_hint={'center_x': 0.5, 'center_y': 0.5}, size=(100*Multiplier_ChooseDate, 50*Multiplier_ChooseDate))
-            dismiss_button.bind(on_press=self.popup.dismiss)
+                # Create dismiss button
+                dismiss_button = Button(text='Close', size_hint=(0.5, 0.4),background_color=(1, 0.5, 0.5, 0.7),  pos_hint={'center_x': 0.5, 'center_y': 0.5}, size=(100*Multiplier_ChooseDate, 50*Multiplier_ChooseDate))
+                dismiss_button.bind(on_press=self.popup.dismiss)
 
-            # Add widgets to content layout
-            content_layout.add_widget(error_label)
-            content_layout.add_widget(dismiss_button)
+                # Add widgets to content layout
+                content_layout.add_widget(error_label)
+                content_layout.add_widget(dismiss_button)
 
-            # Set content layout for the Popup
-            self.popup.content = content_layout
+                # Set content layout for the Popup
+                self.popup.content = content_layout
 
-            # Open the Popup
-            self.popup.open()
-        else:
-            self.selected_table = f'{month}_{day}_{year}'.replace("_", " ")
-            print("Selected Table:", self.selected_table)
-            self.popup.dismiss()
+                # Open the Popup
+                self.popup.open()
+            else:
+                self.selected_table = f'{month}_{day}_{year}'.replace("_", " ")
+                print("Selected Table:", self.selected_table)
+                self.popup.dismiss()
 
-            with sqlite3.connect(db_file, isolation_level=None) as connection:
+                connection = sqlite3.connect(db_file, isolation_level=None)
                 cursor = connection.cursor()
+                data = f'Data_{month}_{day}_{year}'
+                query = f"SELECT * FROM {data}"
+                cursor.execute(query)
+                results = cursor.fetchall()
+                for row in results:
+                    current_time, id, temp, flow, pressure, batt = row
+                    temp_dict[current_time] = temp
+                    flow_dict[current_time] = flow
+                    pressure_dict[current_time] = pressure
+                    batt_dict[current_time] = batt
 
-            data = f'Data_{month}_{day}_{year}'
-            query = f"SELECT * FROM {data}"
-            cursor.execute(query)
-            results = cursor.fetchall()
-            for row in results:
-                current_time, id, temp, flow, pressure, batt = row
-                temp_dict[current_time] = temp
-                flow_dict[current_time] = flow
-                pressure_dict[current_time] = pressure
-                batt_dict[current_time] = batt
-
-            print(f'the table: {self.selected_table}')
+                print(f'the table: {self.selected_table}')
 
 
-            interval_start = datetime.datetime(1, 1, 1, 0, 0, 0)
-            original_interval_end = datetime.datetime(1, 1, 1, 23, 59, 59)
-            second_step = 10
-            time_step = datetime.timedelta(seconds=second_step)
+                interval_start = datetime.datetime(1, 1, 1, 0, 0, 0)
+                original_interval_end = datetime.datetime(1, 1, 1, 23, 59, 59)
+                second_step = 10
+                time_step = datetime.timedelta(seconds=second_step)
 
-            end_intervals = []
+                end_intervals = []
 
-            while interval_start <= original_interval_end:
-                interval_end = interval_start + time_step
-                interval_end_formatted = interval_end.strftime("%H:%M:%S")
-                end_intervals.append(interval_end_formatted)
-                interval_start = interval_end
+                while interval_start <= original_interval_end:
+                    interval_end = interval_start + time_step
+                    interval_end_formatted = interval_end.strftime("%H:%M:%S")
+                    end_intervals.append(interval_end_formatted)
+                    interval_start = interval_end
 
-            cursor.execute(f"SELECT time FROM {data}")
-            res = cursor.fetchall()
+                cursor.execute(f"SELECT time FROM {data}")
+                res = cursor.fetchall()
 
-            time_with_id = [(interval, i * second_step + second_step) for i, interval in enumerate(end_intervals)]
+                time_with_id = [(interval, i * second_step + second_step) for i, interval in enumerate(end_intervals)]
 
-            # Convert the result to datetime objects
-            res = [datetime.datetime.strptime(item[0], "%H:%M:%S") for item in res]
+                # Convert the result to datetime objects
+                res = [datetime.datetime.strptime(item[0], "%H:%M:%S") for item in res]
 
-            # Now you can format the datetime objects
-            formatted_res = [item.strftime("%H:%M:%S") for item in res]
+                # Now you can format the datetime objects
+                formatted_res = [item.strftime("%H:%M:%S") for item in res]
 
-            # Check which intervals are missing in the database
-            missing_intervals = [interval for interval in end_intervals if interval not in formatted_res]
+                # Check which intervals are missing in the database
+                missing_intervals = [interval for interval in end_intervals if interval not in formatted_res]
 
-            # Set the missing intervals to None in the database
-            for item in time_with_id:
-                if item[0] in missing_intervals:
-                    cursor.execute(
-                        f"INSERT INTO {data} (id, time, temperature, flow, pressure, battery) VALUES (?, ?, ?, ?, ?, ?)",
-                        (item[1], item[0], None, None, None, None)
-                    )
-            connection.commit()
+                # Set the missing intervals to None in the database
+                for item in time_with_id:
+                    if item[0] in missing_intervals:
+                        cursor.execute(
+                            f"INSERT INTO {data} (id, time, temperature, flow, pressure, battery) VALUES (?, ?, ?, ?, ?, ?)",
+                            (item[1], item[0], None, None, None, None)
+                        )
+                connection.commit()
 
-            # Create a temporary table, drop the original, and rename the temporary table
-            cursor.execute(f"CREATE TABLE temp_table AS SELECT * FROM {data} ORDER BY id ASC")
-            cursor.execute(f"DROP TABLE {data}")
-            cursor.execute(f"ALTER TABLE temp_table RENAME TO {data}")
+                # Create a temporary table, drop the original, and rename the temporary table
+                cursor.execute(f"CREATE TABLE temp_table AS SELECT * FROM {data} ORDER BY id ASC")
+                cursor.execute(f"DROP TABLE {data}")
+                cursor.execute(f"ALTER TABLE temp_table RENAME TO {data}")
 
-            # Remove duplicate entries with NULL values in time, temperature, flow, pressure, and battery
-            cursor.execute(f'''
-                DELETE FROM {data}
-                WHERE (time, temperature, flow, pressure, battery) IN (
-                    SELECT time, temperature, flow, pressure, battery
-                    FROM {data}
-                    WHERE time IS NOT NULL
-                    GROUP BY time, temperature, flow, pressure, battery
-                    HAVING COUNT(*) > 1
-                ) 
-                AND temperature IS NULL
-                AND flow IS NULL
-                AND pressure IS NULL
-                AND battery IS NULL;
-            ''')
-            new_temperature = None
-            new_flow = None
-            new_pressure = None
-            new_battery = None
+                # Remove duplicate entries with NULL values in time, temperature, flow, pressure, and battery
+                cursor.execute(f'''
+                    DELETE FROM {data}
+                    WHERE (time, temperature, flow, pressure, battery) IN (
+                        SELECT time, temperature, flow, pressure, battery
+                        FROM {data}
+                        WHERE time IS NOT NULL
+                        GROUP BY time, temperature, flow, pressure, battery
+                        HAVING COUNT(*) > 1
+                    ) 
+                    AND temperature IS NULL
+                    AND flow IS NULL
+                    AND pressure IS NULL
+                    AND battery IS NULL;
+                ''')
+                new_temperature = None
+                new_flow = None
+                new_pressure = None
+                new_battery = None
 
-            # Use an SQL query to update the rows with id = 5 and id = 86395
-            update_query = f'''UPDATE {data}
-                              SET temperature = ?,
-                                  flow = ?,
-                                  pressure = ?,
-                                  battery = ?
-                              WHERE id IN (?, ?)'''
+                # Use an SQL query to update the rows with id = 5 and id = 86395
+                update_query = f'''UPDATE {data}
+                                  SET temperature = ?,
+                                      flow = ?,
+                                      pressure = ?,
+                                      battery = ?
+                                  WHERE id IN (?, ?)'''
 
-            # Execute the query with the data
-            cursor.execute(update_query, (new_temperature, new_flow, new_pressure, new_battery, 5, 10))
-            cursor.execute(update_query, (new_temperature, new_flow, new_pressure, new_battery, 5, 86390))
+                # Execute the query with the data
+                cursor.execute(update_query, (new_temperature, new_flow, new_pressure, new_battery, 5, 10))
+                cursor.execute(update_query, (new_temperature, new_flow, new_pressure, new_battery, 5, 86390))
 
-            connection.commit()
-            connection.close()
+                connection.commit()
+                connection.close()
+        except:
+            content = BoxLayout(orientation='vertical')
+            label = Label(text="Accessing Database, Error Please Try Again!")
+            close_button = Button(text="Close", background_color=(0.5, 0, 0, 0.7))
+            content.add_widget(label)
+            content.add_widget(close_button)
 
+            success_popup = Popup(title="Reading Data Error",
+                                  content=content,
+                                  size_hint=(None, None), size=(300 * Multiplier_Delete, 200 * Multiplier_Delete),
+                                  auto_dismiss=True,
+                                  background_color=(0.5, 0.5, 0.8, 0.7))
+
+            close_button.bind(on_release=success_popup.dismiss)
+            success_popup.open()
 
 
     ########
