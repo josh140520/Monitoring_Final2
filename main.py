@@ -310,8 +310,6 @@ class MainWindow(Screen): #Main screen
                 #while sw_ring is True:
 
                 sound.play()
-                if not sound:
-                    play_sound()
 
 
 
@@ -872,7 +870,7 @@ class MainWindow(Screen): #Main screen
                             print(f"Data  {average_data}")
                             print(type(average_data))
                             if any(val is None for nested_dict in data.values() for val in nested_dict.values()):
-                                pass
+                                print("no ringing in notif data")
                             else:
                                 notification_val.update(average_data)
                                 self.notif_data()
