@@ -869,11 +869,11 @@ class MainWindow(Screen): #Main screen
                             print(f"Data inserted into {table_name}")
                             print(f"Data  {average_data}")
                             print(type(average_data))
-                            if any(val is None for nested_dict in data.values() for val in nested_dict.values()):
-                                pass
-                            else:
-                                notification_val.update(average_data)
-                                self.notif_data()
+                            #if any(val is None for nested_dict in data.values() for val in nested_dict.values()):
+                            #    pass
+                            #else:
+                            notification_val.update(average_data)
+                            self.notif_data()
                             data.clear()
                             average_data.clear()
                         except sqlite3.Error as e:
@@ -1153,6 +1153,8 @@ class MainWindow(Screen): #Main screen
         except:
             print("Date does not exist!")
 
+        connection.commit()
+        connection.close()
 
 
 
@@ -2766,12 +2768,28 @@ class GraphWindow(Screen): #3rd window
                 self.show_batt(instance)
 
             instance.parent.parent.parent.parent.parent.dismiss()
+            connection.commit()
+            connection.close()
         except:
             print("No Database!")
             self.ids.temp_layout.clear_widgets()
             self.ids.flow_layout.clear_widgets()
             self.ids.pressure_layout.clear_widgets()
             self.ids.batt_layout.clear_widgets()
+            content = BoxLayout(orientation='vertical')
+            label = Label(text="Records Not Found")
+            close_button = Button(text="Close", background_color=(0.5, 0, 0, 0.7))
+            content.add_widget(label)
+            content.add_widget(close_button)
+
+            success_popup = Popup(title="Reading Data Error",
+                                  content=content,
+                                  size_hint=(None, None), size=(300 * Multiplier_Delete, 200 * Multiplier_Delete),
+                                  auto_dismiss=True,
+                                  background_color=(0.5, 0.5, 0.8, 0.7))
+
+            close_button.bind(on_release=success_popup.dismiss)
+            success_popup.open()
 
 
 
