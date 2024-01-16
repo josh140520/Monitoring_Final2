@@ -821,7 +821,7 @@ class MainWindow(Screen): #Main screen
                             }
 
                             current_date = datetime.date.today().strftime("Data_%B_%d_%Y")
-                            connection = sqlite3.connect("monitoring_database.db")
+                            connection = sqlite3.connect(db_file, isolation_level=None)
                             cursor = connection.cursor()
                             print("Connected to the database.")
 
@@ -1091,7 +1091,7 @@ class MainWindow(Screen): #Main screen
         batt_active = {}
 
 
-        connection = sqlite3.connect(db_file)
+        connection = sqlite3.connect(db_file, isolation_level=None)
         cursor = connection.cursor()
         data = datetime.datetime.now().strftime("Data_%B_%d_%Y")
 
@@ -2547,7 +2547,7 @@ class GraphWindow(Screen): #3rd window
         absolute_path = ''
         try:
             # Connect to SQLite database
-            conn = sqlite3.connect(db_file)  # Replace 'your_database.db' with your database file
+            conn = sqlite3.connect(db_file, isolation_level=None)  # Replace 'your_database.db' with your database file
             cursor = conn.cursor()
 
             # Execute an SQL query to fetch data
@@ -2713,7 +2713,7 @@ class GraphWindow(Screen): #3rd window
             batt_active = {}
 
 
-            connection = sqlite3.connect(db_file)
+            connection = sqlite3.connect(db_file, isolation_level=None)
             cursor = connection.cursor()
             #data = datetime.datetime.now().strftime("Data_%B_%d_%Y")
 
@@ -3444,7 +3444,7 @@ class GraphWindow(Screen): #3rd window
 
             content = BoxLayout(orientation='vertical', size_hint=(1, 0.75))
 
-            connection = sqlite3.connect(db_file)
+            connection = sqlite3.connect(db_file, isolation_level=None)
             cursor = connection.cursor()
             cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
             get_tables = cursor.fetchall()
@@ -3873,7 +3873,7 @@ class GraphWindow(Screen): #3rd window
             print(self.selected_table)
             if self.selected_table != 'None':
                 # Connect to the SQLite database
-                conn = sqlite3.connect(db_file)
+                conn = sqlite3.connect(db_file, isolation_level=None)
                 cursor = conn.cursor()
 
                 # Example: Deleting all records from a table
