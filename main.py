@@ -306,7 +306,7 @@ class MainWindow(Screen): #Main screen
         sound = SoundLoader.load('ringtone.mp3')
 
         def play_sound():
-            if sound:
+            while sound:
                 #while sw_ring is True:
 
                 sound.play()
@@ -869,9 +869,11 @@ class MainWindow(Screen): #Main screen
                             print(f"Data inserted into {table_name}")
                             print(f"Data  {average_data}")
                             print(type(average_data))
-
-                            notification_val.update(average_data)
-                            self.notif_data()
+                            if any(val is None for nested_dict in data.values() for val in nested_dict.values()):
+                                pass
+                            else:
+                                notification_val.update(average_data)
+                                self.notif_data()
                             data.clear()
                             average_data.clear()
                         except sqlite3.Error as e:
