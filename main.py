@@ -352,7 +352,7 @@ class MainWindow(Screen): #Main screen
         global notif_temperatures, notif_flows, notif_pressures, notif_battery
         global msg_box
         fsize = sp(15)
-        val_limit = 5
+        val_limit = 0
 
         # Check if the variables are defined
         if 'temperatures_sum' not in globals() or 'flows_sum' not in globals() or 'pressures_sum' not in globals():
@@ -541,7 +541,7 @@ class MainWindow(Screen): #Main screen
             if MainWindow.testing_enabled is True:
                 try:
                     activelist.append(active1)
-                    if len(activelist) > 7:
+                    if len(activelist) > 10:
                         activelist.pop(0)
                     print(activelist)
                     x = all(item == activelist[0] for item in activelist)
