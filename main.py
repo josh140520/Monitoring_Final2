@@ -310,8 +310,8 @@ class MainWindow(Screen): #Main screen
                 #while sw_ring is True:
 
                 sound.play()
-                sw_ring = False
-                
+                if not sound:
+                    sw_ring = False
 
 
 
