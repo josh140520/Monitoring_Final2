@@ -3545,9 +3545,9 @@ class GraphWindow(Screen): #3rd window
             print("Selected Table:", self.selected_table)
             self.popup.dismiss()
 
-            with sqlite3.connect("your_database.db", isolation_level=None) as connection:
+            with sqlite3.connect(db_file, isolation_level=None) as connection:
                 cursor = connection.cursor()
-            
+
             data = f'Data_{month}_{day}_{year}'
             query = f"SELECT * FROM {data}"
             cursor.execute(query)
