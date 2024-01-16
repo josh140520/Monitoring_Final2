@@ -306,10 +306,12 @@ class MainWindow(Screen): #Main screen
         sound = SoundLoader.load('ringtone.mp3')
 
         def play_sound():
-            while sound:
+            if sound:
                 #while sw_ring is True:
 
                 sound.play()
+                if not sound:
+                    play_sound()
 
 
 
