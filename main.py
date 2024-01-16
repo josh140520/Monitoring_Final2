@@ -856,7 +856,7 @@ class MainWindow(Screen): #Main screen
                                 else:
                                     # Time doesn't exist, insert a new record
                                     insert_query = f'''
-                                        INSERT OR REPLACE INTO {table_name} (time, id, temperature, flow, pressure, battery)
+                                        INSERT INTO {table_name} (time, id, temperature, flow, pressure, battery)
                                         VALUES (?, ?, ?, ?, ?, ?)
                                     '''
                                     cursor.execute(insert_query, (
@@ -3545,8 +3545,9 @@ class GraphWindow(Screen): #3rd window
             print("Selected Table:", self.selected_table)
             self.popup.dismiss()
 
-            connection = sqlite3.connect(db_file, isolation_level=None)
-            cursor = connection.cursor()
+            with sqlite3.connect("your_database.db", isolation_level=None) as connection:
+                cursor = connection.cursor()
+            
             data = f'Data_{month}_{day}_{year}'
             query = f"SELECT * FROM {data}"
             cursor.execute(query)
@@ -3592,7 +3593,7 @@ class GraphWindow(Screen): #3rd window
             for item in time_with_id:
                 if item[0] in missing_intervals:
                     cursor.execute(
-                        f"INSERT OR REPLACE INTO {data} (id, time, temperature, flow, pressure, battery) VALUES (?, ?, ?, ?, ?, ?)",
+                        f"INSERT INTO {data} (id, time, temperature, flow, pressure, battery) VALUES (?, ?, ?, ?, ?, ?)",
                         (item[1], item[0], None, None, None, None)
                     )
             connection.commit()
