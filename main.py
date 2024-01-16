@@ -2777,7 +2777,7 @@ class GraphWindow(Screen): #3rd window
             self.ids.pressure_layout.clear_widgets()
             self.ids.batt_layout.clear_widgets()
             content = BoxLayout(orientation='vertical')
-            label = Label(text="Records Not Found")
+            label = Label(text="Please Try Again")
             close_button = Button(text="Close", background_color=(0.5, 0, 0, 0.7))
             content.add_widget(label)
             content.add_widget(close_button)
@@ -3440,89 +3440,105 @@ class GraphWindow(Screen): #3rd window
 
 #####################################################
     def read_graph(self, instance):
+        try:
 
-        content = BoxLayout(orientation='vertical', size_hint=(1, 0.75))
+            content = BoxLayout(orientation='vertical', size_hint=(1, 0.75))
 
-        connection = sqlite3.connect(db_file)
-        cursor = connection.cursor()
-        cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
-        get_tables = cursor.fetchall()
-        table_list = [str(table[0]) for table in get_tables]
-        date_info = [(str(name.split('_')[3]), str(name.split('_')[1]), str(name.split('_')[2])) for name in table_list]
+            connection = sqlite3.connect(db_file)
+            cursor = connection.cursor()
+            cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
+            get_tables = cursor.fetchall()
+            table_list = [str(table[0]) for table in get_tables]
+            date_info = [(str(name.split('_')[3]), str(name.split('_')[1]), str(name.split('_')[2])) for name in table_list]
 
-        date_dict = {}
+            date_dict = {}
 
-        for year, month, day in date_info:
-            if year not in date_dict:
-                date_dict[year] = {}
-            if month not in date_dict[year]:
-                date_dict[year][month] = set()
-            date_dict[year][month].add(day)
+            for year, month, day in date_info:
+                if year not in date_dict:
+                    date_dict[year] = {}
+                if month not in date_dict[year]:
+                    date_dict[year][month] = set()
+                date_dict[year][month].add(day)
 
-        year_list = list(date_dict.keys())
-        month_list = []
-        day_list = []
+            year_list = list(date_dict.keys())
+            month_list = []
+            day_list = []
 
-        year_spinner = Spinner(text='Select Year', values=year_list, size=(100, 30))
-        month_spinner = Spinner(text='Select Month', values=month_list, size=(100, 30))
-        day_spinner = Spinner(text='Select Day', values=day_list, size=(100, 30))
+            year_spinner = Spinner(text='Select Year', values=year_list, size=(100, 30))
+            month_spinner = Spinner(text='Select Month', values=month_list, size=(100, 30))
+            day_spinner = Spinner(text='Select Day', values=day_list, size=(100, 30))
 
-        def update_month_spinner(year):
-            month_list = list(date_dict.get(year, {}).keys())
-            month_spinner.values = month_list
-            month_spinner.text = 'Select Month'
-            update_day_spinner(year, month_spinner.text)
+            def update_month_spinner(year):
+                month_list = list(date_dict.get(year, {}).keys())
+                month_spinner.values = month_list
+                month_spinner.text = 'Select Month'
+                update_day_spinner(year, month_spinner.text)
 
-        def update_day_spinner(year, month):
-            global Multiplier_ChooseDate
-            day_list = list(date_dict.get(year, {}).get(month, set()))
-            day_spinner.values = day_list
-            day_spinner.text = 'Select Day'
+            def update_day_spinner(year, month):
+                global Multiplier_ChooseDate
+                day_list = list(date_dict.get(year, {}).get(month, set()))
+                day_spinner.values = day_list
+                day_spinner.text = 'Select Day'
 
-        year_spinner.bind(text=lambda instance, text: update_month_spinner(text))
-        month_spinner.bind(text=lambda instance, text: update_day_spinner(year_spinner.text, text))
-        day_spinner.bind(text=self.on_day_select)
+            year_spinner.bind(text=lambda instance, text: update_month_spinner(text))
+            month_spinner.bind(text=lambda instance, text: update_day_spinner(year_spinner.text, text))
+            day_spinner.bind(text=self.on_day_select)
 
-        content.add_widget(Label(text="Choose a database:", size_hint_y=0.1))
-        table_grid = GridLayout(cols=1, spacing=10, size_hint_y=None)
-        table_grid.bind(minimum_height=table_grid.setter('height'))
+            content.add_widget(Label(text="Choose a database:", size_hint_y=0.1))
+            table_grid = GridLayout(cols=1, spacing=10, size_hint_y=None)
+            table_grid.bind(minimum_height=table_grid.setter('height'))
 
-        row1 = BoxLayout(orientation='horizontal', spacing=10, size_hint_y=None, height=40, size=(200*Multiplier_ChooseDate,50*Multiplier_ChooseDate))
-        row1.add_widget(year_spinner)
-        table_grid.add_widget(row1)
+            row1 = BoxLayout(orientation='horizontal', spacing=10, size_hint_y=None, height=40, size=(200*Multiplier_ChooseDate,50*Multiplier_ChooseDate))
+            row1.add_widget(year_spinner)
+            table_grid.add_widget(row1)
 
-        row2 = BoxLayout(orientation='horizontal', spacing=10, size_hint_y=None, height=40, size=(200*Multiplier_ChooseDate,50*Multiplier_ChooseDate))
-        row2.add_widget(month_spinner)
-        table_grid.add_widget(row2)
+            row2 = BoxLayout(orientation='horizontal', spacing=10, size_hint_y=None, height=40, size=(200*Multiplier_ChooseDate,50*Multiplier_ChooseDate))
+            row2.add_widget(month_spinner)
+            table_grid.add_widget(row2)
 
-        row3 = BoxLayout(orientation='horizontal', spacing=10, size_hint_y=None, height=40, size=(200*Multiplier_ChooseDate,50*Multiplier_ChooseDate))
-        row3.add_widget(day_spinner)
-        table_grid.add_widget(row3)
+            row3 = BoxLayout(orientation='horizontal', spacing=10, size_hint_y=None, height=40, size=(200*Multiplier_ChooseDate,50*Multiplier_ChooseDate))
+            row3.add_widget(day_spinner)
+            table_grid.add_widget(row3)
 
-        scroll_view = ScrollView()
-        scroll_view.add_widget(table_grid)
+            scroll_view = ScrollView()
+            scroll_view.add_widget(table_grid)
 
-        confirm_button = Button(text='Confirm', size=(100, 30))
-        confirm_button.bind(
-            on_release=lambda instance: self.on_confirm_button_click(year_spinner.text, month_spinner.text,
-                                                                     day_spinner.text))
+            confirm_button = Button(text='Confirm', size=(100, 30))
+            confirm_button.bind(
+                on_release=lambda instance: self.on_confirm_button_click(year_spinner.text, month_spinner.text,
+                                                                         day_spinner.text))
 
-        row4 = BoxLayout(orientation='horizontal', spacing=10, size_hint_y=None, height=40, size=(200*Multiplier_ChooseDate,50*Multiplier_ChooseDate))
-        row4.add_widget(confirm_button)
-        table_grid.add_widget(row4)
-        content.add_widget(scroll_view)
+            row4 = BoxLayout(orientation='horizontal', spacing=10, size_hint_y=None, height=40, size=(200*Multiplier_ChooseDate,50*Multiplier_ChooseDate))
+            row4.add_widget(confirm_button)
+            table_grid.add_widget(row4)
+            content.add_widget(scroll_view)
 
-        self.popup = Popup(
-            title="Choose a Date",
-            title_align='center',
-            content=content,
-            size_hint=(None, None),
-            size=(400*Multiplier_ChooseDate, 500*Multiplier_ChooseDate),
-            background_color=(0.5, 0.5, 0.8, 0.7),
-        )
+            self.popup = Popup(
+                title="Choose a Date",
+                title_align='center',
+                content=content,
+                size_hint=(None, None),
+                size=(400*Multiplier_ChooseDate, 500*Multiplier_ChooseDate),
+                background_color=(0.5, 0.5, 0.8, 0.7),
+            )
 
-        self.popup.open()
-        connection.close() #temporary added.
+            self.popup.open()
+            connection.close() #temporary added.
+        except:
+            content = BoxLayout(orientation='vertical')
+            label = Label(text="Please Try Again")
+            close_button = Button(text="Close", background_color=(0.5, 0, 0, 0.7))
+            content.add_widget(label)
+            content.add_widget(close_button)
+
+            success_popup = Popup(title="Reading Data Error",
+                                  content=content,
+                                  size_hint=(None, None), size=(300 * Multiplier_Delete, 200 * Multiplier_Delete),
+                                  auto_dismiss=True,
+                                  background_color=(0.5, 0.5, 0.8, 0.7))
+
+            close_button.bind(on_release=success_popup.dismiss)
+            success_popup.open()
 
     def on_month_select(self, instance, text):
         print("Selected Month:", text)
