@@ -1295,7 +1295,7 @@ class MainWindow(Screen): #Main screen
             self.line_color = Color(0, 0, 1)
             self.line = Line(
                 points=points,
-                width=5  # Set line width (adjust as needed)
+                width=2.5  # Set line width (adjust as needed)
             )
             print(drawY)
 
@@ -1460,7 +1460,7 @@ class MainWindow(Screen): #Main screen
             self.line_color = Color(0, 0, 1)
             self.line = Line(
                 points=points,
-                width=5  # Set line width (adjust as needed)
+                width=2.5  # Set line width (adjust as needed)
             )
             print(drawY)
 
@@ -1623,7 +1623,7 @@ class MainWindow(Screen): #Main screen
             self.line_color = Color(0, 0, 1)
             self.line = Line(
                 points=points,
-                width=5  # Set line width (adjust as needed)
+                width=2.5  # Set line width (adjust as needed)
             )
             print(drawY)
 
@@ -1689,7 +1689,7 @@ class MainWindow(Screen): #Main screen
             min_value = min(filter(lambda x: x is not None and x != 0, listY), default=None)
 
             # Replace every None or 0 with the minimum value
-            listY = [min_value if x is None or x == 0 else x for x in listY]
+            listY = [98 if x is None or x == 0 else x for x in listY] #! change
             print(f"every listY{listY}")
 
 
@@ -1785,7 +1785,7 @@ class MainWindow(Screen): #Main screen
             self.line_color = Color(0, 0, 1)
             self.line = Line(
                 points=points,
-                width=5  # Set line width (adjust as needed)
+                width=2.5  # Set line width (adjust as needed)
             )
             print(drawY)
 
@@ -3309,7 +3309,7 @@ class GraphWindow(Screen): #3rd window
             min_value = min(filter(lambda x: x is not None and x != 0, listY), default=None)
 
             # Replace every None or 0 with the minimum value
-            listY = [min_value if x is None or x == 0 else x for x in listY]
+            listY = [98 if x is None or x == 0 else x for x in listY] #! changes
             print(f"every listY{listY}")
 
 
