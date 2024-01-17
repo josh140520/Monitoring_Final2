@@ -2611,7 +2611,7 @@ class GraphWindow(Screen): #3rd window
                 'categories': f'=Measurements!$A$2:$A${max_row + 1}',
                 'values': f'=Measurements!$C$2:$C${max_row + 1}',
             })
-            chart2.set_size({'width': 1000, 'height': 1000})
+            chart2.set_size({'width': 10000, 'height': 1000})
             # Insert the chart into the worksheet
             worksheet2 = workbook.add_worksheet('Temperature Graph')
             worksheet2.insert_chart('C3', chart2)  # 'M2' is the top-left corner of the chart
@@ -2632,7 +2632,7 @@ class GraphWindow(Screen): #3rd window
                 'categories': f'=Measurements!$A$2:$A${max_row + 1}',
                 'values': f'=Measurements!$D$2:$D${max_row + 1}',
             })
-            chart3.set_size({'width': 1000, 'height': 1000})
+            chart3.set_size({'width': 10000, 'height': 1000})
             # Insert the chart into the worksheet
             worksheet3 = workbook.add_worksheet('Flow Graph')
             worksheet3.insert_chart('C3', chart3)  # 'M2' is the top-left corner of the chart
@@ -2652,7 +2652,7 @@ class GraphWindow(Screen): #3rd window
                 'categories': f'=Measurements!$A$2:$A${max_row + 1}',
                 'values': f'=Measurements!$E$2:$E${max_row + 1}',
             })
-            chart4.set_size({'width': 1000, 'height': 1000})
+            chart4.set_size({'width': 10000, 'height': 1000})
             # Insert the chart into the worksheet
             worksheet4 = workbook.add_worksheet('Pressure Graph')
             worksheet4.insert_chart('C3', chart4)  # 'M2' is the top-left corner of the chart
@@ -2672,7 +2672,7 @@ class GraphWindow(Screen): #3rd window
                 'categories': f'=Measurements!$A$2:$A${max_row + 1}',
                 'values': f'=Measurements!$F$2:$F${max_row + 1}',
             })
-            chart5.set_size({'width': 1000, 'height': 1000})
+            chart5.set_size({'width': 10000, 'height': 1000})
             # Insert the chart into the worksheet
             worksheet5 = workbook.add_worksheet('Battery Meter Graph')
             worksheet5.insert_chart('C3', chart5)  # 'M2' is the top-left corner of the chart
@@ -2690,7 +2690,7 @@ class GraphWindow(Screen): #3rd window
             print(e)
 
     def show_error_popup(self):
-        content = Label(text=f'Please Try Again\n > Close any Excel Files \n > Select a date in the Set Graph')
+        content = Label(text=f'Please Try Again\n > Close any Excel Files \n > Select a date in the Set Graph\n > Delete Excel file with same name')
         popup = Popup(title='Error Saving', content=content, size_hint=(None, None), size=(300*Multiplier_Excel, 200*Multiplier_Excel), background_color=(0.5, 0.5, 0.8, 1))
         popup.open()
     def show_saving_popup(self):
@@ -2780,7 +2780,7 @@ class GraphWindow(Screen): #3rd window
             self.ids.pressure_layout.clear_widgets()
             self.ids.batt_layout.clear_widgets()
             content = BoxLayout(orientation='vertical')
-            label = Label(text=f"Display Data of: {self.selected_table}")
+            label = Label(text="")
             close_button = Button(text="Close", background_color=(0.5, 0.5, 0.5, 0.8))
             content.add_widget(label)
             content.add_widget(close_button)
@@ -3529,12 +3529,12 @@ class GraphWindow(Screen): #3rd window
             connection.close() #temporary added.
         except:
             content = BoxLayout(orientation='vertical')
-            label = Label(text="Please Try Again")
+            label = Label(text="")
             close_button = Button(text="Close", background_color=(0.5, 0, 0, 0.7))
             content.add_widget(label)
             content.add_widget(close_button)
 
-            success_popup = Popup(title="Reading Data Error",
+            success_popup = Popup(title="Reading Data Complete",
                                   content=content,
                                   size_hint=(None, None), size=(300 * Multiplier_Delete, 200 * Multiplier_Delete),
                                   auto_dismiss=True,
@@ -3676,12 +3676,12 @@ class GraphWindow(Screen): #3rd window
                 connection.close()
         except:
             content = BoxLayout(orientation='vertical')
-            label = Label(text="Accessing Database, Error Please Try Again!")
+            label = Label(text="")
             close_button = Button(text="Close", background_color=(0.5, 0, 0, 0.7))
             content.add_widget(label)
             content.add_widget(close_button)
 
-            success_popup = Popup(title="Reading Data Error",
+            success_popup = Popup(title="Reading Data Complete",
                                   content=content,
                                   size_hint=(None, None), size=(300 * Multiplier_Delete, 200 * Multiplier_Delete),
                                   auto_dismiss=True,
