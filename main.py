@@ -2663,7 +2663,7 @@ class GraphWindow(Screen): #3rd window
             # Configure the series for the chart
             chart5.set_title({'name': 'Battery Sensor', 'name_font': {'size': 50}})
             chart5.set_x_axis({'name': 'Time', 'name_font': {'size': 50}})
-            chart5.set_y_axis({'name': 'Battery', 'name_font': {'size': 50}})
+            chart5.set_y_axis({'name': 'Battery Level', 'name_font': {'size': 50}})
             chart5.set_legend({'font': {'size': 25}})
 
             chart5.add_series({
@@ -3309,7 +3309,7 @@ class GraphWindow(Screen): #3rd window
             min_value = min(filter(lambda x: x is not None and x != 0, listY), default=None)
 
             # Replace every None or 0 with the minimum value
-            listY = [98 if x is None or x == 0 else x for x in listY] #! changes
+            listY = [70 if x is None or x == 0 else x for x in listY] #! changes
             print(f"every listY{listY}")
 
 
