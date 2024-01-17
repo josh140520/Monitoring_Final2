@@ -527,9 +527,10 @@ class MainWindow(Screen): #Main screen
             print(MainWindow.testing_enabled)
             MainWindow.switch = True
 
-
-
-
+    def delayed_call(self):
+        # Using lambda to delay the call of testing_thread for 3 seconds
+        delayed_function = lambda: time.sleep(3) or self.testing_thread()
+        delayed_function()
 
 
 
@@ -547,7 +548,7 @@ class MainWindow(Screen): #Main screen
                     x = all(item == activelist[0] for item in activelist)
                     print(f"are all the same: {x}")
 
-                    if x is False:
+                    if x is False or len(activelist) < 7:
                         temp = float(temp1)
                         flow = float(flow1)
                         pressure = float(pressure1)
@@ -555,6 +556,7 @@ class MainWindow(Screen): #Main screen
                         data_transfer = True
                         current_time = datetime.datetime.now().time()
                         self.update_data(temp, flow, pressure, batt, current_time)
+                        MainWindow.delayed_call()
                     else:
                         temp = 0
                         flow = 0
@@ -564,6 +566,7 @@ class MainWindow(Screen): #Main screen
                         data_transfer = False
                         current_time = datetime.datetime.now().time()
                         self.update_data(temp, flow, pressure, batt, current_time)
+                        self.testing_thread()
 
                 except Exception as e:
                     MainWindow.switch = True
