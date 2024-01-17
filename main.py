@@ -2780,12 +2780,12 @@ class GraphWindow(Screen): #3rd window
             self.ids.pressure_layout.clear_widgets()
             self.ids.batt_layout.clear_widgets()
             content = BoxLayout(orientation='vertical')
-            label = Label(text="Please Try Again")
-            close_button = Button(text="Close", background_color=(0.5, 0, 0, 0.7))
+            label = Label(text=f"Display Data of: {self.selected_table}")
+            close_button = Button(text="Close", background_color=(0.5, 0.5, 0.5, 0.8))
             content.add_widget(label)
             content.add_widget(close_button)
 
-            success_popup = Popup(title="Reading Data Error",
+            success_popup = Popup(title="Reading Data Complete",
                                   content=content,
                                   size_hint=(None, None), size=(300 * Multiplier_Delete, 200 * Multiplier_Delete),
                                   auto_dismiss=True,
