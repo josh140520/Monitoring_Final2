@@ -3428,7 +3428,7 @@ class GraphWindow(Screen): #3rd window
         resize_factor = x1  # per hour 0.037
         height_factor = 0.7
         heightposition_factor = 0.84
-        position_factor = 0.84 - (2.1 * (listypos * x2))  # hour position
+        position_factor = 0.84 - (2.01 * (listypos * x2))  # hour position
 
         Color(0, 0, 0, 1)  # Set color to blue with alpha (RGB values + alpha)
         self.rectangle = Rectangle(
