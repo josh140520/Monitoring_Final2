@@ -254,7 +254,7 @@ class MainWindow(Screen): #Main screen
         notif_flows = []
         notif_pressures = []
         notif_battery = []
-        trigger = 20
+        trigger = 600
 
         # Iterate through the dictionary
         for time, values in notification_val.items():
@@ -550,9 +550,13 @@ class MainWindow(Screen): #Main screen
 
                     if x is False or len(activelist) < 7:
                         temp = float(temp1)
+
                         flow = float(flow1)
                         flow = min(flow, 60)
+
                         pressure = float(pressure1)
+                        pressure = min(pressure, 60)
+
                         batt = float(batt1)
                         data_transfer = True
                         current_time = datetime.datetime.now().time()
@@ -2948,12 +2952,12 @@ class GraphWindow(Screen): #3rd window
 
 
     def draw_rectangle(self, listypos):
-        x1 = 0.043
+        x1 = 0.09
         x2 = 0.0352
         resize_factor = x1  # per hour 0.037
         height_factor = 0.7
         heightposition_factor = 0.84
-        position_factor = 0.84 - (2.1 * (listypos * x2))  # hour position
+        position_factor = 0.84 - (2 * (listypos * x2))  # hour position
 
         Color(0, 0, 0, 1)  # Set color to blue with alpha (RGB values + alpha)
         self.rectangle = Rectangle(
@@ -3109,12 +3113,12 @@ class GraphWindow(Screen): #3rd window
 
 
     def draw_rectangle1(self, listypos):
-        x1 = 0.043
+        x1 = 0.09
         x2 = 0.0352
         resize_factor = x1  # per hour 0.037
         height_factor = 0.7
         heightposition_factor = 0.84
-        position_factor = 0.84 - (2.1 * (listypos * x2))  # hour position
+        position_factor = 0.84 - (2 * (listypos * x2))  # hour position
 
         Color(0, 0, 0, 1)  # Set color to blue with alpha (RGB values + alpha)
         self.rectangle = Rectangle(
@@ -3268,12 +3272,12 @@ class GraphWindow(Screen): #3rd window
 
 
     def draw_rectangle2(self, listypos):
-        x1 = 0.043
+        x1 = 0.09
         x2 = 0.0352
         resize_factor = x1  # per hour 0.037
         height_factor = 0.7
         heightposition_factor = 0.84
-        position_factor = 0.84 - (2.1 * (listypos * x2))  # hour position
+        position_factor = 0.84 - (2 * (listypos * x2))  # hour position
 
         Color(0, 0, 0, 1)  # Set color to blue with alpha (RGB values + alpha)
         self.rectangle = Rectangle(
