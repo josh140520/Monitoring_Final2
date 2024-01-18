@@ -3309,7 +3309,7 @@ class GraphWindow(Screen): #3rd window
             min_value = min(filter(lambda x: x is not None and x != 0, listY), default=None)
 
             # Replace every None or 0 with the minimum value
-            listY = [70 if x is None or x == 0 else x for x in listY] #! changes
+            listY = [98 if x is None or x == 0 else x for x in listY] #! changes
             print(f"every listY{listY}")
 
 
@@ -3424,7 +3424,7 @@ class GraphWindow(Screen): #3rd window
 
     def draw_rectangle3(self, listypos):
         x1 = 0.043
-        x2 = 0.0352
+        x2 = 0.0367
         resize_factor = x1  # per hour 0.037
         height_factor = 0.7
         heightposition_factor = 0.84
