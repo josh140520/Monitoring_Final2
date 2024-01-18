@@ -1307,7 +1307,7 @@ class MainWindow(Screen): #Main screen
                 if drawY[0] is None:
                     drawY[0] = 0
                     self.draw_rectangle(0)
-                for i in range(0, 24):
+                for i in range(1, 24):
                     if drawY[i] is None:
                         self.draw_rectangle(i)
             except:
@@ -1473,7 +1473,7 @@ class MainWindow(Screen): #Main screen
                 if drawY[0] is None:
                     drawY[0] = 0
                     self.draw_rectangle1(0)
-                for i in range(0, 24):
+                for i in range(1, 24):
                     if drawY[i] is None:
                         self.draw_rectangle1(i)
             except:
@@ -1636,7 +1636,7 @@ class MainWindow(Screen): #Main screen
                 if drawY[0] is None:
                     drawY[0] = 0
                     self.draw_rectangle2(0)
-                for i in range(0, 24):
+                for i in range(1, 24):
                     if drawY[i] is None:
                         self.draw_rectangle2(i)
             except:
@@ -1798,7 +1798,7 @@ class MainWindow(Screen): #Main screen
                 if drawY[0] is None:
                     drawY[0] = 0
                     self.draw_rectangle3(0)
-                for i in range(0, 24):
+                for i in range(1, 24):
                     if drawY[i] is None:
                         self.draw_rectangle3(i)
             except:
@@ -2936,7 +2936,7 @@ class GraphWindow(Screen): #3rd window
                 if drawY[0] is None:
                     drawY[0] = 0
                     self.draw_rectangle(0)
-                for i in range(0, 24):
+                for i in range(1, 24):
                     if drawY[i] is None:
                         self.draw_rectangle(i)
             except:
@@ -3097,7 +3097,7 @@ class GraphWindow(Screen): #3rd window
                 if drawY[0] is None:
                     drawY[0] = 0
                     self.draw_rectangle1(0)
-                for i in range(0, 24):
+                for i in range(1, 24):
                     if drawY[i] is None:
                         self.draw_rectangle1(i)
             except:
@@ -3256,7 +3256,7 @@ class GraphWindow(Screen): #3rd window
                 if drawY[0] is None:
                     drawY[0] = 0
                     self.draw_rectangle2(0)
-                for i in range(0, 24):
+                for i in range(1, 24):
                     if drawY[i] is None:
                         self.draw_rectangle2(i)
             except:
@@ -3300,7 +3300,7 @@ class GraphWindow(Screen): #3rd window
 
             # Calculate line coordinates based on listX and listY
             listX = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
-            listY = [None, 2, None, 4, None, 6, None, 8, None, 10, None, 12, None, 14, None, 16, None, 18, None, 20, None, 22, None, 24]
+            listY = list(batt_active.values())
             print(f"the y values: {listY} and lenY {len(listY)} and lenX {len(listX)}")
 
 
@@ -3429,7 +3429,7 @@ class GraphWindow(Screen): #3rd window
         resize_factor = x1  # per hour 0.037
         height_factor = 0.7
         heightposition_factor = 0.84
-        position_factor = 0.84 - (2.202 * (listypos * x2))  # hour position
+        position_factor = 0.84 - (2.1 * (listypos * x2))  # hour position
 
         Color(0, 0, 0, 1)  # Set color to blue with alpha (RGB values + alpha)
         self.rectangle = Rectangle(
