@@ -3412,7 +3412,7 @@ class GraphWindow(Screen): #3rd window
                 if drawY[0] is None:
                     drawY[0] = 0
                     self.draw_rectangle3(0)
-                for i in range(1, 24):
+                for i in range(0, 24):
                     if drawY[i] is None:
                         self.draw_rectangle3(i)
             except:
