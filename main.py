@@ -1328,7 +1328,7 @@ class MainWindow(Screen): #Main screen
         resize_factor = x1  # per hour 0.037
         height_factor = 0.515
         heightposition_factor = 0.74
-        position_factor = 0.788 - (2.09 * (listypos * x2))
+        position_factor = 0.788 - (2.02 * (listypos * x2))
 
         Color(0, 0, 0, 1)  # Set color to blue with alpha (RGB values + alpha)
         self.rectangle = Rectangle(
@@ -1494,7 +1494,7 @@ class MainWindow(Screen): #Main screen
         resize_factor = x1  # per hour 0.037
         height_factor = 0.515
         heightposition_factor = 0.74
-        position_factor = 0.788 - (2.09 * (listypos * x2))
+        position_factor = 0.788 - (2.02 * (listypos * x2))
 
         Color(0, 0, 0, 1)  # Set color to blue with alpha (RGB values + alpha)
         self.rectangle = Rectangle(
@@ -1657,7 +1657,7 @@ class MainWindow(Screen): #Main screen
         resize_factor = x1  # per hour 0.037
         height_factor = 0.515
         heightposition_factor = 0.74
-        position_factor = 0.788 - (2.09 * (listypos * x2))
+        position_factor = 0.788 - (2.02 * (listypos * x2))
 
         Color(0, 0, 0, 1)  # Set color to blue with alpha (RGB values + alpha)
         self.rectangle = Rectangle(
@@ -1818,7 +1818,7 @@ class MainWindow(Screen): #Main screen
         resize_factor = x1  # per hour 0.037
         height_factor = 0.515
         heightposition_factor = 0.74
-        position_factor = 0.788 - (2.09 * (listypos * x2))
+        position_factor = 0.788 - (2.02 * (listypos * x2))
 
         Color(0, 0, 0, 1)  # Set color to blue with alpha (RGB values + alpha)
         self.rectangle = Rectangle(
