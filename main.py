@@ -551,6 +551,7 @@ class MainWindow(Screen): #Main screen
                     if x is False or len(activelist) < 7:
                         temp = float(temp1)
                         flow = float(flow1)
+                        flow = min(flow, 60)
                         pressure = float(pressure1)
                         batt = float(batt1)
                         data_transfer = True
@@ -1306,7 +1307,7 @@ class MainWindow(Screen): #Main screen
                 if drawY[0] is None:
                     drawY[0] = 0
                     self.draw_rectangle(0)
-                for i in range(1, 24):
+                for i in range(0, 24):
                     if drawY[i] is None:
                         self.draw_rectangle(i)
             except:
@@ -1472,7 +1473,7 @@ class MainWindow(Screen): #Main screen
                 if drawY[0] is None:
                     drawY[0] = 0
                     self.draw_rectangle1(0)
-                for i in range(1, 24):
+                for i in range(0, 24):
                     if drawY[i] is None:
                         self.draw_rectangle1(i)
             except:
@@ -1635,7 +1636,7 @@ class MainWindow(Screen): #Main screen
                 if drawY[0] is None:
                     drawY[0] = 0
                     self.draw_rectangle2(0)
-                for i in range(1, 24):
+                for i in range(0, 24):
                     if drawY[i] is None:
                         self.draw_rectangle2(i)
             except:
@@ -1797,7 +1798,7 @@ class MainWindow(Screen): #Main screen
                 if drawY[0] is None:
                     drawY[0] = 0
                     self.draw_rectangle3(0)
-                for i in range(1, 24):
+                for i in range(0, 24):
                     if drawY[i] is None:
                         self.draw_rectangle3(i)
             except:
@@ -2935,7 +2936,7 @@ class GraphWindow(Screen): #3rd window
                 if drawY[0] is None:
                     drawY[0] = 0
                     self.draw_rectangle(0)
-                for i in range(1, 24):
+                for i in range(0, 24):
                     if drawY[i] is None:
                         self.draw_rectangle(i)
             except:
@@ -3096,7 +3097,7 @@ class GraphWindow(Screen): #3rd window
                 if drawY[0] is None:
                     drawY[0] = 0
                     self.draw_rectangle1(0)
-                for i in range(1, 24):
+                for i in range(0, 24):
                     if drawY[i] is None:
                         self.draw_rectangle1(i)
             except:
@@ -3255,7 +3256,7 @@ class GraphWindow(Screen): #3rd window
                 if drawY[0] is None:
                     drawY[0] = 0
                     self.draw_rectangle2(0)
-                for i in range(1, 24):
+                for i in range(0, 24):
                     if drawY[i] is None:
                         self.draw_rectangle2(i)
             except:
