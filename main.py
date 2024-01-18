@@ -552,7 +552,7 @@ class MainWindow(Screen): #Main screen
                         temp = float(temp1)
 
                         flow = float(flow1)
-                        flow = min(flow, 60)
+                        #flow = min(flow, 60)
 
                         pressure = float(pressure1)
                         pressure = min(pressure, 60)
@@ -1323,12 +1323,12 @@ class MainWindow(Screen): #Main screen
 
 
     def draw_rectangle(self, listypos):
-        x1 = 0.0575
+        x1 = 0.08
         x2 = 0.0352
         resize_factor = x1  # per hour 0.037
         height_factor = 0.515
         heightposition_factor = 0.74
-        position_factor = 0.788 - (2.15 * (listypos * x2))
+        position_factor = 0.788 - (2.09 * (listypos * x2))
 
         Color(0, 0, 0, 1)  # Set color to blue with alpha (RGB values + alpha)
         self.rectangle = Rectangle(
@@ -1489,12 +1489,12 @@ class MainWindow(Screen): #Main screen
 
 
     def draw_rectangle1(self, listypos):
-        x1 = 0.0575
+        x1 = 0.08
         x2 = 0.0352
         resize_factor = x1  # per hour 0.037
         height_factor = 0.515
         heightposition_factor = 0.74
-        position_factor = 0.788 - (2.15 * (listypos * x2))
+        position_factor = 0.788 - (2.09 * (listypos * x2))
 
         Color(0, 0, 0, 1)  # Set color to blue with alpha (RGB values + alpha)
         self.rectangle = Rectangle(
@@ -1652,12 +1652,12 @@ class MainWindow(Screen): #Main screen
 
 
     def draw_rectangle2(self, listypos):
-        x1 = 0.0575
+        x1 = 0.08
         x2 = 0.0352
         resize_factor = x1  # per hour 0.037
         height_factor = 0.515
         heightposition_factor = 0.74
-        position_factor = 0.788 - (2.15 * (listypos * x2))
+        position_factor = 0.788 - (2.09 * (listypos * x2))
 
         Color(0, 0, 0, 1)  # Set color to blue with alpha (RGB values + alpha)
         self.rectangle = Rectangle(
@@ -1813,12 +1813,12 @@ class MainWindow(Screen): #Main screen
             # Bind line points to update dynamically when the layout size changes
 
     def draw_rectangle3(self, listypos):
-        x1 = 0.0575
+        x1 = 0.08
         x2 = 0.0352
         resize_factor = x1  # per hour 0.037
         height_factor = 0.515
         heightposition_factor = 0.74
-        position_factor = 0.788 - (2.15 * (listypos * x2))
+        position_factor = 0.788 - (2.09 * (listypos * x2))
 
         Color(0, 0, 0, 1)  # Set color to blue with alpha (RGB values + alpha)
         self.rectangle = Rectangle(
