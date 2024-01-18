@@ -1323,7 +1323,7 @@ class MainWindow(Screen): #Main screen
 
 
     def draw_rectangle(self, listypos):
-        x1 = 0.08
+        x1 = 0.088
         x2 = 0.0352
         resize_factor = x1  # per hour 0.037
         height_factor = 0.515
@@ -1489,7 +1489,7 @@ class MainWindow(Screen): #Main screen
 
 
     def draw_rectangle1(self, listypos):
-        x1 = 0.08
+        x1 = 0.088
         x2 = 0.0352
         resize_factor = x1  # per hour 0.037
         height_factor = 0.515
@@ -1652,7 +1652,7 @@ class MainWindow(Screen): #Main screen
 
 
     def draw_rectangle2(self, listypos):
-        x1 = 0.08
+        x1 = 0.088
         x2 = 0.0352
         resize_factor = x1  # per hour 0.037
         height_factor = 0.515
@@ -1813,7 +1813,7 @@ class MainWindow(Screen): #Main screen
             # Bind line points to update dynamically when the layout size changes
 
     def draw_rectangle3(self, listypos):
-        x1 = 0.08
+        x1 = 0.088
         x2 = 0.0352
         resize_factor = x1  # per hour 0.037
         height_factor = 0.515
