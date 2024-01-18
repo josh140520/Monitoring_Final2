@@ -3309,7 +3309,7 @@ class GraphWindow(Screen): #3rd window
             min_value = min(filter(lambda x: x is not None and x != 0, listY), default=None)
 
             # Replace every None or 0 with the minimum value
-            listY = [98 if x is None or x == 0 else x for x in listY] #! changes
+            listY = [min_value if x is None or x == 0 else x for x in listY] #! changes
             print(f"every listY{listY}")
 
 
